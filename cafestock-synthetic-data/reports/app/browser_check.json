@@ -1,0 +1,17 @@
+{
+  "browser": "headless Chrome",
+  "checks": [
+    "page load",
+    "three branches",
+    "10 ingredient rows",
+    "sentiment inference",
+    "CSV download",
+    "mobile no page overflow",
+    "no JavaScript errors"
+  ],
+  "source_sha256": {
+    "owner_app.py": "8b5912b28524a037aba467abe9ef8d96298e50e5a92e55c8c22c34fa344f6fa0",
+    "web/index.html": "09ecaaf6d3aed637935b1d7ad2614ce2e880ae2358bc1f31300e20226cd45928"
+  },
+  "passed": true
+}

@@ -31,7 +31,7 @@ uv pip install --python ../.venv/Scripts/python.exe -r requirements-eda.txt
 ```
 
 Helper memeriksa hash/relasi, membuat audit cleaning, EDA train, kontrak fitur,
-dan ekspor X/y/metadata train–validation–test di `prepared/`. Model belum dilatih.
+dan ekspor X/y/metadata train–validation–test di `prepared/`. Model belum dilatih oleh helper ini; pelatihan dilakukan terpisah pada tahap 07.
 Renderer grafik dapat memakai interpreter lain yang sudah memiliki matplotlib
 dengan `--plot-python path/to/python.exe`; data preparation tetap berjalan pada
 Python 3.11+. Artefak grafik menyimpan versi renderer di laporan audit.
@@ -125,3 +125,23 @@ supplier, label, agregat sosial, lokasi unknown, jadwal batch, split ingestion,
 dan rekonstruksi independen fitur sebelum keputusan. Laporan terkini ada di
 reports/validation_report.md; hasil aktual SQL dan reproduksibilitas dilaporkan
 terpisah. Input sumber eksternal tidak digabung seolah-olah bisnis yang sama.
+
+## 6. Modeling, evaluasi, optimasi, dan aplikasi (tahap 07–11)
+
+Setelah tahap 01–06 selesai, jalankan berurutan:
+
+```powershell
+uv pip install --python ../.venv/Scripts/python.exe -r requirements-ml.txt
+../.venv/Scripts/python.exe train_models.py
+../.venv/Scripts/python.exe optimize_inventory.py
+../.venv/Scripts/python.exe analyze_results.py
+../.venv/Scripts/python.exe -m unittest discover -s tests -v
+../.venv/Scripts/python.exe owner_app.py
+```
+
+Buka [dashboard lokal](http://127.0.0.1:8765). Pelatihan menulis model, prediksi,
+fitur sentimen historis, dan penjelasan di `prepared/07_modeling/`. Optimasi
+menulis forecast serta replay stok di `prepared/10_optimization/`.
+Baca [laporan model](reports/modeling_report.md), [laporan optimasi](reports/optimization_report.md),
+[petunjuk aplikasi](docs/aplikasi_pemilik.md), dan [bukti penyelesaian](reports/completion_report.md).
+Data sumber dan artefak tahap 01–06 tidak ditimpa oleh kedua script ini.

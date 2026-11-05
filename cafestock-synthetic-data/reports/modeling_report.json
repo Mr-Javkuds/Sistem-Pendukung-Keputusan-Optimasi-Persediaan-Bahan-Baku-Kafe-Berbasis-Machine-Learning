@@ -1,0 +1,721 @@
+{
+  "sentiment": {
+    "SVM": {
+      "validation": {
+        "mixed": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 143.0
+        },
+        "negative": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 144.0
+        },
+        "neutral": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 153.0
+        },
+        "positive": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 224.0
+        },
+        "accuracy": 1.0,
+        "macro avg": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 664.0
+        },
+        "weighted avg": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 664.0
+        }
+      },
+      "test": {
+        "mixed": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 111.0
+        },
+        "negative": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 136.0
+        },
+        "neutral": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 160.0
+        },
+        "positive": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 213.0
+        },
+        "accuracy": 1.0,
+        "macro avg": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 620.0
+        },
+        "weighted avg": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 620.0
+        }
+      }
+    },
+    "NaiveBayes": {
+      "validation": {
+        "mixed": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 143.0
+        },
+        "negative": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 144.0
+        },
+        "neutral": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 153.0
+        },
+        "positive": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 224.0
+        },
+        "accuracy": 1.0,
+        "macro avg": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 664.0
+        },
+        "weighted avg": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 664.0
+        }
+      },
+      "test": {
+        "mixed": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 111.0
+        },
+        "negative": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 136.0
+        },
+        "neutral": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 160.0
+        },
+        "positive": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 213.0
+        },
+        "accuracy": 1.0,
+        "macro avg": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 620.0
+        },
+        "weighted avg": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 620.0
+        }
+      }
+    }
+  },
+  "risk": {
+    "A_operational_RandomForest": {
+      "features": [
+        "branch_id",
+        "ingredient_id",
+        "history_days",
+        "mean_daily_consumption_14d",
+        "on_hand",
+        "on_order",
+        "lead_time_days",
+        "shelf_life_days",
+        "package_size",
+        "minimum_order_qty"
+      ],
+      "selected_setting": 8,
+      "threshold": 0.40000000000000013,
+      "validation": {
+        "precision": 0.5867635189669088,
+        "recall": 0.9641909814323607,
+        "f1": 0.7295534370296036,
+        "pr_auc_average_precision": 0.7517369849432355,
+        "brier": 0.2056515574546638,
+        "confusion_matrix": [
+          [
+            174,
+            512
+          ],
+          [
+            27,
+            727
+          ]
+        ]
+      },
+      "test": {
+        "precision": 0.648538961038961,
+        "recall": 0.9152348224513173,
+        "f1": 0.7591448931116389,
+        "pr_auc_average_precision": 0.7001806848786086,
+        "brier": 0.23979589112586522,
+        "confusion_matrix": [
+          [
+            104,
+            433
+          ],
+          [
+            74,
+            799
+          ]
+        ]
+      },
+      "candidate_count": 2
+    },
+    "A_operational_LogisticRegression": {
+      "features": [
+        "branch_id",
+        "ingredient_id",
+        "history_days",
+        "mean_daily_consumption_14d",
+        "on_hand",
+        "on_order",
+        "lead_time_days",
+        "shelf_life_days",
+        "package_size",
+        "minimum_order_qty"
+      ],
+      "selected_setting": 0.1,
+      "threshold": 0.40000000000000013,
+      "validation": {
+        "precision": 0.5870445344129555,
+        "recall": 0.9615384615384616,
+        "f1": 0.7290095525389643,
+        "pr_auc_average_precision": 0.7139368809467881,
+        "brier": 0.21518126212342872,
+        "confusion_matrix": [
+          [
+            176,
+            510
+          ],
+          [
+            29,
+            725
+          ]
+        ]
+      },
+      "test": {
+        "precision": 0.6423297785069729,
+        "recall": 0.8969072164948454,
+        "f1": 0.748565965583174,
+        "pr_auc_average_precision": 0.6502980799742599,
+        "brier": 0.2543724506933277,
+        "confusion_matrix": [
+          [
+            101,
+            436
+          ],
+          [
+            90,
+            783
+          ]
+        ]
+      },
+      "candidate_count": 2
+    },
+    "B_trend_RandomForest": {
+      "features": [
+        "branch_id",
+        "ingredient_id",
+        "history_days",
+        "mean_daily_consumption_14d",
+        "on_hand",
+        "on_order",
+        "lead_time_days",
+        "shelf_life_days",
+        "package_size",
+        "minimum_order_qty",
+        "market_interest_latest",
+        "market_interest_lag_1w"
+      ],
+      "selected_setting": 8,
+      "threshold": 0.3500000000000001,
+      "validation": {
+        "precision": 0.5959765297569153,
+        "recall": 0.9429708222811671,
+        "f1": 0.7303543913713405,
+        "pr_auc_average_precision": 0.7722050713096149,
+        "brier": 0.2045802657537844,
+        "confusion_matrix": [
+          [
+            204,
+            482
+          ],
+          [
+            43,
+            711
+          ]
+        ]
+      },
+      "test": {
+        "precision": 0.6517783291976841,
+        "recall": 0.9026345933562429,
+        "f1": 0.7569644572526417,
+        "pr_auc_average_precision": 0.6929874382107322,
+        "brier": 0.24212709139883026,
+        "confusion_matrix": [
+          [
+            116,
+            421
+          ],
+          [
+            85,
+            788
+          ]
+        ]
+      },
+      "candidate_count": 2
+    },
+    "B_trend_LogisticRegression": {
+      "features": [
+        "branch_id",
+        "ingredient_id",
+        "history_days",
+        "mean_daily_consumption_14d",
+        "on_hand",
+        "on_order",
+        "lead_time_days",
+        "shelf_life_days",
+        "package_size",
+        "minimum_order_qty",
+        "market_interest_latest",
+        "market_interest_lag_1w"
+      ],
+      "selected_setting": 0.1,
+      "threshold": 0.3500000000000001,
+      "validation": {
+        "precision": 0.5914429530201343,
+        "recall": 0.9350132625994695,
+        "f1": 0.7245632065775951,
+        "pr_auc_average_precision": 0.7383362186200806,
+        "brier": 0.2111286642549738,
+        "confusion_matrix": [
+          [
+            199,
+            487
+          ],
+          [
+            49,
+            705
+          ]
+        ]
+      },
+      "test": {
+        "precision": 0.6468085106382979,
+        "recall": 0.870561282932417,
+        "f1": 0.7421875,
+        "pr_auc_average_precision": 0.653550890251761,
+        "brier": 0.25218793729094524,
+        "confusion_matrix": [
+          [
+            122,
+            415
+          ],
+          [
+            113,
+            760
+          ]
+        ]
+      },
+      "candidate_count": 2
+    },
+    "C_sentiment_RandomForest": {
+      "features": [
+        "branch_id",
+        "ingredient_id",
+        "history_days",
+        "mean_daily_consumption_14d",
+        "on_hand",
+        "on_order",
+        "lead_time_days",
+        "shelf_life_days",
+        "package_size",
+        "minimum_order_qty",
+        "social_post_count_latest_month",
+        "menu_sentiment_latest_month",
+        "social_data_available",
+        "social_age_days"
+      ],
+      "selected_setting": 8,
+      "threshold": 0.3500000000000001,
+      "validation": {
+        "precision": 0.5988225399495374,
+        "recall": 0.9442970822281167,
+        "f1": 0.7328872876994339,
+        "pr_auc_average_precision": 0.758079484563026,
+        "brier": 0.2075498778038089,
+        "confusion_matrix": [
+          [
+            209,
+            477
+          ],
+          [
+            42,
+            712
+          ]
+        ]
+      },
+      "test": {
+        "precision": 0.655,
+        "recall": 0.9003436426116839,
+        "f1": 0.7583212735166426,
+        "pr_auc_average_precision": 0.6708909149166259,
+        "brier": 0.2554639125874408,
+        "confusion_matrix": [
+          [
+            123,
+            414
+          ],
+          [
+            87,
+            786
+          ]
+        ]
+      },
+      "candidate_count": 2
+    },
+    "C_sentiment_LogisticRegression": {
+      "features": [
+        "branch_id",
+        "ingredient_id",
+        "history_days",
+        "mean_daily_consumption_14d",
+        "on_hand",
+        "on_order",
+        "lead_time_days",
+        "shelf_life_days",
+        "package_size",
+        "minimum_order_qty",
+        "social_post_count_latest_month",
+        "menu_sentiment_latest_month",
+        "social_data_available",
+        "social_age_days"
+      ],
+      "selected_setting": 1.0,
+      "threshold": 0.3500000000000001,
+      "validation": {
+        "precision": 0.5894909688013136,
+        "recall": 0.9522546419098143,
+        "f1": 0.7281947261663286,
+        "pr_auc_average_precision": 0.7030318499973743,
+        "brier": 0.2167067350061498,
+        "confusion_matrix": [
+          [
+            186,
+            500
+          ],
+          [
+            36,
+            718
+          ]
+        ]
+      },
+      "test": {
+        "precision": 0.6441515650741351,
+        "recall": 0.8957617411225659,
+        "f1": 0.7494010541447054,
+        "pr_auc_average_precision": 0.6387053243241475,
+        "brier": 0.26341169254508123,
+        "confusion_matrix": [
+          [
+            105,
+            432
+          ],
+          [
+            91,
+            782
+          ]
+        ]
+      },
+      "candidate_count": 2
+    },
+    "D_combined_RandomForest": {
+      "features": [
+        "branch_id",
+        "ingredient_id",
+        "history_days",
+        "mean_daily_consumption_14d",
+        "on_hand",
+        "on_order",
+        "lead_time_days",
+        "shelf_life_days",
+        "package_size",
+        "minimum_order_qty",
+        "market_interest_latest",
+        "market_interest_lag_1w",
+        "social_post_count_latest_month",
+        "menu_sentiment_latest_month",
+        "social_data_available",
+        "social_age_days"
+      ],
+      "selected_setting": null,
+      "threshold": 0.25000000000000006,
+      "validation": {
+        "precision": 0.5965202982601492,
+        "recall": 0.9549071618037135,
+        "f1": 0.7343192248852626,
+        "pr_auc_average_precision": 0.7497780800596384,
+        "brier": 0.20856759348723605,
+        "confusion_matrix": [
+          [
+            199,
+            487
+          ],
+          [
+            34,
+            720
+          ]
+        ]
+      },
+      "test": {
+        "precision": 0.6584,
+        "recall": 0.9427262313860252,
+        "f1": 0.7753179463024022,
+        "pr_auc_average_precision": 0.687616533629007,
+        "brier": 0.24657128396762584,
+        "confusion_matrix": [
+          [
+            110,
+            427
+          ],
+          [
+            50,
+            823
+          ]
+        ]
+      },
+      "candidate_count": 2
+    },
+    "D_combined_LogisticRegression": {
+      "features": [
+        "branch_id",
+        "ingredient_id",
+        "history_days",
+        "mean_daily_consumption_14d",
+        "on_hand",
+        "on_order",
+        "lead_time_days",
+        "shelf_life_days",
+        "package_size",
+        "minimum_order_qty",
+        "market_interest_latest",
+        "market_interest_lag_1w",
+        "social_post_count_latest_month",
+        "menu_sentiment_latest_month",
+        "social_data_available",
+        "social_age_days"
+      ],
+      "selected_setting": 1.0,
+      "threshold": 0.30000000000000004,
+      "validation": {
+        "precision": 0.5916530278232406,
+        "recall": 0.9588859416445623,
+        "f1": 0.7317813765182186,
+        "pr_auc_average_precision": 0.7308516557202139,
+        "brier": 0.21184777494776388,
+        "confusion_matrix": [
+          [
+            187,
+            499
+          ],
+          [
+            31,
+            723
+          ]
+        ]
+      },
+      "test": {
+        "precision": 0.6426256077795786,
+        "recall": 0.9083619702176403,
+        "f1": 0.7527289985761747,
+        "pr_auc_average_precision": 0.6487663151132859,
+        "brier": 0.2580399239604424,
+        "confusion_matrix": [
+          [
+            96,
+            441
+          ],
+          [
+            80,
+            793
+          ]
+        ]
+      },
+      "candidate_count": 2
+    },
+    "E_volume_without_polarity_RandomForest": {
+      "features": [
+        "branch_id",
+        "ingredient_id",
+        "history_days",
+        "mean_daily_consumption_14d",
+        "on_hand",
+        "on_order",
+        "lead_time_days",
+        "shelf_life_days",
+        "package_size",
+        "minimum_order_qty",
+        "market_interest_latest",
+        "market_interest_lag_1w",
+        "social_post_count_latest_month",
+        "social_data_available",
+        "social_age_days"
+      ],
+      "selected_setting": 8,
+      "threshold": 0.3500000000000001,
+      "validation": {
+        "precision": 0.6074201898188093,
+        "recall": 0.9336870026525199,
+        "f1": 0.7360167276529012,
+        "pr_auc_average_precision": 0.7694859786230589,
+        "brier": 0.20538077884471212,
+        "confusion_matrix": [
+          [
+            231,
+            455
+          ],
+          [
+            50,
+            704
+          ]
+        ]
+      },
+      "test": {
+        "precision": 0.6570931244560487,
+        "recall": 0.8648339060710195,
+        "f1": 0.7467853610286844,
+        "pr_auc_average_precision": 0.682448028816715,
+        "brier": 0.24810939677478036,
+        "confusion_matrix": [
+          [
+            143,
+            394
+          ],
+          [
+            118,
+            755
+          ]
+        ]
+      },
+      "candidate_count": 2
+    },
+    "E_volume_without_polarity_LogisticRegression": {
+      "features": [
+        "branch_id",
+        "ingredient_id",
+        "history_days",
+        "mean_daily_consumption_14d",
+        "on_hand",
+        "on_order",
+        "lead_time_days",
+        "shelf_life_days",
+        "package_size",
+        "minimum_order_qty",
+        "market_interest_latest",
+        "market_interest_lag_1w",
+        "social_post_count_latest_month",
+        "social_data_available",
+        "social_age_days"
+      ],
+      "selected_setting": 0.1,
+      "threshold": 0.3500000000000001,
+      "validation": {
+        "precision": 0.6227824463118581,
+        "recall": 0.8846153846153846,
+        "f1": 0.7309589041095891,
+        "pr_auc_average_precision": 0.7307371648753872,
+        "brier": 0.21453164876406633,
+        "confusion_matrix": [
+          [
+            282,
+            404
+          ],
+          [
+            87,
+            667
+          ]
+        ]
+      },
+      "test": {
+        "precision": 0.6570657065706571,
+        "recall": 0.8361970217640321,
+        "f1": 0.7358870967741935,
+        "pr_auc_average_precision": 0.6454018276735694,
+        "brier": 0.2576222858125072,
+        "confusion_matrix": [
+          [
+            156,
+            381
+          ],
+          [
+            143,
+            730
+          ]
+        ]
+      },
+      "candidate_count": 2
+    }
+  },
+  "primary_risk_model": "D_combined_RandomForest",
+  "primary_threshold": 0.25000000000000006,
+  "sentiment_source": "strict earlier-batch SVM; frozen train model for validation/test",
+  "warmup_posts_without_prediction": 497,
+  "limitations": [
+    "Synthetic templates do not establish real Instagram generalization.",
+    "Risk labels describe historical inventory policy, not counterfactual policies.",
+    "Risk scores are not claimed as calibrated probabilities; Brier scores are reported.",
+    "No test-based feature/parameter/threshold selection; permutation importance is descriptive."
+  ],
+  "source_manifest_sha256": "c13240b7547a960f0e91039b7e5783204b242fdad341cf96bf3adf74f99028f0"
+}

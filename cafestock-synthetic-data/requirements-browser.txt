@@ -1,0 +1,2 @@
+# Optional UI verification only; not required to run the application.
+playwright==1.58.0

@@ -1,0 +1,58 @@
+{
+  "mixed": [
+    "cocok untuk",
+    "rasanya cocok",
+    "lagi untuk",
+    "rasanya enak",
+    "enak dan",
+    "enak",
+    "dan seimbang",
+    "dinikmati untuk",
+    "harganya",
+    "mahal",
+    "harganya terasa",
+    "porsi seperti"
+  ],
+  "negative": [
+    "kurang",
+    "rasanya kurang",
+    "kurang seimbang",
+    "manis",
+    "terlalu",
+    "terlalu manis",
+    "manis untuk",
+    "kurang pas",
+    "pas",
+    "pas untuk",
+    "teksturnya terasa",
+    "terasa kurang"
+  ],
+  "neutral": [
+    "aku",
+    "aku belum",
+    "kesimpulan bahasan",
+    "kesimpulan",
+    "belum punya",
+    "untuk harga",
+    "punya",
+    "punya kesimpulan",
+    "harga aku",
+    "harga",
+    "sedang",
+    "belum"
+  ],
+  "positive": [
+    "rasanya sepadan",
+    "menurutku porsi",
+    "menurutku",
+    "porsi dan",
+    "dan rasanya",
+    "sepadan",
+    "sepadan bahasan",
+    "rasanya",
+    "dan",
+    "lagi menurutku",
+    "dinikmati menurutku",
+    "seleraku menurutku"
+  ]
+}

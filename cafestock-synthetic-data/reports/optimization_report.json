@@ -1,0 +1,242 @@
+{
+  "forecast_features": [
+    "branch_id",
+    "ingredient_id",
+    "mean_daily_consumption_14d",
+    "market_interest_latest",
+    "menu_sentiment_latest_month",
+    "social_data_available",
+    "weekday",
+    "month"
+  ],
+  "forecasting": {
+    "validation": {
+      "1": {
+        "model_mae": 82.84596452826383,
+        "historical_mean_mae": 79.5915965882353,
+        "model_rmse": 97.55595660671433
+      },
+      "2": {
+        "model_mae": 878.2997592443757,
+        "historical_mean_mae": 1177.3974244046121,
+        "model_rmse": 1128.6621023580049
+      },
+      "3": {
+        "model_mae": 5.372206326886835,
+        "historical_mean_mae": 5.107376241830065,
+        "model_rmse": 6.536319486452125
+      },
+      "4": {
+        "model_mae": 12.550405444611856,
+        "historical_mean_mae": 14.330158751633984,
+        "model_rmse": 15.586850662811083
+      },
+      "5": {
+        "model_mae": 52.501131207812676,
+        "historical_mean_mae": 94.85060689542485,
+        "model_rmse": 69.0433974101296
+      },
+      "6": {
+        "model_mae": 43.59040914373721,
+        "historical_mean_mae": 57.56302522875817,
+        "model_rmse": 52.0813213706586
+      },
+      "7": {
+        "model_mae": 325.7431798528815,
+        "historical_mean_mae": 334.7259658553459,
+        "model_rmse": 403.25725854052996
+      },
+      "8": {
+        "model_mae": 1.1944457328415112,
+        "historical_mean_mae": 1.8533992222222222,
+        "model_rmse": 1.5292376440031539
+      },
+      "9": {
+        "model_mae": 1.4582042230677001,
+        "historical_mean_mae": 1.564540285115304,
+        "model_rmse": 1.8202045584336848
+      },
+      "10": {
+        "model_mae": 1367.9627435191842,
+        "historical_mean_mae": 1456.4764899706497,
+        "model_rmse": 1629.7995541889431
+      }
+    },
+    "test": {
+      "1": {
+        "model_mae": 103.34520323730499,
+        "historical_mean_mae": 75.49371431333333,
+        "model_rmse": 124.52411398278217
+      },
+      "2": {
+        "model_mae": 903.4905806956391,
+        "historical_mean_mae": 1298.3516483461538,
+        "model_rmse": 1126.801632831362
+      },
+      "3": {
+        "model_mae": 4.772395163405651,
+        "historical_mean_mae": 6.84190474,
+        "model_rmse": 5.8290626397010445
+      },
+      "4": {
+        "model_mae": 13.237788446759486,
+        "historical_mean_mae": 23.873809493333333,
+        "model_rmse": 16.141238757116874
+      },
+      "5": {
+        "model_mae": 67.38668579286914,
+        "historical_mean_mae": 101.35714286000002,
+        "model_rmse": 84.93499774768313
+      },
+      "6": {
+        "model_mae": 41.91138828697572,
+        "historical_mean_mae": 100.2142857,
+        "model_rmse": 49.319703936387164
+      },
+      "7": {
+        "model_mae": 386.3571274009345,
+        "historical_mean_mae": 411.1721611666666,
+        "model_rmse": 477.28477569692757
+      },
+      "8": {
+        "model_mae": 1.2917759497498236,
+        "historical_mean_mae": 1.3954517393162393,
+        "model_rmse": 1.5998305466717022
+      },
+      "9": {
+        "model_mae": 1.9628474099564908,
+        "historical_mean_mae": 1.8844627457264955,
+        "model_rmse": 2.4549292131178206
+      },
+      "10": {
+        "model_mae": 1704.7069940595613,
+        "historical_mean_mae": 1943.6660561623935,
+        "model_rmse": 2116.8074424761016
+      }
+    }
+  },
+  "policies": {
+    "baseline": {
+      "validation": {
+        "requested_units": 19367.0,
+        "fulfilled_units": 17984.0,
+        "fill_rate": 0.9285898693654154,
+        "stockout_transaction_rate": 0.07277529161470178,
+        "waste_cost_idr": 1623920.0,
+        "material_cost_idr": 78191440.0,
+        "holding_cost_idr": 86931.21100000001,
+        "lost_revenue_idr": 31836000.0,
+        "objective_cost_idr": 110114371.211,
+        "minimum_closing_stock": 0.0
+      },
+      "test": {
+        "requested_units": 20623.0,
+        "fulfilled_units": 18679.0,
+        "fill_rate": 0.9057363138243708,
+        "stockout_transaction_rate": 0.09239613989459997,
+        "waste_cost_idr": 1097280.0,
+        "material_cost_idr": 78565481.0,
+        "holding_cost_idr": 84535.514,
+        "lost_revenue_idr": 43790000.0,
+        "objective_cost_idr": 122440016.514,
+        "minimum_closing_stock": 0.0
+      }
+    },
+    "ML_0.8": {
+      "validation": {
+        "requested_units": 19367.0,
+        "fulfilled_units": 15864.0,
+        "fill_rate": 0.8191253162596168,
+        "stockout_transaction_rate": 0.1780500330129851,
+        "waste_cost_idr": 1552600.0,
+        "material_cost_idr": 71365108.0,
+        "holding_cost_idr": 71012.47099999999,
+        "lost_revenue_idr": 76243000.0,
+        "objective_cost_idr": 147679120.47100002,
+        "minimum_closing_stock": 0.0
+      },
+      "test": {
+        "requested_units": 20623.0,
+        "fulfilled_units": 17056.0,
+        "fill_rate": 0.827037773359841,
+        "stockout_transaction_rate": 0.16829785777838616,
+        "waste_cost_idr": 749360.0,
+        "material_cost_idr": 73865286.0,
+        "holding_cost_idr": 71527.02300000002,
+        "lost_revenue_idr": 76255000.0,
+        "objective_cost_idr": 150191813.023,
+        "minimum_closing_stock": 0.0
+      }
+    },
+    "ML_1.0": {
+      "validation": {
+        "requested_units": 19367.0,
+        "fulfilled_units": 18675.0,
+        "fill_rate": 0.9642691175711261,
+        "stockout_transaction_rate": 0.03807497615728853,
+        "waste_cost_idr": 1901420.0,
+        "material_cost_idr": 81805988.0,
+        "holding_cost_idr": 100845.37899999999,
+        "lost_revenue_idr": 15817000.0,
+        "objective_cost_idr": 97723833.379,
+        "minimum_closing_stock": 0.0
+      },
+      "test": {
+        "requested_units": 20623.0,
+        "fulfilled_units": 19831.0,
+        "fill_rate": 0.9615962760025215,
+        "stockout_transaction_rate": 0.03976456094723154,
+        "waste_cost_idr": 1416600.0,
+        "material_cost_idr": 83316087.0,
+        "holding_cost_idr": 112200.89,
+        "lost_revenue_idr": 17718000.0,
+        "objective_cost_idr": 101146287.89,
+        "minimum_closing_stock": 0.0
+      }
+    },
+    "ML_1.2": {
+      "validation": {
+        "requested_units": 19367.0,
+        "fulfilled_units": 19242.0,
+        "fill_rate": 0.9935457221046109,
+        "stockout_transaction_rate": 0.007482943291027804,
+        "waste_cost_idr": 2839600.0,
+        "material_cost_idr": 85497134.0,
+        "holding_cost_idr": 153381.28999999998,
+        "lost_revenue_idr": 2931000.0,
+        "objective_cost_idr": 88581515.29,
+        "minimum_closing_stock": 0.0
+      },
+      "test": {
+        "requested_units": 20623.0,
+        "fulfilled_units": 20452.0,
+        "fill_rate": 0.9917082868641808,
+        "stockout_transaction_rate": 0.009376497159674218,
+        "waste_cost_idr": 2469040.0,
+        "material_cost_idr": 86974375.0,
+        "holding_cost_idr": 167429.023,
+        "lost_revenue_idr": 3792000.0,
+        "objective_cost_idr": 90933804.023,
+        "minimum_closing_stock": 0.0
+      }
+    }
+  },
+  "selected_ml_policy": "ML_1.2",
+  "recommended_policy": "ML_1.2",
+  "selection_partition": "validation",
+  "factors_tested": [
+    0.8,
+    1.0,
+    1.2
+  ],
+  "objective": "material consumed+wasted+shrinkage cost + daily holding 0.1% of closing stock value + lost sales revenue",
+  "assumptions": [
+    "Same latent demand and discrepancy random seed for every replay.",
+    "FEFO, lead time, MOQ, package size, shelf life and pipeline stock enforced by shared simulator.",
+    "Lost revenue is an assumed shortage penalty, not measured profit. No fixed ordering fee.",
+    "Forecast target uses simulated latent demand; a real cafe needs records of unmet demand.",
+    "Forecast train excludes target windows beyond its partition; validation selects safety factor.",
+    "Policy replay before validation is warm-up; performance is claimed only on held-out test.",
+    "Optimization searches three safety factors; it does not prove a global optimum."
+  ]
+}

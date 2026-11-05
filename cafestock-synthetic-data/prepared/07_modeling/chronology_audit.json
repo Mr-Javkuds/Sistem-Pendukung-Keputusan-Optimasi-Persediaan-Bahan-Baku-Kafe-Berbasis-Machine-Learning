@@ -1,0 +1,73 @@
+[
+  {
+    "batch": "2025-12-01T07:00:00+07:00",
+    "training_rows": 0,
+    "status": "warmup_unavailable"
+  },
+  {
+    "batch": "2026-01-01T07:00:00+07:00",
+    "training_rows": 485,
+    "training_max_at": "2025-12-01T07:00:00+07:00",
+    "status": "predicted"
+  },
+  {
+    "batch": "2026-02-01T07:00:00+07:00",
+    "training_rows": 966,
+    "training_max_at": "2026-01-01T07:00:00+07:00",
+    "status": "predicted"
+  },
+  {
+    "batch": "2026-03-01T07:00:00+07:00",
+    "training_rows": 1451,
+    "training_max_at": "2026-02-01T07:00:00+07:00",
+    "status": "predicted"
+  },
+  {
+    "batch": "2026-04-01T07:00:00+07:00",
+    "training_rows": 1841,
+    "training_max_at": "2026-03-01T07:00:00+07:00",
+    "status": "predicted"
+  },
+  {
+    "batch": "2026-05-01T07:00:00+07:00",
+    "training_rows": 2275,
+    "training_max_at": "2026-04-01T07:00:00+07:00",
+    "status": "predicted"
+  },
+  {
+    "batch": "2026-06-01T07:00:00+07:00",
+    "training_rows": 2701,
+    "training_max_at": "2026-05-01T07:00:00+07:00",
+    "status": "predicted"
+  },
+  {
+    "batch": "2026-07-01T07:00:00+07:00",
+    "training_rows": 3034,
+    "training_max_at": "2026-06-01T07:00:00+07:00",
+    "status": "predicted"
+  },
+  {
+    "batch": "2026-08-01T07:00:00+07:00",
+    "training_rows": 3361,
+    "training_max_at": "2026-07-01T07:00:00+07:00",
+    "status": "predicted"
+  },
+  {
+    "batch": "2026-09-01T07:00:00+07:00",
+    "training_rows": 3361,
+    "training_max_at": "2026-07-01T07:00:00+07:00",
+    "status": "predicted"
+  },
+  {
+    "batch": "2026-10-01T07:00:00+07:00",
+    "training_rows": 3361,
+    "training_max_at": "2026-07-01T07:00:00+07:00",
+    "status": "predicted"
+  },
+  {
+    "batch": "2026-11-01T07:00:00+07:00",
+    "training_rows": 3361,
+    "training_max_at": "2026-07-01T07:00:00+07:00",
+    "status": "predicted"
+  }
+]

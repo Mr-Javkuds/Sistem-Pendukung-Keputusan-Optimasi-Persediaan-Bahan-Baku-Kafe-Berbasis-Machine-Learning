@@ -126,6 +126,8 @@ bukan published_at; pending tidak dipakai training/evaluasi. Fit preprocessing h
 pada train. Sinyal sentimen risiko saat ini memakai label aturan sebagai referensi;
 alur SVM operasional memerlukan prediksi historis out-of-fold sebelum agregasi.
 
-Tidak ada model final yang dilatih. Mengimitasi baseline_purchase_qty dengan
+Model riset train-only sudah dilatih pada tahap 07–10; laporan ada di
+[modeling_report.md](../reports/modeling_report.md) dan
+[optimization_report.md](../reports/optimization_report.md). Mengimitasi baseline_purchase_qty dengan
 regresi bukan optimasi. Kebijakan pembelian baru perlu disimulasikan ulang dengan
 permintaan laten yang sama dan metrik biaya/limbah/stockout yang didefinisikan.

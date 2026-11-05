@@ -27,3 +27,16 @@ Tugas sentiment hanya memakai training_status=eligible, risiko/tren hanya target
 yang lengkap, restock_reference hanya meniru aturan baseline (bukan optimalisasi).
 Proporsi nominal 70/15/15 didasarkan pada waktu dan berubah setelah dedup/purge/
 censoring. Metadata ID, fingerprint, split, dan waktu label bukan fitur model.
+
+## Tahap 07–11 — model dan aplikasi
+
+- `07_modeling/`: model sentimen/risiko, prediksi test, audit kronologi, fitur stok
+  dengan sentimen prediksi, importance, bobot kata, dan contoh kesalahan.
+- `10_optimization/`: dataset target kebutuhan laten, model forecast, prediksi,
+  snapshot dan keputusan setiap kebijakan, serta rekomendasi terakhir.
+- Aplikasi berada di `../owner_app.py` dan `../web/`; persetujuan lokal di
+  `../local/` tidak masuk Git. [Panduan aplikasi](../docs/aplikasi_pemilik.md).
+
+[Laporan model](../reports/modeling_report.md), [analisis kesalahan](../reports/error_analysis.md),
+[optimasi](../reports/optimization_report.md), dan [bukti penyelesaian](../reports/completion_report.md)
+menjelaskan hasil serta batas penggunaan model sintetis.

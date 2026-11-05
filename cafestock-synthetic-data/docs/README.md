@@ -6,7 +6,7 @@
 
 | Kebutuhan | Dokumen |
 |---|---|
-| Progres dan pekerjaan berikutnya | [Alur proyek ML](alur_project_ml.md) |
+| Progres dan bukti penyelesaian | [Alur proyek ML](alur_project_ml.md) |
 | Sumber data dan batas penelitian | [Asumsi dan provenance](assumptions.md) |
 | Postingan, menu, wilayah, dan sentimen | [Dataset sentimen pasar menu](sentimen_pasar_menu.md) |
 | Hubungan antartabel | [ERD](erd.md) |
@@ -47,3 +47,10 @@ Laporan yang dihasilkan script dapat ditulis ulang ketika script dijalankan lagi
 
 [Master prompt awal](../../master_prompt.md) merupakan arsip rancangan. Untuk
 implementasi aktif, ikuti skenario Semarang dan Instagram sintetis di dokumen ini.
+
+## Hasil tahap 07–11
+
+- [Pelatihan, evaluasi, ablation, dan explainability](../reports/modeling_report.md).
+- [Peramalan kebutuhan bahan dan optimasi kebijakan](../reports/optimization_report.md).
+- [Aplikasi pemilik dan cara menjalankannya](aplikasi_pemilik.md).
+- [Audit penyelesaian dan keterbatasan prototipe](../reports/completion_report.md).

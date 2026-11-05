@@ -21,11 +21,12 @@ wilayah. Semua data operasional dan konten Instagram yang dihasilkan adalah
 |---|---|---|
 | 01–05: dataset, cleaning, EDA, fitur, split | ✅ Selesai | [Audit 239/239 lulus](cafestock-synthetic-data/reports/steps_1_5_audit.md) |
 | 06: encoding | ✅ Selesai | [Laporan 196/196 lulus](cafestock-synthetic-data/reports/encoding_report.md) |
-| 07–09: modeling, evaluasi, explainability | ⬜ Belum dikerjakan | Latih model utama dan pembanding |
-| Optimasi pembelian dan aplikasi pemilik | ⬜ Belum dikerjakan | Simulasi ulang kebijakan dan integrasi aplikasi |
+| 07–09: modeling, evaluasi, explainability | ✅ Selesai | [Model, ablation, dan evaluasi](cafestock-synthetic-data/reports/modeling_report.md) |
+| 10: optimasi pembelian | ✅ Selesai | [Forecast dan replay kebijakan](cafestock-synthetic-data/reports/optimization_report.md) |
+| 11: aplikasi pemilik | ✅ Selesai | [Dashboard lokal dan panduan](cafestock-synthetic-data/docs/aplikasi_pemilik.md) |
 
-Status mengacu pada artefak dan laporan, bukan akurasi model. Tahap 01–06
-sudah tersedia; pekerjaan berikutnya adalah tahap 07 modeling.
+Status mengacu pada artefak dan laporan, bukan akurasi model. Tahap 01–11
+tersedia sebagai prototipe akademik lokal. Lihat [bukti penyelesaian](cafestock-synthetic-data/reports/completion_report.md).
 
 ## Ruang lingkup
 
@@ -38,9 +39,22 @@ sudah tersedia; pekerjaan berikutnya adalah tahap 07 modeling.
   sebelum keputusan; lokasi tidak diketahui tidak masuk agregat regional.
 - Yelp, customer_reviews, review_aspects dan generator ulasan telah dikeluarkan
   dari versi aktif. Data sumber asli di luar proyek tidak dihapus.
-- Model SVM/Random Forest dan aplikasi pemilik belum dilatih/dibuat.
+- SVM/Naive Bayes sentimen, Random Forest/Logistic Regression risiko, peramalan
+  kebutuhan bahan, replay kebijakan, dan dashboard lokal sudah tersedia.
 - Tahap 01–05 sudah diaudit dan tahap 06 encoding telah dijalankan dari train saja;
-  matriks serta preprocessing tersimpan untuk langkah modeling berikutnya.
+  matriks serta preprocessing tersimpan sebagai bukti preprocessing train-only.
+
+## Buka aplikasi
+
+Dari folder `cafestock-synthetic-data`, jalankan:
+
+```powershell
+../.venv/Scripts/python.exe owner_app.py
+```
+
+Buka [dashboard pemilik](http://127.0.0.1:8765). Pasang dependensi
+`requirements-ml.txt` pada lingkungan proyek jika belum tersedia.
+[Petunjuk lengkap aplikasi](cafestock-synthetic-data/docs/aplikasi_pemilik.md).
 
 ## Dokumen
 

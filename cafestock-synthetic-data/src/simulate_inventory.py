@@ -4,7 +4,7 @@ from collections import defaultdict
 import numpy as np
 import pandas as pd
 
-def simulate(config,tables,demand,rng):
+def simulate(config,tables,demand,rng,rate_policy=None,safety_factor=1.0):
     ingredients={int(r.ingredient_id):r for r in tables['ingredients'].itertuples()}
     suppliers=tables['suppliers'].set_index('supplier_id')
     recipes={int(p): dict(zip(g.ingredient_id.astype(int),g.quantity))
@@ -66,11 +66,14 @@ def simulate(config,tables,demand,rng):
                 orders[order['id']-1]['status']='delivered'
                 orders[order['id']-1]['delivered_at']=instant(day,4)
                 pending.remove(order)
+        predicted_rates = rate_policy(day, histories, prior) if rate_policy is not None else None
         for key in sorted(lots):
             branch,i=key; ing=ingredients[i]
             lead=int(suppliers.loc[ing.supplier_id,'lead_time_days'])
             hist=histories[key][-14:]
             rate=float(np.mean(hist)) if hist else prior[i]
+            if predicted_rates is not None:
+                rate=max(0.,float(predicted_rates[key]))*safety_factor
             ordered=sum(o['qty'] for o in pending if o['key']==key)
             available=onhand(key)
             # Do not replenish against future target labels. No oracle is used here.

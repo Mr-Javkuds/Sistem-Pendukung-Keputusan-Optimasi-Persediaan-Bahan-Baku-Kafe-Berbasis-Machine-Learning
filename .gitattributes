@@ -3,3 +3,10 @@
 # Preserve audited source and deterministic output bytes exactly.
 *.csv -text
 *.pdf binary
+
+# Preserve the exact bytes referenced by the completed experiment manifest.
+cafestock-synthetic-data/prepared/07_modeling/** -text
+cafestock-synthetic-data/prepared/10_optimization/** -text
+cafestock-synthetic-data/reports/modeling_report.json -text
+cafestock-synthetic-data/reports/optimization_report.json -text
+cafestock-synthetic-data/reports/error_analysis.md -text

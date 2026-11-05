@@ -3,7 +3,7 @@
 [Panduan prepared](../README.md) · [Alur dan progres](../../docs/alur_project_ml.md)
 
 > ✅ Selesai per 5 November 2026. Kode, dependensi, laporan, dan matriks tersedia
-> di repository. Tahap berikutnya adalah 07_modeling.
+> di repository. Tahap ini dilanjutkan oleh 07_modeling yang hasilnya ada di `../07_modeling/`.
 
 Artefak dibuat oleh `encode.py --verify-reproducibility`. Tidak ada model prediksi
 yang dilatih. TF-IDF, one-hot encoder, imputer dan scaler adalah preprocessing

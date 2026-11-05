@@ -8,6 +8,7 @@ venv/
 
 # Local render previews and temporary work
 /tmp/
+**/local/
 *.log
 
 # Local credentials and editor settings
