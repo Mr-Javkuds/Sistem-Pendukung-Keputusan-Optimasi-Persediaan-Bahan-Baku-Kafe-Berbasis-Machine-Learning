@@ -1,0 +1,27 @@
+\set ON_ERROR_STOP on
+-- Run from project root: psql -d cafestock -f sql/schema.sql -f sql/import.sql
+BEGIN;
+\copy branches (branch_id, business_name, branch_name, timezone) FROM 'output/branches.csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8', NULL '')
+\copy categories (category_id, category_name) FROM 'output/categories.csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8', NULL '')
+\copy suppliers (supplier_id, supplier_name, lead_time_days) FROM 'output/suppliers.csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8', NULL '')
+\copy ingredients (ingredient_id, ingredient_name, unit, shelf_life_days, unit_cost_usd, package_size, minimum_order_qty, supplier_id) FROM 'output/ingredients.csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8', NULL '')
+\copy products (product_id, product_name, category_id, source_product_type_proxy) FROM 'output/products.csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8', NULL '')
+\copy recipes (recipe_id, product_id, version) FROM 'output/recipes.csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8', NULL '')
+\copy recipe_ingredients (recipe_ingredient_id, recipe_id, ingredient_id, quantity) FROM 'output/recipe_ingredients.csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8', NULL '')
+\copy market_trends (trend_id, category_id, week_start, available_at, interest_index, provenance) FROM 'output/market_trends.csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8', NULL '')
+\copy latent_demand (demand_id, branch_id, product_id, transaction_at, requested_qty, unit_price_usd) FROM 'output/latent_demand.csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8', NULL '')
+\copy transactions (transaction_id, branch_id, transaction_at) FROM 'output/transactions.csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8', NULL '')
+\copy transaction_items (transaction_item_id, transaction_id, demand_id, product_id, requested_qty, fulfilled_qty, unit_price_usd) FROM 'output/transaction_items.csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8', NULL '')
+\copy customer_reviews (review_id, transaction_item_id, review_at, rating, review_text, sentiment_label, label_provenance) FROM 'output/customer_reviews.csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8', NULL '')
+\copy review_aspects (review_aspect_id, review_id, aspect, sentiment_label) FROM 'output/review_aspects.csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8', NULL '')
+\copy purchase_orders (purchase_order_id, branch_id, supplier_id, ordered_at, expected_delivery_at, delivered_at, status) FROM 'output/purchase_orders.csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8', NULL '')
+\copy purchase_order_items (purchase_order_item_id, purchase_order_id, ingredient_id, quantity, unit_cost_usd) FROM 'output/purchase_order_items.csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8', NULL '')
+\copy inventory_movements (movement_id, branch_id, ingredient_id, movement_at, movement_type, quantity, transaction_item_id, purchase_order_item_id) FROM 'output/inventory_movements.csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8', NULL '')
+\copy inventory_snapshots (snapshot_id, branch_id, ingredient_id, date, opening_stock, receipts, consumption, waste, adjustments, closing_stock) FROM 'output/inventory_snapshots.csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8', NULL '')
+\copy stockout_events (stockout_event_id, transaction_item_id, ingredient_id, event_at, shortage_qty, unfulfilled_product_qty) FROM 'output/stockout_events.csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8', NULL '')
+\copy waste_records (waste_id, movement_id, reason, quantity) FROM 'output/waste_records.csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8', NULL '')
+\copy restock_decision_dataset (decision_id, branch_id, ingredient_id, decision_at, history_days, mean_daily_consumption_14d, on_hand, on_order, lead_time_days, shelf_life_days, package_size, minimum_order_qty, baseline_purchase_qty, market_interest_latest, market_feature_max_at, review_count_14d, sentiment_mean_14d, sentiment_feature_max_at, label_window_end, future_stockout_7d, label_observed, split) FROM 'output/restock_decision_dataset.csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8', NULL '')
+\copy inventory_risk_ml_dataset (risk_row_id, branch_id, ingredient_id, decision_at, history_days, mean_daily_consumption_14d, on_hand, on_order, lead_time_days, shelf_life_days, package_size, minimum_order_qty, baseline_purchase_qty, market_interest_latest, market_feature_max_at, review_count_14d, sentiment_mean_14d, sentiment_feature_max_at, label_window_end, target_stockout, label_observed, split, risk_label) FROM 'output/inventory_risk_ml_dataset.csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8', NULL '')
+\copy sentiment_ml_dataset (sentiment_row_id, review_id, review_text, sentiment_label, rating, review_at, split) FROM 'output/sentiment_ml_dataset.csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8', NULL '')
+\copy trend_ml_dataset (trend_row_id, category_id, decision_at, interest_lag_1w, feature_max_at, target_fulfilled_units_next_7d, label_observed, split) FROM 'output/trend_ml_dataset.csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8', NULL '')
+COMMIT;

@@ -1,0 +1,44 @@
+{
+  "restock_features": [
+    "branch_id",
+    "ingredient_id",
+    "history_days",
+    "mean_daily_consumption_14d",
+    "on_hand",
+    "on_order",
+    "lead_time_days",
+    "shelf_life_days",
+    "package_size",
+    "minimum_order_qty",
+    "market_interest_latest",
+    "review_count_14d",
+    "sentiment_mean_14d"
+  ],
+  "restock_reference_target": "baseline_purchase_qty",
+  "risk_features": [
+    "branch_id",
+    "ingredient_id",
+    "history_days",
+    "mean_daily_consumption_14d",
+    "on_hand",
+    "on_order",
+    "lead_time_days",
+    "shelf_life_days",
+    "package_size",
+    "minimum_order_qty",
+    "market_interest_latest",
+    "review_count_14d",
+    "sentiment_mean_14d"
+  ],
+  "risk_target": "target_stockout",
+  "sentiment_features": [
+    "review_text"
+  ],
+  "sentiment_target": "sentiment_label",
+  "trend_features": [
+    "category_id",
+    "interest_lag_1w"
+  ],
+  "trend_target": "target_fulfilled_units_next_7d",
+  "split_rule": "chronological 70/15/15; purge training label windows crossing next split boundary"
+}

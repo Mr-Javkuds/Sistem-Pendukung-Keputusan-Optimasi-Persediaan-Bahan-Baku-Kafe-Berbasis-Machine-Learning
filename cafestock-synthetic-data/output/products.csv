@@ -1,0 +1,11 @@
+product_id,product_name,category_id,source_product_type_proxy
+1,House Brewed Coffee,1,Gourmet brewed coffee
+2,Espresso,1,Barista Espresso
+3,Cafe Latte,1,Barista Espresso
+4,Iced Latte,1,Barista Espresso
+5,Iced Matcha Latte,2,Green tea
+6,Chai Tea,2,Brewed Chai tea
+7,Green Tea,2,Brewed Green tea
+8,Hot Chocolate,4,Hot chocolate
+9,Butter Croissant,3,Pastry
+10,Blueberry Muffin,3,Scone

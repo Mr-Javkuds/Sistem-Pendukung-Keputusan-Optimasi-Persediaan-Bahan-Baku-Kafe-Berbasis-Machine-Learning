@@ -1,0 +1,108 @@
+# Statistical profile
+
+```json
+{
+  "sales_rows": 149116,
+  "hour": {
+    "6": 0.030808229834491267,
+    "7": 0.09005069878483865,
+    "8": 0.11839105126210467,
+    "9": 0.11912873199388396,
+    "10": 0.12436626518951689,
+    "11": 0.06549263660505915,
+    "12": 0.058397489203036564,
+    "13": 0.058437726333860886,
+    "14": 0.05990638160894874,
+    "15": 0.06021486627860189,
+    "16": 0.060979371764264066,
+    "17": 0.05864561817645323,
+    "18": 0.050283001153464416,
+    "19": 0.040854100163631,
+    "20": 0.004043831647844631
+  },
+  "weekday": {
+    "0": 0.14514203707180987,
+    "1": 0.142184607956222,
+    "2": 0.14290887631105983,
+    "3": 0.1452158051449878,
+    "4": 0.14553099600311167,
+    "5": 0.13754392553448322,
+    "6": 0.1414737519783256
+  },
+  "quantity": {
+    "1": 0.5845046809195525,
+    "2": 0.393264304300008,
+    "3": 0.02198959199549344,
+    "4": 0.00015424233482657797,
+    "6": 2.0118565412162344e-05,
+    "8": 6.706188470720782e-05
+  },
+  "category": {
+    "Bakery": 0.15287427237855092,
+    "Branded": 0.005009522787628423,
+    "Coffee": 0.39174870570562514,
+    "Coffee beans": 0.011755948389173529,
+    "Drinking Chocolate": 0.07690656938222591,
+    "Flavours": 0.04553501971619411,
+    "Loose Tea": 0.008114488049572145,
+    "Packaged Chocolate": 0.0032659137852410203,
+    "Tea": 0.30478955980578876
+  },
+  "branch": {
+    "Astoria": 0.3393264304300008,
+    "Hell's Kitchen": 0.34023847206201885,
+    "Lower Manhattan": 0.3204350975079804
+  },
+  "rating": {
+    "1.0": 0.036587129428778016,
+    "2.0": 0.058279103398409256,
+    "3.0": 0.09689081706435286,
+    "4.0": 0.3099060014461316,
+    "5.0": 0.49833694866232825
+  },
+  "overall_sent": {
+    "-4.0": 0.00041568518775114314,
+    "-3.0": 0.003048358043508383,
+    "-2.0": 0.019398642095053348,
+    "-1.0": 0.07925730913121795,
+    "0.0": 0.16571982818345574,
+    "1.0": 0.32852986005265344,
+    "2.0": 0.3170292365248718,
+    "3.0": 0.0825827906332271,
+    "4.0": 0.00401829014826105
+  },
+  "review_length_quantiles": {
+    "0.0": 5.0,
+    "0.1": 27.0,
+    "0.5": 81.0,
+    "0.9": 207.0,
+    "1.0": 945.0
+  },
+  "aspect_mention_rates": {
+    "vibe": 0.15879174172093669,
+    "tea": 0.03713454343910212,
+    "service": 0.24691700152417903,
+    "seating": 0.11389774144381322,
+    "price": 0.07108216710544547,
+    "parking": 0.07787169183871415,
+    "location": 0.062214216433421086,
+    "alcohol": 0.03297769156159069,
+    "coffee": 0.42219758902591104,
+    "food": 0.27379797699875297,
+    "hours": 0.03602604960509907,
+    "internet": 0.030067895247332686,
+    "local": 0.030067895247332686
+  },
+  "price_quantiles": {
+    "0.0": 0.8,
+    "0.1": 2.2,
+    "0.5": 3.0,
+    "0.9": 4.25,
+    "1.0": 45.0
+  },
+  "negative_or_zero_quantity": 0,
+  "negative_or_zero_price": 0
+}
+```
+
+Profiling excludes 701 exact duplicate raw Yelp rows; raw input bytes are unchanged. Transformed sentiment rows missing review/rating are excluded, exact duplicates removed, and numeric aspect parse failures contribute zero to the mention proxy only. Weekday probabilities are normalized by observed calendar-day exposures during generation. Branch names map explicitly by matching source location names, never by arbitrary IDs. Raw review ratings and lengths are used once; transformed Yelp rows and shop aggregates are overlapping sources and are not pooled as independent reviews. Aspect integer codes have no supplied codebook: nonzero is used only as a mention proxy, never as sentiment ground truth.

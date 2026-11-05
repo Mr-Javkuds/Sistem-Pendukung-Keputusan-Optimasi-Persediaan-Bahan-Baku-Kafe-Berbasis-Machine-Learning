@@ -1,0 +1,5 @@
+* text=auto eol=lf
+
+# Preserve audited source and deterministic output bytes exactly.
+*.csv -text
+*.pdf binary

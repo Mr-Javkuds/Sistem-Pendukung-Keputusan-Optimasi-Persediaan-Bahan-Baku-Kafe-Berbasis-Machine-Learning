@@ -1,0 +1,404 @@
+# Source audit
+
+Source observations are external evidence, not CafeStock records. Source review text is never reproduced in this report or generated reviews.
+
+## coffee-shop-sales-revenue.csv
+```json
+{
+  "status": "present",
+  "sha256": "d5a22d9f1137b1c2caae1bdef80f7458c6c90fd09e9aeded6e77b4e00f704884",
+  "encoding": "utf-8-sig",
+  "delimiter": "|",
+  "metadata_lines": 0,
+  "rows": 149116,
+  "duplicates": 0,
+  "columns": {
+    "transaction_id": {
+      "dtype": "int64",
+      "missing": 0,
+      "unique": 149116
+    },
+    "transaction_date": {
+      "dtype": "object",
+      "missing": 0,
+      "unique": 181
+    },
+    "transaction_time": {
+      "dtype": "object",
+      "missing": 0,
+      "unique": 25762
+    },
+    "transaction_qty": {
+      "dtype": "int64",
+      "missing": 0,
+      "unique": 6
+    },
+    "store_id": {
+      "dtype": "int64",
+      "missing": 0,
+      "unique": 3
+    },
+    "store_location": {
+      "dtype": "object",
+      "missing": 0,
+      "unique": 3
+    },
+    "product_id": {
+      "dtype": "int64",
+      "missing": 0,
+      "unique": 80
+    },
+    "unit_price": {
+      "dtype": "float64",
+      "missing": 0,
+      "unique": 41
+    },
+    "product_category": {
+      "dtype": "object",
+      "missing": 0,
+      "unique": 9
+    },
+    "product_type": {
+      "dtype": "object",
+      "missing": 0,
+      "unique": 29
+    },
+    "product_detail": {
+      "dtype": "object",
+      "missing": 0,
+      "unique": 80
+    }
+  },
+  "transaction_date_range": [
+    "2023-01-01 00:00:00",
+    "2023-06-30 00:00:00"
+  ]
+}
+```
+
+## geoMap.csv
+```json
+{
+  "status": "present",
+  "sha256": "6f20fae326c41f94e8bc04e81e04d44a550a5843c223dfc174bf94e667634766",
+  "encoding": "utf-8-sig",
+  "delimiter": ",",
+  "metadata_lines": 2,
+  "rows": 67,
+  "duplicates": 0,
+  "columns": {
+    "Kota": {
+      "dtype": "object",
+      "missing": 0,
+      "unique": 67
+    },
+    "matcha: (04/11/25 - 04/11/26)": {
+      "dtype": "float64",
+      "missing": 17,
+      "unique": 32
+    }
+  },
+  "format": "Geographic interest by city; not a historical time series; Indonesian scope."
+}
+```
+
+## geoMap(1).csv
+MISSING. No substitute observations fabricated.
+
+## raw_yelp_review_data.csv
+```json
+{
+  "status": "present",
+  "sha256": "2e2cf0029c2ecdde43a80caebceff339c04f663fa52e1562ef9c667010c6b62f",
+  "encoding": "utf-8-sig",
+  "delimiter": ",",
+  "metadata_lines": 0,
+  "rows": 7616,
+  "duplicates": 701,
+  "columns": {
+    "coffee_shop_name": {
+      "dtype": "object",
+      "missing": 0,
+      "unique": 79
+    },
+    "full_review_text": {
+      "dtype": "object",
+      "missing": 0,
+      "unique": 6915
+    },
+    "star_rating": {
+      "dtype": "object",
+      "missing": 0,
+      "unique": 5
+    }
+  },
+  "embedded_review_date_note": "Unverified leading dates in text; not structured timestamps.",
+  "embedded_review_dates_parsed": 7616,
+  "embedded_review_date_range": [
+    "2006-11-11 00:00:00",
+    "2016-12-05 00:00:00"
+  ],
+  "blank_rows": 0
+}
+```
+
+## ratings_and_sentiments.csv
+```json
+{
+  "status": "present",
+  "sha256": "7b565d5f384db1572c81a603b0d79259dbba6f0844d0338e83ed7eca31235ea6",
+  "encoding": "latin-1 (lossless byte mapping; intended encoding unknown)",
+  "delimiter": ",",
+  "metadata_lines": 0,
+  "rows": 7621,
+  "duplicates": 403,
+  "columns": {
+    "coffee_shop_name": {
+      "dtype": "object",
+      "missing": 5,
+      "unique": 78
+    },
+    "review_text": {
+      "dtype": "object",
+      "missing": 5,
+      "unique": 6915
+    },
+    "rating": {
+      "dtype": "object",
+      "missing": 5,
+      "unique": 5
+    },
+    "num_rating": {
+      "dtype": "float64",
+      "missing": 5,
+      "unique": 5
+    },
+    "cat_rating": {
+      "dtype": "object",
+      "missing": 5,
+      "unique": 2
+    },
+    "bool_HIGH": {
+      "dtype": "float64",
+      "missing": 5,
+      "unique": 2
+    },
+    "overall_sent": {
+      "dtype": "float64",
+      "missing": 5,
+      "unique": 9,
+      "numeric_parse_failures": 0
+    },
+    "vibe_sent": {
+      "dtype": "object",
+      "missing": 3114,
+      "unique": 9,
+      "numeric_parse_failures": 2
+    },
+    "tea_sent": {
+      "dtype": "float64",
+      "missing": 5,
+      "unique": 8,
+      "numeric_parse_failures": 0
+    },
+    "service_sent": {
+      "dtype": "float64",
+      "missing": 5,
+      "unique": 9,
+      "numeric_parse_failures": 0
+    },
+    "seating_sent": {
+      "dtype": "float64",
+      "missing": 5,
+      "unique": 8,
+      "numeric_parse_failures": 0
+    },
+    "price_sent": {
+      "dtype": "float64",
+      "missing": 5,
+      "unique": 7,
+      "numeric_parse_failures": 0
+    },
+    "parking_sent": {
+      "dtype": "object",
+      "missing": 5,
+      "unique": 9,
+      "numeric_parse_failures": 1
+    },
+    "location_sent": {
+      "dtype": "float64",
+      "missing": 5,
+      "unique": 9,
+      "numeric_parse_failures": 0
+    },
+    "alcohol_sent": {
+      "dtype": "float64",
+      "missing": 5,
+      "unique": 7,
+      "numeric_parse_failures": 0
+    },
+    "coffee_sent": {
+      "dtype": "object",
+      "missing": 5,
+      "unique": 9,
+      "numeric_parse_failures": 1
+    },
+    "food_sent": {
+      "dtype": "object",
+      "missing": 5,
+      "unique": 9,
+      "numeric_parse_failures": 1
+    },
+    "hours_sent": {
+      "dtype": "float64",
+      "missing": 6,
+      "unique": 7,
+      "numeric_parse_failures": 0
+    },
+    "internet_sent": {
+      "dtype": "float64",
+      "missing": 5,
+      "unique": 7,
+      "numeric_parse_failures": 0
+    },
+    "local_sent": {
+      "dtype": "float64",
+      "missing": 5,
+      "unique": 6,
+      "numeric_parse_failures": 0
+    }
+  },
+  "embedded_review_date_note": "Unverified leading dates in text; not structured timestamps.",
+  "embedded_review_dates_parsed": 7616,
+  "embedded_review_date_range": [
+    "2006-11-11 00:00:00",
+    "2016-12-05 00:00:00"
+  ],
+  "blank_rows": 5
+}
+```
+
+## sentiments_by_shop.csv
+```json
+{
+  "status": "present",
+  "sha256": "e2d8f7033bf519647cf56fdf7003b2e85ba69a0b48859fb2ae4c528c836c98ae",
+  "encoding": "utf-8-sig",
+  "delimiter": ",",
+  "metadata_lines": 0,
+  "rows": 66,
+  "duplicates": 0,
+  "columns": {
+    "coffee_shop_name": {
+      "dtype": "object",
+      "missing": 0,
+      "unique": 66
+    },
+    "num_reviews": {
+      "dtype": "int64",
+      "missing": 0,
+      "unique": 24
+    },
+    "rating": {
+      "dtype": "float64",
+      "missing": 0,
+      "unique": 59
+    },
+    "coffee": {
+      "dtype": "float64",
+      "missing": 0,
+      "unique": 52
+    },
+    "tea": {
+      "dtype": "float64",
+      "missing": 0,
+      "unique": 30
+    },
+    "vibe": {
+      "dtype": "float64",
+      "missing": 0,
+      "unique": 32
+    },
+    "internet": {
+      "dtype": "float64",
+      "missing": 0,
+      "unique": 23
+    },
+    "food": {
+      "dtype": "float64",
+      "missing": 0,
+      "unique": 54
+    },
+    "alcohol": {
+      "dtype": "float64",
+      "missing": 0,
+      "unique": 20
+    },
+    "seating": {
+      "dtype": "float64",
+      "missing": 0,
+      "unique": 43
+    },
+    "service": {
+      "dtype": "float64",
+      "missing": 0,
+      "unique": 49
+    },
+    "parking": {
+      "dtype": "float64",
+      "missing": 0,
+      "unique": 36
+    },
+    "location": {
+      "dtype": "float64",
+      "missing": 0,
+      "unique": 37
+    },
+    "local": {
+      "dtype": "float64",
+      "missing": 0,
+      "unique": 26
+    },
+    "price": {
+      "dtype": "float64",
+      "missing": 0,
+      "unique": 35
+    },
+    "hours": {
+      "dtype": "float64",
+      "missing": 0,
+      "unique": 31
+    }
+  }
+}
+```
+
+## multiTimeline.csv
+```json
+{
+  "status": "present",
+  "sha256": "c3d8b5a406d20abd5b02a8e6086d0b6ddf6bb28ff6ae072a1d22341c5eaea0b8",
+  "encoding": "utf-8-sig",
+  "delimiter": ",",
+  "metadata_lines": 2,
+  "rows": 53,
+  "duplicates": 0,
+  "columns": {
+    "Minggu": {
+      "dtype": "object",
+      "missing": 0,
+      "unique": 53
+    },
+    "matcha: (Jawa Tengah)": {
+      "dtype": "int64",
+      "missing": 0,
+      "unique": 33
+    }
+  },
+  "format": "Weekly matcha interest, Central Java; measured source series, not NYC.",
+  "Minggu_range": [
+    "2025-11-02 00:00:00",
+    "2026-11-01 00:00:00"
+  ]
+}
+```
