@@ -1,0 +1,2035 @@
+{
+  "stage": "06_encoding",
+  "checks": [
+    {
+      "check": "risk train exact input contract",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "risk train row alignment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "risk train X agrees with source identities",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "risk train y agrees with source identities",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "risk train metadata agrees with source identities",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "risk train only correct time split",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "risk train observed target only",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "risk validation exact input contract",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "risk validation row alignment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "risk validation X agrees with source identities",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "risk validation y agrees with source identities",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "risk validation metadata agrees with source identities",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "risk validation only correct time split",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "risk validation observed target only",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "risk test exact input contract",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "risk test row alignment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "risk test X agrees with source identities",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "risk test y agrees with source identities",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "risk test metadata agrees with source identities",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "risk test only correct time split",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "risk test observed target only",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "risk output feature names unique",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "risk branch_id categories learned from train",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "risk ingredient_id categories learned from train",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "risk medians learned from train",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "risk scaler mean learned from train",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "risk scaler variance learned from train",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "risk scaler sample count is train only",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "risk train matrix/target shape",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "risk train finite matrix",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "risk train sparse roundtrip identical",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "risk train target roundtrip identical",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Risk train binary targets unchanged",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "risk validation matrix/target shape",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "risk validation finite matrix",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "risk validation sparse roundtrip identical",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "risk validation target roundtrip identical",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Risk validation binary targets unchanged",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "risk test matrix/target shape",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "risk test finite matrix",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "risk test sparse roundtrip identical",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "risk test target roundtrip identical",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Risk test binary targets unchanged",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "risk validation/test transforms do not change fitted state",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "risk serialized transformer preserves state",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "risk serialized transformer reproduces test matrix",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "risk independently refitted train state identical",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "risk train independent encoding identical",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "risk validation independent encoding identical",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "risk test independent encoding identical",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "restock_reference train exact input contract",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "restock_reference train row alignment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "restock_reference train X agrees with source identities",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "restock_reference train y agrees with source identities",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "restock_reference train metadata agrees with source identities",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "restock_reference train only correct time split",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "restock_reference validation exact input contract",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "restock_reference validation row alignment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "restock_reference validation X agrees with source identities",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "restock_reference validation y agrees with source identities",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "restock_reference validation metadata agrees with source identities",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "restock_reference validation only correct time split",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "restock_reference test exact input contract",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "restock_reference test row alignment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "restock_reference test X agrees with source identities",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "restock_reference test y agrees with source identities",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "restock_reference test metadata agrees with source identities",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "restock_reference test only correct time split",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "restock_reference output feature names unique",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "restock_reference branch_id categories learned from train",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "restock_reference ingredient_id categories learned from train",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "restock_reference medians learned from train",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "restock_reference scaler mean learned from train",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "restock_reference scaler variance learned from train",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "restock_reference scaler sample count is train only",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "restock_reference train matrix/target shape",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "restock_reference train finite matrix",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "restock_reference train sparse roundtrip identical",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "restock_reference train target roundtrip identical",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Restock train reference quantity unchanged",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "restock_reference validation matrix/target shape",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "restock_reference validation finite matrix",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "restock_reference validation sparse roundtrip identical",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "restock_reference validation target roundtrip identical",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Restock validation reference quantity unchanged",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "restock_reference test matrix/target shape",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "restock_reference test finite matrix",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "restock_reference test sparse roundtrip identical",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "restock_reference test target roundtrip identical",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Restock test reference quantity unchanged",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "restock_reference validation/test transforms do not change fitted state",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "restock_reference serialized transformer preserves state",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "restock_reference serialized transformer reproduces test matrix",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "restock_reference independently refitted train state identical",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "restock_reference train independent encoding identical",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "restock_reference validation independent encoding identical",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "restock_reference test independent encoding identical",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "sentiment train exact input contract",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "sentiment train row alignment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "sentiment train X agrees with source identities",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "sentiment train y agrees with source identities",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "sentiment train metadata agrees with source identities",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "sentiment train only correct time split",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "sentiment train eligible text only",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "sentiment validation exact input contract",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "sentiment validation row alignment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "sentiment validation X agrees with source identities",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "sentiment validation y agrees with source identities",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "sentiment validation metadata agrees with source identities",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "sentiment validation only correct time split",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "sentiment validation eligible text only",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "sentiment test exact input contract",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "sentiment test row alignment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "sentiment test X agrees with source identities",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "sentiment test y agrees with source identities",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "sentiment test metadata agrees with source identities",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "sentiment test only correct time split",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "sentiment test eligible text only",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "sentiment output feature names unique",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "TF-IDF vocabulary comes from train",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "TF-IDF IDF independently matches train document frequencies",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "TF-IDF respects train min_df",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "sentiment train matrix/target shape",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "sentiment train finite matrix",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "sentiment train sparse roundtrip identical",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "sentiment train target roundtrip identical",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "TF-IDF train nonnegative",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Sentiment train reversible labels",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "sentiment validation matrix/target shape",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "sentiment validation finite matrix",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "sentiment validation sparse roundtrip identical",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "sentiment validation target roundtrip identical",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "TF-IDF validation nonnegative",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Sentiment validation reversible labels",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "sentiment test matrix/target shape",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "sentiment test finite matrix",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "sentiment test sparse roundtrip identical",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "sentiment test target roundtrip identical",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "TF-IDF test nonnegative",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Sentiment test reversible labels",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "sentiment validation/test transforms do not change fitted state",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "sentiment serialized transformer preserves state",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "sentiment serialized transformer reproduces test matrix",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "sentiment independently refitted train state identical",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "sentiment train independent encoding identical",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "sentiment validation independent encoding identical",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "sentiment test independent encoding identical",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "trend train exact input contract",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "trend train row alignment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "trend train X agrees with source identities",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "trend train y agrees with source identities",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "trend train metadata agrees with source identities",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "trend train only correct time split",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "trend train observed target only",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "trend validation exact input contract",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "trend validation row alignment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "trend validation X agrees with source identities",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "trend validation y agrees with source identities",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "trend validation metadata agrees with source identities",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "trend validation only correct time split",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "trend validation observed target only",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "trend test exact input contract",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "trend test row alignment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "trend test X agrees with source identities",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "trend test y agrees with source identities",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "trend test metadata agrees with source identities",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "trend test only correct time split",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "trend test observed target only",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "trend output feature names unique",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "trend category_id categories learned from train",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "trend medians learned from train",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "trend scaler mean learned from train",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "trend scaler variance learned from train",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "trend scaler sample count is train only",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "trend train matrix/target shape",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "trend train finite matrix",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "trend train sparse roundtrip identical",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "trend train target roundtrip identical",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Trend train units unchanged",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "trend validation matrix/target shape",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "trend validation finite matrix",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "trend validation sparse roundtrip identical",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "trend validation target roundtrip identical",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Trend validation units unchanged",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "trend test matrix/target shape",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "trend test finite matrix",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "trend test sparse roundtrip identical",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "trend test target roundtrip identical",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Trend test units unchanged",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "trend validation/test transforms do not change fitted state",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "trend serialized transformer preserves state",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "trend serialized transformer reproduces test matrix",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "trend independently refitted train state identical",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "trend train independent encoding identical",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "trend validation independent encoding identical",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "trend test independent encoding identical",
+      "passed": true,
+      "detail": ""
+    }
+  ],
+  "tasks": {
+    "risk": {
+      "input_features": [
+        "branch_id",
+        "ingredient_id",
+        "history_days",
+        "mean_daily_consumption_14d",
+        "on_hand",
+        "on_order",
+        "lead_time_days",
+        "shelf_life_days",
+        "package_size",
+        "minimum_order_qty",
+        "market_interest_latest",
+        "market_interest_lag_1w",
+        "social_post_count_latest_month",
+        "menu_sentiment_latest_month",
+        "social_data_available",
+        "social_age_days"
+      ],
+      "encoded_features": 27,
+      "target": "target_stockout",
+      "fit_partition": "train",
+      "fit_rows": 7470,
+      "preprocessor_state_sha256": "214c17d6c607314a516fd083edb9f4cc6e241d2229c293054eeefc6e306effad",
+      "label_mapping": {
+        "no_stockout": 0,
+        "stockout": 1
+      },
+      "partitions": {
+        "train": {
+          "rows": 7470,
+          "features": 27,
+          "nonzero": 119520,
+          "matrix_numerical_sha256": "4d949b572a3fc32fa62c0e273834dfb50cdaf47ad35241168b38657510f09917",
+          "target_shape": [
+            7470
+          ],
+          "unknown_categories": {
+            "branch_id": 0,
+            "ingredient_id": 0
+          }
+        },
+        "validation": {
+          "rows": 1440,
+          "features": 27,
+          "nonzero": 23040,
+          "matrix_numerical_sha256": "79a9467c98971998830ec571d3679a903a75a058164a5fbaedca51ff12592357",
+          "target_shape": [
+            1440
+          ],
+          "unknown_categories": {
+            "branch_id": 0,
+            "ingredient_id": 0
+          }
+        },
+        "test": {
+          "rows": 1410,
+          "features": 27,
+          "nonzero": 22560,
+          "matrix_numerical_sha256": "1cadf9fe28cf7b96d73225b9d5bb3faf4b9ac69c1f5bf2563dd5f066c9da7c7f",
+          "target_shape": [
+            1410
+          ],
+          "unknown_categories": {
+            "branch_id": 0,
+            "ingredient_id": 0
+          }
+        }
+      },
+      "prediction_model_trained": false,
+      "reference_only": false
+    },
+    "restock_reference": {
+      "input_features": [
+        "branch_id",
+        "ingredient_id",
+        "history_days",
+        "mean_daily_consumption_14d",
+        "on_hand",
+        "on_order",
+        "lead_time_days",
+        "shelf_life_days",
+        "package_size",
+        "minimum_order_qty",
+        "market_interest_latest",
+        "market_interest_lag_1w",
+        "social_post_count_latest_month",
+        "menu_sentiment_latest_month",
+        "social_data_available",
+        "social_age_days"
+      ],
+      "encoded_features": 27,
+      "target": "baseline_purchase_qty",
+      "fit_partition": "train",
+      "fit_rows": 7470,
+      "preprocessor_state_sha256": "214c17d6c607314a516fd083edb9f4cc6e241d2229c293054eeefc6e306effad",
+      "label_mapping": null,
+      "partitions": {
+        "train": {
+          "rows": 7470,
+          "features": 27,
+          "nonzero": 119520,
+          "matrix_numerical_sha256": "4d949b572a3fc32fa62c0e273834dfb50cdaf47ad35241168b38657510f09917",
+          "target_shape": [
+            7470
+          ],
+          "unknown_categories": {
+            "branch_id": 0,
+            "ingredient_id": 0
+          }
+        },
+        "validation": {
+          "rows": 1440,
+          "features": 27,
+          "nonzero": 23040,
+          "matrix_numerical_sha256": "79a9467c98971998830ec571d3679a903a75a058164a5fbaedca51ff12592357",
+          "target_shape": [
+            1440
+          ],
+          "unknown_categories": {
+            "branch_id": 0,
+            "ingredient_id": 0
+          }
+        },
+        "test": {
+          "rows": 1620,
+          "features": 27,
+          "nonzero": 25920,
+          "matrix_numerical_sha256": "2ffc84eb03791099f6b9b9ff36cf96523696a9fbaec2d57839ee14bebe0f3849",
+          "target_shape": [
+            1620
+          ],
+          "unknown_categories": {
+            "branch_id": 0,
+            "ingredient_id": 0
+          }
+        }
+      },
+      "prediction_model_trained": false,
+      "reference_only": true
+    },
+    "sentiment": {
+      "input_features": [
+        "content_text"
+      ],
+      "encoded_features": 337,
+      "target": "sentiment_label",
+      "fit_partition": "train",
+      "fit_rows": 3361,
+      "preprocessor_state_sha256": "db392014472348c6c00b5dd8efa13caa527c0cc4eaa8feca0fa74a578e1c2189",
+      "label_mapping": {
+        "mixed": 0,
+        "negative": 1,
+        "neutral": 2,
+        "positive": 3
+      },
+      "partitions": {
+        "train": {
+          "rows": 3361,
+          "features": 337,
+          "nonzero": 174130,
+          "matrix_numerical_sha256": "8ddeba7cdc72cf9d3e721c2d1f5c2056a8851aee10162f6fdf8460dc20a8003f",
+          "target_shape": [
+            3361
+          ],
+          "zero_vector_rows": 0,
+          "out_of_vocabulary_ngram_occurrences": 0,
+          "analyzed_ngram_occurrences": 182817
+        },
+        "validation": {
+          "rows": 664,
+          "features": 337,
+          "nonzero": 34634,
+          "matrix_numerical_sha256": "130094c8b94c60d09f3b2f09dc1862911fc6c283956c41deb5755f03875123f2",
+          "target_shape": [
+            664
+          ],
+          "zero_vector_rows": 0,
+          "out_of_vocabulary_ngram_occurrences": 0,
+          "analyzed_ngram_occurrences": 36292
+        },
+        "test": {
+          "rows": 620,
+          "features": 337,
+          "nonzero": 32422,
+          "matrix_numerical_sha256": "3f7b1c9d92e1ef1fb68710bf93970f1140fdd6a2da71a6f4854c7810d4e5892a",
+          "target_shape": [
+            620
+          ],
+          "zero_vector_rows": 0,
+          "out_of_vocabulary_ngram_occurrences": 0,
+          "analyzed_ngram_occurrences": 33942
+        }
+      },
+      "prediction_model_trained": false,
+      "reference_only": false
+    },
+    "trend": {
+      "input_features": [
+        "category_id",
+        "interest_lag_1w"
+      ],
+      "encoded_features": 5,
+      "target": "target_fulfilled_units_next_7d",
+      "fit_partition": "train",
+      "fit_rows": 144,
+      "preprocessor_state_sha256": "030d3eac898832e996064ac4fac02943e21a5d0f26227926c3f86fcefb007a2f",
+      "label_mapping": null,
+      "partitions": {
+        "train": {
+          "rows": 144,
+          "features": 5,
+          "nonzero": 288,
+          "matrix_numerical_sha256": "8cc40a62a5ce027dcd041577b424f140bede9596972d7f483d4165c3637b15f4",
+          "target_shape": [
+            144
+          ],
+          "unknown_categories": {
+            "category_id": 0
+          }
+        },
+        "validation": {
+          "rows": 28,
+          "features": 5,
+          "nonzero": 56,
+          "matrix_numerical_sha256": "d86172cfc1b387e78c6fc9190409432fddebd266439b49e3bfdffb324c65fd43",
+          "target_shape": [
+            28
+          ],
+          "unknown_categories": {
+            "category_id": 0
+          }
+        },
+        "test": {
+          "rows": 28,
+          "features": 5,
+          "nonzero": 56,
+          "matrix_numerical_sha256": "5f76e0adbf5f3b3c8074b64c19d3aeeb5fb26ec39ee76f0b6a4c6743c6708f34",
+          "target_shape": [
+            28
+          ],
+          "unknown_categories": {
+            "category_id": 0
+          }
+        }
+      },
+      "prediction_model_trained": false,
+      "reference_only": false
+    }
+  },
+  "config": {
+    "tfidf": {
+      "ngram_range": [
+        1,
+        2
+      ],
+      "min_df": 2,
+      "max_features": 10000,
+      "sublinear_tf": true,
+      "smooth_idf": true,
+      "norm": "l2"
+    },
+    "categorical_features": {
+      "risk": [
+        "branch_id",
+        "ingredient_id"
+      ],
+      "restock_reference": [
+        "branch_id",
+        "ingredient_id"
+      ],
+      "trend": [
+        "category_id"
+      ]
+    },
+    "numeric_imputation": "median",
+    "numeric_scaling": "standard",
+    "categorical_unknown": "ignore",
+    "text_normalization": "NFKC_casefold_whitespace"
+  },
+  "prediction_models_trained": false,
+  "preprocessing_fit_partition": "train",
+  "reproducibility_checked": true,
+  "versions": {
+    "python": "3.11.17 (main, Oct 21 2026, 17:46:24) [MSC v.1944 64 bit (AMD64)]",
+    "numpy": "2.3.4",
+    "pandas": "2.3.3",
+    "scipy": "1.17.1",
+    "scikit_learn": "1.9.1",
+    "joblib": "1.6.0"
+  },
+  "source_generation_manifest_sha256": "c13240b7547a960f0e91039b7e5783204b242fdad341cf96bf3adf74f99028f0",
+  "prepared_artifact_manifest_sha256": "26d427f87ecc981ac25bced7239c3e7bead305add3bfb3a53c23d3ebe323e1a0",
+  "code_and_contract_sha256": {
+    "encode.py": "497de22f325c98f938f7d00234cc3286358892660db12cbb1a338bc17ef8b873",
+    "src/encoding.py": "feeacdbcd8646be9fef46ffe79acd088074c23e9dd9763a4e84941b012f50dda",
+    "encoding_config.yaml": "5c536e1b0bb9cc687679233bc06958177550b7b23b8838c1b3ea7fe1c6b9001f",
+    "prepared/04_feature_engineering/contracts.json": "22591493e5cfdc6aa0496f27c661e122fcb6e3e7532d7dec94640b8667c0086a",
+    "docs/feature_manifest.json": "0d681d4264cc0db231e358511c6b6013ab4b3e2607628e13046987ba485828ca"
+  },
+  "input_artifacts": [
+    {
+      "path": "prepared/05_split_70_15_15/risk/train_X.csv",
+      "rows": 7470,
+      "columns": [
+        "branch_id",
+        "ingredient_id",
+        "history_days",
+        "mean_daily_consumption_14d",
+        "on_hand",
+        "on_order",
+        "lead_time_days",
+        "shelf_life_days",
+        "package_size",
+        "minimum_order_qty",
+        "market_interest_latest",
+        "market_interest_lag_1w",
+        "social_post_count_latest_month",
+        "menu_sentiment_latest_month",
+        "social_data_available",
+        "social_age_days"
+      ],
+      "sha256": "b2abadb8911d1d87a8537cf18884858865dd7969e599767e7dfe52711646cc84"
+    },
+    {
+      "path": "prepared/05_split_70_15_15/risk/train_y.csv",
+      "rows": 7470,
+      "columns": [
+        "target_stockout"
+      ],
+      "sha256": "0daf85961484d26694c92f09bc5c81ded524f85be605383c852ed00ef4def6c1"
+    },
+    {
+      "path": "prepared/05_split_70_15_15/risk/train_metadata.csv",
+      "rows": 7470,
+      "columns": [
+        "risk_row_id",
+        "decision_at",
+        "baseline_purchase_qty",
+        "market_feature_max_at",
+        "social_feature_max_at",
+        "social_available_at",
+        "social_period_start",
+        "label_window_end",
+        "label_observed",
+        "split",
+        "risk_label"
+      ],
+      "sha256": "6d3778c287a54ab85c94e47b0d9c6668a9743da99f9d27ee85f5a573406f96a5"
+    },
+    {
+      "path": "prepared/05_split_70_15_15/risk/validation_X.csv",
+      "rows": 1440,
+      "columns": [
+        "branch_id",
+        "ingredient_id",
+        "history_days",
+        "mean_daily_consumption_14d",
+        "on_hand",
+        "on_order",
+        "lead_time_days",
+        "shelf_life_days",
+        "package_size",
+        "minimum_order_qty",
+        "market_interest_latest",
+        "market_interest_lag_1w",
+        "social_post_count_latest_month",
+        "menu_sentiment_latest_month",
+        "social_data_available",
+        "social_age_days"
+      ],
+      "sha256": "cb59134e87dea26767fb63a25f011d195fe3d88e9c7e87db58e7f5d525145c1f"
+    },
+    {
+      "path": "prepared/05_split_70_15_15/risk/validation_y.csv",
+      "rows": 1440,
+      "columns": [
+        "target_stockout"
+      ],
+      "sha256": "97d267d91c8fa377cddabdfbda4acabd8a57741c70510f235350a68529618783"
+    },
+    {
+      "path": "prepared/05_split_70_15_15/risk/validation_metadata.csv",
+      "rows": 1440,
+      "columns": [
+        "risk_row_id",
+        "decision_at",
+        "baseline_purchase_qty",
+        "market_feature_max_at",
+        "social_feature_max_at",
+        "social_available_at",
+        "social_period_start",
+        "label_window_end",
+        "label_observed",
+        "split",
+        "risk_label"
+      ],
+      "sha256": "8084e8dd4cdf20c91051f1d3ed9dbe01922f35cafdc60343467ccbda36b32236"
+    },
+    {
+      "path": "prepared/05_split_70_15_15/risk/test_X.csv",
+      "rows": 1410,
+      "columns": [
+        "branch_id",
+        "ingredient_id",
+        "history_days",
+        "mean_daily_consumption_14d",
+        "on_hand",
+        "on_order",
+        "lead_time_days",
+        "shelf_life_days",
+        "package_size",
+        "minimum_order_qty",
+        "market_interest_latest",
+        "market_interest_lag_1w",
+        "social_post_count_latest_month",
+        "menu_sentiment_latest_month",
+        "social_data_available",
+        "social_age_days"
+      ],
+      "sha256": "a0553ec24121845c420c2c3aaf86120d96a8c4386df05d07246cc9fe90025a07"
+    },
+    {
+      "path": "prepared/05_split_70_15_15/risk/test_y.csv",
+      "rows": 1410,
+      "columns": [
+        "target_stockout"
+      ],
+      "sha256": "f7c3db82c4190e8bc9a28cdc9d573fb44c26e02c32129b7a014e66ef5216eedc"
+    },
+    {
+      "path": "prepared/05_split_70_15_15/risk/test_metadata.csv",
+      "rows": 1410,
+      "columns": [
+        "risk_row_id",
+        "decision_at",
+        "baseline_purchase_qty",
+        "market_feature_max_at",
+        "social_feature_max_at",
+        "social_available_at",
+        "social_period_start",
+        "label_window_end",
+        "label_observed",
+        "split",
+        "risk_label"
+      ],
+      "sha256": "62c08783d2f45699169a8f2bd00b9ee09096e5366952fa564f9dbbf37b58bc4d"
+    },
+    {
+      "path": "prepared/05_split_70_15_15/restock_reference/train_X.csv",
+      "rows": 7470,
+      "columns": [
+        "branch_id",
+        "ingredient_id",
+        "history_days",
+        "mean_daily_consumption_14d",
+        "on_hand",
+        "on_order",
+        "lead_time_days",
+        "shelf_life_days",
+        "package_size",
+        "minimum_order_qty",
+        "market_interest_latest",
+        "market_interest_lag_1w",
+        "social_post_count_latest_month",
+        "menu_sentiment_latest_month",
+        "social_data_available",
+        "social_age_days"
+      ],
+      "sha256": "b2abadb8911d1d87a8537cf18884858865dd7969e599767e7dfe52711646cc84"
+    },
+    {
+      "path": "prepared/05_split_70_15_15/restock_reference/train_y.csv",
+      "rows": 7470,
+      "columns": [
+        "baseline_purchase_qty"
+      ],
+      "sha256": "9b0067d0a95ee116bb2ea7f83508999ae738e69ae17eedc4c2b99f604b74d9bd"
+    },
+    {
+      "path": "prepared/05_split_70_15_15/restock_reference/train_metadata.csv",
+      "rows": 7470,
+      "columns": [
+        "decision_id",
+        "decision_at",
+        "market_feature_max_at",
+        "social_feature_max_at",
+        "social_available_at",
+        "social_period_start",
+        "label_window_end",
+        "future_stockout_7d",
+        "label_observed",
+        "split"
+      ],
+      "sha256": "0b5223a40c81c06339c97085e7d09ef0bf66848e0a6402f223effca369c0b635"
+    },
+    {
+      "path": "prepared/05_split_70_15_15/restock_reference/validation_X.csv",
+      "rows": 1440,
+      "columns": [
+        "branch_id",
+        "ingredient_id",
+        "history_days",
+        "mean_daily_consumption_14d",
+        "on_hand",
+        "on_order",
+        "lead_time_days",
+        "shelf_life_days",
+        "package_size",
+        "minimum_order_qty",
+        "market_interest_latest",
+        "market_interest_lag_1w",
+        "social_post_count_latest_month",
+        "menu_sentiment_latest_month",
+        "social_data_available",
+        "social_age_days"
+      ],
+      "sha256": "cb59134e87dea26767fb63a25f011d195fe3d88e9c7e87db58e7f5d525145c1f"
+    },
+    {
+      "path": "prepared/05_split_70_15_15/restock_reference/validation_y.csv",
+      "rows": 1440,
+      "columns": [
+        "baseline_purchase_qty"
+      ],
+      "sha256": "360a0647e6a66dcf8d31a21761029244f3491b22dafd26de910d7489eb122aff"
+    },
+    {
+      "path": "prepared/05_split_70_15_15/restock_reference/validation_metadata.csv",
+      "rows": 1440,
+      "columns": [
+        "decision_id",
+        "decision_at",
+        "market_feature_max_at",
+        "social_feature_max_at",
+        "social_available_at",
+        "social_period_start",
+        "label_window_end",
+        "future_stockout_7d",
+        "label_observed",
+        "split"
+      ],
+      "sha256": "892b064a78231e055e4db25e12f9d4bdff60f6312e76aaba77a34ec8b99c3fbd"
+    },
+    {
+      "path": "prepared/05_split_70_15_15/restock_reference/test_X.csv",
+      "rows": 1620,
+      "columns": [
+        "branch_id",
+        "ingredient_id",
+        "history_days",
+        "mean_daily_consumption_14d",
+        "on_hand",
+        "on_order",
+        "lead_time_days",
+        "shelf_life_days",
+        "package_size",
+        "minimum_order_qty",
+        "market_interest_latest",
+        "market_interest_lag_1w",
+        "social_post_count_latest_month",
+        "menu_sentiment_latest_month",
+        "social_data_available",
+        "social_age_days"
+      ],
+      "sha256": "ee37eaa8e63b199319d056ecb79cfc3d9f134752bcf898ecf2cdb38507023aeb"
+    },
+    {
+      "path": "prepared/05_split_70_15_15/restock_reference/test_y.csv",
+      "rows": 1620,
+      "columns": [
+        "baseline_purchase_qty"
+      ],
+      "sha256": "b935f4323bae0c3467e8184231fb3dfdd135d845e15cbf49046071c707b45107"
+    },
+    {
+      "path": "prepared/05_split_70_15_15/restock_reference/test_metadata.csv",
+      "rows": 1620,
+      "columns": [
+        "decision_id",
+        "decision_at",
+        "market_feature_max_at",
+        "social_feature_max_at",
+        "social_available_at",
+        "social_period_start",
+        "label_window_end",
+        "future_stockout_7d",
+        "label_observed",
+        "split"
+      ],
+      "sha256": "6604ee577b43ec4d7733a20fb87b201b6af59f692a2f0ab0efe0af02c244cd2e"
+    },
+    {
+      "path": "prepared/05_split_70_15_15/sentiment/train_X.csv",
+      "rows": 3361,
+      "columns": [
+        "content_text"
+      ],
+      "sha256": "25a492f3b35c9bb88a6cbba94008071ba77ca78a0a44412dbd5c3de3be3add97"
+    },
+    {
+      "path": "prepared/05_split_70_15_15/sentiment/train_y.csv",
+      "rows": 3361,
+      "columns": [
+        "sentiment_label"
+      ],
+      "sha256": "69ef0594cfb16c07c2c808487de663c563e2fe614d0814cfa0243abd14160a78"
+    },
+    {
+      "path": "prepared/05_split_70_15_15/sentiment/train_metadata.csv",
+      "rows": 3361,
+      "columns": [
+        "sentiment_row_id",
+        "mention_id",
+        "post_id",
+        "product_id",
+        "region_id",
+        "published_at",
+        "collected_at",
+        "label_provenance",
+        "split",
+        "text_fingerprint",
+        "training_status"
+      ],
+      "sha256": "ddfe3a924a7370a19b9e11b7b028c6cf83ca1f0156fd6eb4055cef94e87199b1"
+    },
+    {
+      "path": "prepared/05_split_70_15_15/sentiment/validation_X.csv",
+      "rows": 664,
+      "columns": [
+        "content_text"
+      ],
+      "sha256": "0d2b972f8e0da97c32b9f89f51efeddb5dd6d6536159e3c01ad00b9a98087c7b"
+    },
+    {
+      "path": "prepared/05_split_70_15_15/sentiment/validation_y.csv",
+      "rows": 664,
+      "columns": [
+        "sentiment_label"
+      ],
+      "sha256": "5485beba717aeef7cf1d9e831c0fae641547fa55a33b296c0ac2a4a7b65994ff"
+    },
+    {
+      "path": "prepared/05_split_70_15_15/sentiment/validation_metadata.csv",
+      "rows": 664,
+      "columns": [
+        "sentiment_row_id",
+        "mention_id",
+        "post_id",
+        "product_id",
+        "region_id",
+        "published_at",
+        "collected_at",
+        "label_provenance",
+        "split",
+        "text_fingerprint",
+        "training_status"
+      ],
+      "sha256": "97747bab63e46b39b5cf78771de8e03e5a9e23860f95a75ba69b59a8c1840812"
+    },
+    {
+      "path": "prepared/05_split_70_15_15/sentiment/test_X.csv",
+      "rows": 620,
+      "columns": [
+        "content_text"
+      ],
+      "sha256": "118a1301ac5db06a94fbd7d2a8bee33059c9cb3482a1e3a2e906b5e21176f1da"
+    },
+    {
+      "path": "prepared/05_split_70_15_15/sentiment/test_y.csv",
+      "rows": 620,
+      "columns": [
+        "sentiment_label"
+      ],
+      "sha256": "51eb9c807dc41eed8726d098150d1b75f98db0107c9e5f6bea96d02e1b14db72"
+    },
+    {
+      "path": "prepared/05_split_70_15_15/sentiment/test_metadata.csv",
+      "rows": 620,
+      "columns": [
+        "sentiment_row_id",
+        "mention_id",
+        "post_id",
+        "product_id",
+        "region_id",
+        "published_at",
+        "collected_at",
+        "label_provenance",
+        "split",
+        "text_fingerprint",
+        "training_status"
+      ],
+      "sha256": "191122ecab05ed4f81bc0225054ba66243af219047c5bda9168851285e038109"
+    },
+    {
+      "path": "prepared/05_split_70_15_15/trend/train_X.csv",
+      "rows": 144,
+      "columns": [
+        "category_id",
+        "interest_lag_1w"
+      ],
+      "sha256": "9cc732bff593626cd282c3c85ccea6b1adec7004bb2cbecffaa0d795cbabbe52"
+    },
+    {
+      "path": "prepared/05_split_70_15_15/trend/train_y.csv",
+      "rows": 144,
+      "columns": [
+        "target_fulfilled_units_next_7d"
+      ],
+      "sha256": "2f81f8ce75296defa38dde482fcb0d9bca63f3ecf2e10c3ad1c8993ce76cfa25"
+    },
+    {
+      "path": "prepared/05_split_70_15_15/trend/train_metadata.csv",
+      "rows": 144,
+      "columns": [
+        "trend_row_id",
+        "decision_at",
+        "feature_max_at",
+        "label_observed",
+        "split"
+      ],
+      "sha256": "dc40a7ecd00be8ee3908b683429560df3943975fc675031a1a8cad172f51a772"
+    },
+    {
+      "path": "prepared/05_split_70_15_15/trend/validation_X.csv",
+      "rows": 28,
+      "columns": [
+        "category_id",
+        "interest_lag_1w"
+      ],
+      "sha256": "8bc5fd68be1a9eb3f38004ca53f8e1de05d239152edbf2915ccd585e0dd8b3a6"
+    },
+    {
+      "path": "prepared/05_split_70_15_15/trend/validation_y.csv",
+      "rows": 28,
+      "columns": [
+        "target_fulfilled_units_next_7d"
+      ],
+      "sha256": "5d8e5b3b191500876ae737035109df057ec8ac63327e418111f44e8f618325ad"
+    },
+    {
+      "path": "prepared/05_split_70_15_15/trend/validation_metadata.csv",
+      "rows": 28,
+      "columns": [
+        "trend_row_id",
+        "decision_at",
+        "feature_max_at",
+        "label_observed",
+        "split"
+      ],
+      "sha256": "90006d89d41b84667d5c85b507478412d8726ad82e853fb14239f64831b7ebdf"
+    },
+    {
+      "path": "prepared/05_split_70_15_15/trend/test_X.csv",
+      "rows": 28,
+      "columns": [
+        "category_id",
+        "interest_lag_1w"
+      ],
+      "sha256": "78845bc24be3527d0f4a43488bf5442731ea1139982643c8444fc09dd66db994"
+    },
+    {
+      "path": "prepared/05_split_70_15_15/trend/test_y.csv",
+      "rows": 28,
+      "columns": [
+        "target_fulfilled_units_next_7d"
+      ],
+      "sha256": "fbc73e3f22bd29d4ea21a7ab2aedc6d559580aaf9abb44420384ebd341c1e473"
+    },
+    {
+      "path": "prepared/05_split_70_15_15/trend/test_metadata.csv",
+      "rows": 28,
+      "columns": [
+        "trend_row_id",
+        "decision_at",
+        "feature_max_at",
+        "label_observed",
+        "split"
+      ],
+      "sha256": "5731f35a01940d278218e59558b6f7b4c3d774c44f6fee983503da9c5177fcc6"
+    }
+  ],
+  "output_artifacts": [
+    {
+      "path": "prepared/06_encoding/risk/feature_names.json",
+      "sha256": "6c335f7c34c116a51da4e86c01b0231722c5e07d1d22efbe989bacc4d0b687b2",
+      "bytes": 919
+    },
+    {
+      "path": "prepared/06_encoding/risk/fitted_state.json",
+      "sha256": "b5a6e5213fe7eafb3101feb1cb88b0ed3803240a6098b70246f418d8f2d037be",
+      "bytes": 2991
+    },
+    {
+      "path": "prepared/06_encoding/risk/label_mapping.json",
+      "sha256": "c5791052632dce24e8d58836bc5d18cfc4f1836e635f2459b3b64f65c730f5da",
+      "bytes": 42
+    },
+    {
+      "path": "prepared/06_encoding/risk/preprocessor.joblib",
+      "sha256": "9ea74a1b3961769110457990129b083b5266b80c4fa968e48452f1a5a95f0453",
+      "bytes": 2151
+    },
+    {
+      "path": "prepared/06_encoding/risk/test_metadata.csv",
+      "sha256": "62c08783d2f45699169a8f2bd00b9ee09096e5366952fa564f9dbbf37b58bc4d",
+      "bytes": 245110
+    },
+    {
+      "path": "prepared/06_encoding/risk/test_X.npz",
+      "sha256": "9a2997d4eb6864f2729e04bef743c2702c63a884031c6ce0a86d08c5254dfd0c",
+      "bytes": 19450
+    },
+    {
+      "path": "prepared/06_encoding/risk/test_y.npy",
+      "sha256": "cdb243f4487878a16a8ac00a96649fb147c41b54322358c5799da64622579f5f",
+      "bytes": 1538
+    },
+    {
+      "path": "prepared/06_encoding/risk/train_metadata.csv",
+      "sha256": "6d3778c287a54ab85c94e47b0d9c6668a9743da99f9d27ee85f5a573406f96a5",
+      "bytes": 1252673
+    },
+    {
+      "path": "prepared/06_encoding/risk/train_X.npz",
+      "sha256": "ef43e1d76581e0963f1b5e6af004f8258fa683e1a6d523b48558715423e41958",
+      "bytes": 94199
+    },
+    {
+      "path": "prepared/06_encoding/risk/train_y.npy",
+      "sha256": "3943d147f3d51e4e7f80d5d7d04eba0b9b35295641673c6f4b0ee56c2f9b5c70",
+      "bytes": 7598
+    },
+    {
+      "path": "prepared/06_encoding/risk/validation_metadata.csv",
+      "sha256": "8084e8dd4cdf20c91051f1d3ed9dbe01922f35cafdc60343467ccbda36b32236",
+      "bytes": 258579
+    },
+    {
+      "path": "prepared/06_encoding/risk/validation_X.npz",
+      "sha256": "ea49928e82868cf9a8c702c72dd7d21707c6fd8f4ef0bac6b1435fda2cbc21b2",
+      "bytes": 19864
+    },
+    {
+      "path": "prepared/06_encoding/risk/validation_y.npy",
+      "sha256": "d3b22b6488eadb97abfabaeae6ac7d4be3f167998a328b171d84339f6abe2b22",
+      "bytes": 1568
+    },
+    {
+      "path": "prepared/06_encoding/restock_reference/feature_names.json",
+      "sha256": "6c335f7c34c116a51da4e86c01b0231722c5e07d1d22efbe989bacc4d0b687b2",
+      "bytes": 919
+    },
+    {
+      "path": "prepared/06_encoding/restock_reference/fitted_state.json",
+      "sha256": "b5a6e5213fe7eafb3101feb1cb88b0ed3803240a6098b70246f418d8f2d037be",
+      "bytes": 2991
+    },
+    {
+      "path": "prepared/06_encoding/restock_reference/label_mapping.json",
+      "sha256": "e7e0ad9fe8131131e79811eb44bb790f395b0b0a5d7fb48fa5208c678aa4612c",
+      "bytes": 84
+    },
+    {
+      "path": "prepared/06_encoding/restock_reference/preprocessor.joblib",
+      "sha256": "9ea74a1b3961769110457990129b083b5266b80c4fa968e48452f1a5a95f0453",
+      "bytes": 2151
+    },
+    {
+      "path": "prepared/06_encoding/restock_reference/test_metadata.csv",
+      "sha256": "6604ee577b43ec4d7733a20fb87b201b6af59f692a2f0ab0efe0af02c244cd2e",
+      "bytes": 252006
+    },
+    {
+      "path": "prepared/06_encoding/restock_reference/test_X.npz",
+      "sha256": "c5263b406adb6ea4e159cd2fda9cfd7081659b24f4fa1ebd75b057c9bd2ac6f5",
+      "bytes": 22245
+    },
+    {
+      "path": "prepared/06_encoding/restock_reference/test_y.npy",
+      "sha256": "96e9678b9c654757fe422f557b7dfbb8dc2133158778b111258b00397946a3d2",
+      "bytes": 13088
+    },
+    {
+      "path": "prepared/06_encoding/restock_reference/train_metadata.csv",
+      "sha256": "0b5223a40c81c06339c97085e7d09ef0bf66848e0a6402f223effca369c0b635",
+      "bytes": 1113978
+    },
+    {
+      "path": "prepared/06_encoding/restock_reference/train_X.npz",
+      "sha256": "ef43e1d76581e0963f1b5e6af004f8258fa683e1a6d523b48558715423e41958",
+      "bytes": 94199
+    },
+    {
+      "path": "prepared/06_encoding/restock_reference/train_y.npy",
+      "sha256": "83cca418bcc256b527f4967f5435f80b25925f5eb79f6d246097a1ac208bdbce",
+      "bytes": 59888
+    },
+    {
+      "path": "prepared/06_encoding/restock_reference/validation_metadata.csv",
+      "sha256": "892b064a78231e055e4db25e12f9d4bdff60f6312e76aaba77a34ec8b99c3fbd",
+      "bytes": 232005
+    },
+    {
+      "path": "prepared/06_encoding/restock_reference/validation_X.npz",
+      "sha256": "ea49928e82868cf9a8c702c72dd7d21707c6fd8f4ef0bac6b1435fda2cbc21b2",
+      "bytes": 19864
+    },
+    {
+      "path": "prepared/06_encoding/restock_reference/validation_y.npy",
+      "sha256": "7c1e8183b6a5169adae467b7004937e8cd007ab2a03767379af202f2ee665d15",
+      "bytes": 11648
+    },
+    {
+      "path": "prepared/06_encoding/sentiment/feature_names.json",
+      "sha256": "c372b306a7f124f4768b980d5b4955f2422a04c5610a34840173710992fb72ee",
+      "bytes": 5954
+    },
+    {
+      "path": "prepared/06_encoding/sentiment/fitted_state.json",
+      "sha256": "51d5c49438ae11c34be6c9cf05ffe01804d56c855661098a229134eca19cb67e",
+      "bytes": 14908
+    },
+    {
+      "path": "prepared/06_encoding/sentiment/label_mapping.json",
+      "sha256": "646bf94b26d565e18f28dbb3c3443cf764a35aa1c47ac296184e5fa8fd8c1578",
+      "bytes": 71
+    },
+    {
+      "path": "prepared/06_encoding/sentiment/preprocessor.joblib",
+      "sha256": "c5ffac3da32fdf2c3fa06d11a8551db314ec5f37c6ec0ba89f63f733730cfda4",
+      "bytes": 4301
+    },
+    {
+      "path": "prepared/06_encoding/sentiment/target_encoder.joblib",
+      "sha256": "a6d338fced50c628f5fc35bc42c9b83fa093b21de360857253369de3670509a7",
+      "bytes": 344
+    },
+    {
+      "path": "prepared/06_encoding/sentiment/test_metadata.csv",
+      "sha256": "191122ecab05ed4f81bc0225054ba66243af219047c5bda9168851285e038109",
+      "bytes": 102453
+    },
+    {
+      "path": "prepared/06_encoding/sentiment/test_X.npz",
+      "sha256": "8e14a451aec555dc9f6157079dd883006e419edd66f496214a9d8403592b5595",
+      "bytes": 83813
+    },
+    {
+      "path": "prepared/06_encoding/sentiment/test_y.npy",
+      "sha256": "0c483dd62c772b793faa9d82702dcd96890b39709541da5dca01377f1327e53d",
+      "bytes": 748
+    },
+    {
+      "path": "prepared/06_encoding/sentiment/train_metadata.csv",
+      "sha256": "ddfe3a924a7370a19b9e11b7b028c6cf83ca1f0156fd6eb4055cef94e87199b1",
+      "bytes": 555075
+    },
+    {
+      "path": "prepared/06_encoding/sentiment/train_X.npz",
+      "sha256": "0cf98466e2ce591a32af27cd78a39b8ee0b21ccba1d314d43e818f67587f1ccb",
+      "bytes": 441958
+    },
+    {
+      "path": "prepared/06_encoding/sentiment/train_y.npy",
+      "sha256": "0078f3f512357ee6bbbfdc38caf5f4f2a936d4941d0c9afe0b7b08cdff22bdba",
+      "bytes": 3489
+    },
+    {
+      "path": "prepared/06_encoding/sentiment/validation_metadata.csv",
+      "sha256": "97747bab63e46b39b5cf78771de8e03e5a9e23860f95a75ba69b59a8c1840812",
+      "bytes": 113719
+    },
+    {
+      "path": "prepared/06_encoding/sentiment/validation_X.npz",
+      "sha256": "92a8e0a56f3330ce39dba390595e802c4e3dcd1e529e4edd0b6f592b4b774e47",
+      "bytes": 89641
+    },
+    {
+      "path": "prepared/06_encoding/sentiment/validation_y.npy",
+      "sha256": "7941f9801016e9fabc4895bb7d5ed14c344585c5be5067eaa7138f3b04f75b58",
+      "bytes": 792
+    },
+    {
+      "path": "prepared/06_encoding/trend/feature_names.json",
+      "sha256": "c88e591eb2f9993c2ca4d6bc636a60e6e5be1b3d9823f34ab89a14fe11e33254",
+      "bytes": 166
+    },
+    {
+      "path": "prepared/06_encoding/trend/fitted_state.json",
+      "sha256": "854a30d5cc951544d5f1854ef5af87f418fd8a6d00d78fd7798b4843be3a850e",
+      "bytes": 679
+    },
+    {
+      "path": "prepared/06_encoding/trend/label_mapping.json",
+      "sha256": "e569e63f86c4494ecad609fb6c9fdb7e5af1bdeda9f1a6a190779e49483d8924",
+      "bytes": 93
+    },
+    {
+      "path": "prepared/06_encoding/trend/preprocessor.joblib",
+      "sha256": "f4856f17d7cc16bed77ee8fb91dbf3fd0c227165bb883f81eb069a42bb7d4afb",
+      "bytes": 1491
+    },
+    {
+      "path": "prepared/06_encoding/trend/test_metadata.csv",
+      "sha256": "5731f35a01940d278218e59558b6f7b4c3d774c44f6fee983503da9c5177fcc6",
+      "bytes": 1817
+    },
+    {
+      "path": "prepared/06_encoding/trend/test_X.npz",
+      "sha256": "747650e5b4916469b50d0a7708a6f053e649ae730c1c5a19fbbc1a19837a3775",
+      "bytes": 1171
+    },
+    {
+      "path": "prepared/06_encoding/trend/test_y.npy",
+      "sha256": "fdaa3f7ed4c34627bcf206ccc932b0492a8078c9ee6c6b820fb213d2cb29f979",
+      "bytes": 352
+    },
+    {
+      "path": "prepared/06_encoding/trend/train_metadata.csv",
+      "sha256": "dc40a7ecd00be8ee3908b683429560df3943975fc675031a1a8cad172f51a772",
+      "bytes": 9196
+    },
+    {
+      "path": "prepared/06_encoding/trend/train_X.npz",
+      "sha256": "4cc779ba3f0eb87b4ee473bdcb42f3dddc70ef383ecedb86fdf6f7ce7f414474",
+      "bytes": 1897
+    },
+    {
+      "path": "prepared/06_encoding/trend/train_y.npy",
+      "sha256": "5c3485d735bfb3955e153e8fa03b0826d2e1674d57122fedc2f7fa149337af9b",
+      "bytes": 1280
+    },
+    {
+      "path": "prepared/06_encoding/trend/validation_metadata.csv",
+      "sha256": "90006d89d41b84667d5c85b507478412d8726ad82e853fb14239f64831b7ebdf",
+      "bytes": 1979
+    },
+    {
+      "path": "prepared/06_encoding/trend/validation_X.npz",
+      "sha256": "8d77fd298875bc3a5951e5008f96bc0c80393d6741d05c75aff69e0cc8412e87",
+      "bytes": 1168
+    },
+    {
+      "path": "prepared/06_encoding/trend/validation_y.npy",
+      "sha256": "26e6320114211a9c26050e39fb902adcf3c2522e51065638568c7f809808b356",
+      "bytes": 352
+    }
+  ]
+}

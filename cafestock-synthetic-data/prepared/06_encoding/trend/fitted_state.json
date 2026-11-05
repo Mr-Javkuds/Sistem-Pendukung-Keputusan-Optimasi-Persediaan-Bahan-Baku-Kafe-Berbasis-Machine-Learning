@@ -1,0 +1,37 @@
+{
+  "feature_names": [
+    "categorical__category_id_1",
+    "categorical__category_id_2",
+    "categorical__category_id_3",
+    "categorical__category_id_4",
+    "numeric__interest_lag_1w"
+  ],
+  "categorical_features": [
+    "category_id"
+  ],
+  "categories": {
+    "category_id": [
+      1,
+      2,
+      3,
+      4
+    ]
+  },
+  "numeric_features": [
+    "interest_lag_1w"
+  ],
+  "numeric_imputation_statistics": [
+    53.9375
+  ],
+  "missing_indicators": [],
+  "numeric_mean": [
+    53.59225694444444
+  ],
+  "numeric_variance": [
+    183.40304903814624
+  ],
+  "numeric_scale": [
+    13.542638186045814
+  ],
+  "numeric_samples_seen": 144
+}

@@ -1,0 +1,16 @@
+# Fixed preprocessing choices, not selected using validation/test outcomes.
+tfidf:
+  ngram_range: [1, 2]
+  min_df: 2
+  max_features: 10000
+  sublinear_tf: true
+  smooth_idf: true
+  norm: l2
+categorical_features:
+  risk: [branch_id, ingredient_id]
+  restock_reference: [branch_id, ingredient_id]
+  trend: [category_id]
+numeric_imputation: median
+numeric_scaling: standard
+categorical_unknown: ignore
+text_normalization: NFKC_casefold_whitespace

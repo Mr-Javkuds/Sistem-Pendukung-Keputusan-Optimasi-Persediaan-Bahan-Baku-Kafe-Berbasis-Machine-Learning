@@ -64,6 +64,20 @@ Lokasi unknown tetap NULL dan dikeluarkan dari agregat regional.
 
 ## Eksperimen ML
 
+Tahap **06_encoding sudah tersedia**. Pasang dependensi ML dan jalankan:
+
+```powershell
+uv pip install --python .venv/Scripts/python.exe -r requirements-ml.txt
+.venv/Scripts/python.exe encode.py --verify-reproducibility
+.venv/Scripts/python.exe -m unittest discover -s tests -v
+```
+
+Hasilnya di `prepared/06_encoding/`: TF-IDF sentimen, one-hot kategori dan
+imputasi/scaling numerik untuk fitur tabular, label mapping, serta matriks
+train/validation/test yang terpisah. Semua preprocessing di-fit pada train saja;
+hasil validasi dan versi tersimpan di `reports/encoding_report.md` dan JSON-nya.
+Tidak ada SVM/Random Forest atau model prediksi lain yang dilatih pada tahap ini.
+
 Gunakan allowlist docs/feature_manifest.json. Untuk sentimen, X=content_text dan
 y=sentiment_label. Label dibuat oleh aturan penyusunan teks, bukan prediksi model.
 Gunakan hanya `training_status=eligible` untuk model sentimen. Fingerprint teks

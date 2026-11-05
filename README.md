@@ -17,6 +17,8 @@ wilayah. Semua data operasional dan konten Instagram yang dihasilkan adalah
 - Yelp, customer_reviews, review_aspects dan generator ulasan telah dikeluarkan
   dari versi aktif. Data sumber asli di luar proyek tidak dihapus.
 - Model SVM/Random Forest dan aplikasi pemilik belum dilatih/dibuat.
+- Tahap 01–05 sudah diaudit dan tahap 06 encoding telah dijalankan dari train saja;
+  matriks serta preprocessing tersimpan untuk langkah modeling berikutnya.
 
 ## Dokumen
 
@@ -30,6 +32,8 @@ wilayah. Semua data operasional dan konten Instagram yang dihasilkan adalah
 | [Validasi](cafestock-synthetic-data/reports/validation_report.md) | Hasil pemeriksaan data terkini |
 | [Audit tahap 01–05](cafestock-synthetic-data/reports/steps_1_5_audit.md) | Sinkronisasi, cleaning, EDA, fitur dan split yang sudah dijalankan |
 | [Data siap tahap modeling](cafestock-synthetic-data/prepared/README.md) | X/y/metadata terpisah dan aturan eligibility |
+| [Hasil encoding tahap 06](cafestock-synthetic-data/reports/encoding_report.md) | TF-IDF, one-hot, imputasi/scaling train-only dan pemeriksaannya |
+| [Artefak encoding](cafestock-synthetic-data/prepared/06_encoding/README.md) | Matriks CSR, target, metadata dan transformer tersimpan |
 | [Reproduksibilitas](cafestock-synthetic-data/reports/reproducibility_report.md) | Hash CSV dua generasi |
 | [ERD](cafestock-synthetic-data/docs/erd.md) | Relasi operasional dan menu-wilayah |
 

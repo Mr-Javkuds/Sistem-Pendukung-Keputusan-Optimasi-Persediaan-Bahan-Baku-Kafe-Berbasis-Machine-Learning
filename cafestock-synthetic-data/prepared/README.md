@@ -1,5 +1,9 @@
 # Prepared stages 01–05
 
+Tahap selanjutnya sudah tersedia di [06_encoding/](06_encoding/README.md).
+Pernyataan tidak ada preprocessing yang di-fit di bawah berlaku untuk tahap 01–05;
+tahap 06 secara terpisah mempelajari preprocessing dari train saja.
+
 Artefak ini dibuat oleh `audit_steps_1_5.py` setelah generator dan validator selesai.
 `source_generation_manifest.json` mengikat versi input/output/config yang dipakai.
 Jalankan ulang audit jika output generator berubah; jangan mencampur prepared

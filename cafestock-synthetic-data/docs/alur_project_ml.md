@@ -4,7 +4,10 @@
 
 Persiapan data telah direvisi menjadi skenario Semarang; Instagram sintetis
 menggantikan ulasan pembelian kafe. Generator, fitur referensi, schema dan
-validator tersedia. Model SVM/Random Forest, scraper nyata dan dashboard belum dibuat.
+validator tersedia. Tahap 06 encoding sudah dijalankan: TF-IDF serta encoder,
+imputer dan scaler dipelajari dari train saja. Matriks tetap terpisah per split;
+laporan aktual di reports/encoding_report.md. Model SVM/Random Forest, scraper
+nyata dan dashboard belum dibuat. Tahap berikutnya adalah 07_modeling.
 Hasil pemeriksaan aktual dibaca dari reports/, bukan dianggap sebagai akurasi ML.
 
 ## Urutan eksperimen
