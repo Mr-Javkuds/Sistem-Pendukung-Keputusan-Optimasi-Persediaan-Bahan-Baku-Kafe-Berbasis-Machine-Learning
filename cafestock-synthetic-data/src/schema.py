@@ -139,6 +139,8 @@ def emit(root,tables):
     manifest['restock_features'].remove('baseline_purchase_qty')
     manifest['social_feature_contract']='Latest completed publication month collected before decision_at; mapped by city/district and recipe menu; unknown locations excluded.'
     manifest['sentiment_split_rule']='By collected_at; pending batches beyond simulation end excluded from training/evaluation.'
+    manifest['sentiment_eligibility_rule']='Use training_status=eligible only. Canonical text deduplication retains earliest ingested occurrence; later duplicates/conflicts excluded without moving time partitions.'
+    manifest['sentiment_excluded_metadata']=['text_fingerprint','training_status','split','sentiment_label','label_provenance','post_id','mention_id','region_id','product_id','published_at','collected_at','sentiment_row_id']
     manifest['sentiment_provenance']='synthetic Instagram-like Indonesian menu discussion; not real scraping or cafe reviews'
     (root/'docs'/'feature_manifest.json').write_text(json.dumps(manifest,indent=2),encoding='utf-8')
 
@@ -157,6 +159,7 @@ def checks(name,frame):
                    'sentiment_mean BETWEEN -1 AND 1','available_at >= source_max_published_at']
     if 'menu_sentiment_latest_month' in frame: result.append('menu_sentiment_latest_month BETWEEN -1 AND 1')
     if 'sentiment_label' in frame: result.append("sentiment_label IN ('positive','neutral','negative','mixed')")
+    if name=='sentiment_ml_dataset': result += ["training_status IN ('eligible','duplicate','label_conflict','pending')",'length(text_fingerprint) = 64']
     if name=='market_trends': result.append('interest_index BETWEEN 0 AND 100')
     if name=='inventory_snapshots': result.append('abs(closing_stock - (opening_stock + receipts - consumption - waste + adjustments)) < 0.00001')
     if name=='purchase_orders':
@@ -180,6 +183,8 @@ def describe(col):
         'label_observed':'1 if complete future outcome window is available, otherwise 0',
         'market_feature_max_at':'Latest source timestamp of historical synthetic weekly interest feature',
         'content_text':'Original synthetic Indonesian discussion about a menu, not a cafe review',
+        'text_fingerprint':'SHA-256 of NFKC/casefold/whitespace-normalized text, used for audit/dedup only; excluded from model inputs',
+        'training_status':'Use eligible only for modeling; later duplicate, label_conflict and pending records remain auditable but excluded',
         'collected_at':'Simulated monthly ingestion time; later than publication; gates feature availability',
         'source_url':'NULL for synthetic content; no real Instagram link is claimed',
         'location_evidence':'synthetic_scenario for assigned market or unknown; never inferred from account location',

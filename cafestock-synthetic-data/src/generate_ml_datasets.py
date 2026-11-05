@@ -1,6 +1,7 @@
 """Point-in-time menu/region/month signals, without cafe reviews or purchase links."""
 import numpy as np
 import pandas as pd
+from .cleaning import mark_sentiment_eligibility
 
 def temporal_split(day,config):
     start,end=pd.Timestamp(config['start_date']),pd.Timestamp(config['end_date'])
@@ -65,7 +66,7 @@ def generate(config,tables):
                          'content_text','sentiment_label','label_provenance']].copy()
     sentiment.insert(0,'sentiment_row_id',range(1,len(sentiment)+1))
     sentiment['split']=sentiment.collected_at.str[:10].map(lambda d:temporal_split(d,config))
-    tables['sentiment_ml_dataset']=sentiment
+    tables['sentiment_ml_dataset']=mark_sentiment_eligibility(sentiment)
     sale_items=tables['transaction_items'].copy()
     sale_items['date']=sale_items.transaction_id.map(tx.transaction_at).astype('string').str[:10]
     sale_items['category_id']=sale_items.product_id.map(product_categories)

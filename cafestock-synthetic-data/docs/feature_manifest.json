@@ -49,5 +49,20 @@
   "split_rule": "chronological 70/15/15; purge training label windows crossing next split boundary",
   "social_feature_contract": "Latest completed publication month collected before decision_at; mapped by city/district and recipe menu; unknown locations excluded.",
   "sentiment_split_rule": "By collected_at; pending batches beyond simulation end excluded from training/evaluation.",
+  "sentiment_eligibility_rule": "Use training_status=eligible only. Canonical text deduplication retains earliest ingested occurrence; later duplicates/conflicts excluded without moving time partitions.",
+  "sentiment_excluded_metadata": [
+    "text_fingerprint",
+    "training_status",
+    "split",
+    "sentiment_label",
+    "label_provenance",
+    "post_id",
+    "mention_id",
+    "region_id",
+    "product_id",
+    "published_at",
+    "collected_at",
+    "sentiment_row_id"
+  ],
   "sentiment_provenance": "synthetic Instagram-like Indonesian menu discussion; not real scraping or cafe reviews"
 }

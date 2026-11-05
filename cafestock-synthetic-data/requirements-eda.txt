@@ -1,0 +1,2 @@
+# Optional chart renderer; the generator itself does not need matplotlib.
+matplotlib==3.10.7

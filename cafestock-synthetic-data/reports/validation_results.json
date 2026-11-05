@@ -1451,6 +1451,16 @@
       ""
     ],
     [
+      "sentiment_ml_dataset required text_fingerprint",
+      true,
+      ""
+    ],
+    [
+      "sentiment_ml_dataset required training_status",
+      true,
+      ""
+    ],
+    [
       "sentiment_ml_dataset FK mention_id",
       true,
       ""
@@ -1741,6 +1751,26 @@
       ""
     ],
     [
+      "Canonical text fingerprints independently verified",
+      true,
+      ""
+    ],
+    [
+      "Earliest-ingestion text eligibility independently verified",
+      true,
+      ""
+    ],
+    [
+      "No eligible duplicate text within or across ML partitions",
+      true,
+      ""
+    ],
+    [
+      "Pending collection never eligible",
+      true,
+      ""
+    ],
+    [
       "No future feature market_feature_max_at",
       true,
       ""
@@ -1782,6 +1812,16 @@
     ],
     [
       "Risk target agrees with decision evaluation target",
+      true,
+      ""
+    ],
+    [
+      "Risk and restock shared fields exactly synchronized",
+      true,
+      ""
+    ],
+    [
+      "Risk input allowlist exists and excludes target metadata",
       true,
       ""
     ],

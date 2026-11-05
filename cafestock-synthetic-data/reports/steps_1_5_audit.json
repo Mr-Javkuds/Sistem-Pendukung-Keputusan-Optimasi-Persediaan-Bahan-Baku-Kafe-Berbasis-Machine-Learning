@@ -1,0 +1,1581 @@
+{
+  "checks": [
+    {
+      "stage": 1,
+      "check": "input/coffee-shop-sales-revenue.csv hash",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 1,
+      "check": "input/geoMap.csv hash",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 1,
+      "check": "input/multiTimeline.csv hash",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 1,
+      "check": "output/regions.csv hash",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 1,
+      "check": "output/branches.csv hash",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 1,
+      "check": "output/categories.csv hash",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 1,
+      "check": "output/suppliers.csv hash",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 1,
+      "check": "output/ingredients.csv hash",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 1,
+      "check": "output/products.csv hash",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 1,
+      "check": "output/recipes.csv hash",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 1,
+      "check": "output/recipe_ingredients.csv hash",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 1,
+      "check": "output/market_trends.csv hash",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 1,
+      "check": "output/social_posts.csv hash",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 1,
+      "check": "output/menu_mentions.csv hash",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 1,
+      "check": "output/menu_aspects.csv hash",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 1,
+      "check": "output/menu_market_signals.csv hash",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 1,
+      "check": "output/latent_demand.csv hash",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 1,
+      "check": "output/transactions.csv hash",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 1,
+      "check": "output/transaction_items.csv hash",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 1,
+      "check": "output/purchase_orders.csv hash",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 1,
+      "check": "output/purchase_order_items.csv hash",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 1,
+      "check": "output/inventory_movements.csv hash",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 1,
+      "check": "output/inventory_snapshots.csv hash",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 1,
+      "check": "output/stockout_events.csv hash",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 1,
+      "check": "output/waste_records.csv hash",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 1,
+      "check": "output/restock_decision_dataset.csv hash",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 1,
+      "check": "output/inventory_risk_ml_dataset.csv hash",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 1,
+      "check": "output/sentiment_ml_dataset.csv hash",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 1,
+      "check": "output/trend_ml_dataset.csv hash",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 1,
+      "check": "Config matches generation manifest",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 1,
+      "check": "Exactly the registered output tables exist",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "regions primary identity",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "branches primary identity",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "branches -> regions via region_id",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "categories primary identity",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "suppliers primary identity",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "ingredients primary identity",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "ingredients -> suppliers via supplier_id",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "products primary identity",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "products -> categories via category_id",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "recipes primary identity",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "recipes -> products via product_id",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "recipe_ingredients primary identity",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "recipe_ingredients -> recipes via recipe_id",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "recipe_ingredients -> ingredients via ingredient_id",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "market_trends primary identity",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "market_trends -> categories via category_id",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "market_trends -> regions via region_id",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "social_posts primary identity",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "social_posts -> regions via region_id",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "menu_mentions primary identity",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "menu_mentions -> social_posts via post_id",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "menu_mentions -> products via product_id",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "menu_aspects primary identity",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "menu_aspects -> menu_mentions via mention_id",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "menu_market_signals primary identity",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "menu_market_signals -> regions via region_id",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "menu_market_signals -> products via product_id",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "latent_demand primary identity",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "latent_demand -> branches via branch_id",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "latent_demand -> products via product_id",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "transactions primary identity",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "transactions -> branches via branch_id",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "transaction_items primary identity",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "transaction_items -> transactions via transaction_id",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "transaction_items -> latent_demand via demand_id",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "transaction_items -> products via product_id",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "purchase_orders primary identity",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "purchase_orders -> branches via branch_id",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "purchase_orders -> suppliers via supplier_id",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "purchase_order_items primary identity",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "purchase_order_items -> purchase_orders via purchase_order_id",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "purchase_order_items -> ingredients via ingredient_id",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "inventory_movements primary identity",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "inventory_movements -> branches via branch_id",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "inventory_movements -> ingredients via ingredient_id",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "inventory_movements -> transaction_items via transaction_item_id",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "inventory_movements -> purchase_order_items via purchase_order_item_id",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "inventory_snapshots primary identity",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "inventory_snapshots -> branches via branch_id",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "inventory_snapshots -> ingredients via ingredient_id",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "stockout_events primary identity",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "stockout_events -> transaction_items via transaction_item_id",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "stockout_events -> ingredients via ingredient_id",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "waste_records primary identity",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "waste_records -> inventory_movements via movement_id",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "restock_decision_dataset primary identity",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "restock_decision_dataset -> branches via branch_id",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "restock_decision_dataset -> ingredients via ingredient_id",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "inventory_risk_ml_dataset primary identity",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "inventory_risk_ml_dataset -> branches via branch_id",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "inventory_risk_ml_dataset -> ingredients via ingredient_id",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "sentiment_ml_dataset primary identity",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "sentiment_ml_dataset -> menu_mentions via mention_id",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "sentiment_ml_dataset -> social_posts via post_id",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "sentiment_ml_dataset -> products via product_id",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "sentiment_ml_dataset -> regions via region_id",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "trend_ml_dataset primary identity",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "trend_ml_dataset -> categories via category_id",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "Canonical audit matches stored fingerprints",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "Eligible text fingerprints unique across all partitions",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 2,
+      "check": "No pending or conflicting text is eligible",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 3,
+      "check": "EDA overview chart rendered",
+      "passed": true,
+      "detail": "{\"python\": \"3.10.11 (tags/v3.10.11:7d4cc5a, Apr  5 2023, 00:38:17) [MSC v.1929 64 bit (AMD64)]\", \"matplotlib\": \"3.10.7\"}"
+    },
+    {
+      "stage": 3,
+      "check": "Train retains all four sentiment labels",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 3,
+      "check": "Train retains both risk labels",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 4,
+      "check": "risk feature allowlist exists",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 4,
+      "check": "risk excludes its target and outcome metadata",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 4,
+      "check": "risk X is complete",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 4,
+      "check": "risk numeric inputs finite",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "risk train nonempty",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "risk train identities disjoint",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "risk train targets observed",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "risk train X roundtrip rows/columns",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "risk train X roundtrip values/alignment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "risk train y roundtrip rows/columns",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "risk train y roundtrip values/alignment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "risk train metadata roundtrip rows/columns",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "risk train metadata roundtrip values/alignment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "risk validation nonempty",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "risk validation identities disjoint",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "risk validation targets observed",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "risk validation X roundtrip rows/columns",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "risk validation X roundtrip values/alignment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "risk validation y roundtrip rows/columns",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "risk validation y roundtrip values/alignment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "risk validation metadata roundtrip rows/columns",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "risk validation metadata roundtrip values/alignment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "risk test nonempty",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "risk test identities disjoint",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "risk test targets observed",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "risk test X roundtrip rows/columns",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "risk test X roundtrip values/alignment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "risk test y roundtrip rows/columns",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "risk test y roundtrip values/alignment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "risk test metadata roundtrip rows/columns",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "risk test metadata roundtrip values/alignment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "risk chronological partitions",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 4,
+      "check": "restock_reference feature allowlist exists",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 4,
+      "check": "restock_reference excludes its target and outcome metadata",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 4,
+      "check": "restock_reference X is complete",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 4,
+      "check": "restock_reference numeric inputs finite",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "restock_reference train nonempty",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "restock_reference train identities disjoint",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "restock_reference train targets observed",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "restock_reference train X roundtrip rows/columns",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "restock_reference train X roundtrip values/alignment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "restock_reference train y roundtrip rows/columns",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "restock_reference train y roundtrip values/alignment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "restock_reference train metadata roundtrip rows/columns",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "restock_reference train metadata roundtrip values/alignment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "restock_reference validation nonempty",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "restock_reference validation identities disjoint",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "restock_reference validation targets observed",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "restock_reference validation X roundtrip rows/columns",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "restock_reference validation X roundtrip values/alignment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "restock_reference validation y roundtrip rows/columns",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "restock_reference validation y roundtrip values/alignment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "restock_reference validation metadata roundtrip rows/columns",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "restock_reference validation metadata roundtrip values/alignment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "restock_reference test nonempty",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "restock_reference test identities disjoint",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "restock_reference test targets observed",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "restock_reference test X roundtrip rows/columns",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "restock_reference test X roundtrip values/alignment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "restock_reference test y roundtrip rows/columns",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "restock_reference test y roundtrip values/alignment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "restock_reference test metadata roundtrip rows/columns",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "restock_reference test metadata roundtrip values/alignment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "restock_reference chronological partitions",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 4,
+      "check": "sentiment feature allowlist exists",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 4,
+      "check": "sentiment excludes its target and outcome metadata",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 4,
+      "check": "sentiment X is complete",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "sentiment train nonempty",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "sentiment train identities disjoint",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "sentiment train targets observed",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "sentiment train X roundtrip rows/columns",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "sentiment train X roundtrip values/alignment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "sentiment train y roundtrip rows/columns",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "sentiment train y roundtrip values/alignment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "sentiment train metadata roundtrip rows/columns",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "sentiment train metadata roundtrip values/alignment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "sentiment validation nonempty",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "sentiment validation identities disjoint",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "sentiment validation targets observed",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "sentiment validation X roundtrip rows/columns",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "sentiment validation X roundtrip values/alignment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "sentiment validation y roundtrip rows/columns",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "sentiment validation y roundtrip values/alignment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "sentiment validation metadata roundtrip rows/columns",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "sentiment validation metadata roundtrip values/alignment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "sentiment test nonempty",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "sentiment test identities disjoint",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "sentiment test targets observed",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "sentiment test X roundtrip rows/columns",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "sentiment test X roundtrip values/alignment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "sentiment test y roundtrip rows/columns",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "sentiment test y roundtrip values/alignment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "sentiment test metadata roundtrip rows/columns",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "sentiment test metadata roundtrip values/alignment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "sentiment chronological partitions",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 4,
+      "check": "trend feature allowlist exists",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 4,
+      "check": "trend excludes its target and outcome metadata",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 4,
+      "check": "trend X is complete",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 4,
+      "check": "trend numeric inputs finite",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "trend train nonempty",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "trend train identities disjoint",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "trend train targets observed",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "trend train X roundtrip rows/columns",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "trend train X roundtrip values/alignment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "trend train y roundtrip rows/columns",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "trend train y roundtrip values/alignment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "trend train metadata roundtrip rows/columns",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "trend train metadata roundtrip values/alignment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "trend validation nonempty",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "trend validation identities disjoint",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "trend validation targets observed",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "trend validation X roundtrip rows/columns",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "trend validation X roundtrip values/alignment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "trend validation y roundtrip rows/columns",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "trend validation y roundtrip values/alignment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "trend validation metadata roundtrip rows/columns",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "trend validation metadata roundtrip values/alignment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "trend test nonempty",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "trend test identities disjoint",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "trend test targets observed",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "trend test X roundtrip rows/columns",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "trend test X roundtrip values/alignment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "trend test y roundtrip rows/columns",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "trend test y roundtrip values/alignment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "trend test metadata roundtrip rows/columns",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "trend test metadata roundtrip values/alignment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "trend chronological partitions",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 4,
+      "check": "Full independent relational/inventory/feature validation passed",
+      "passed": true,
+      "detail": "374 full checks"
+    },
+    {
+      "stage": 4,
+      "check": "social_available_at precedes decision",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 4,
+      "check": "social_feature_max_at precedes decision",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 4,
+      "check": "market_feature_max_at precedes decision",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "inventory_risk_ml_dataset exact calendar split/purge assignments",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "restock_decision_dataset exact calendar split/purge assignments",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "stage": 5,
+      "check": "trend_ml_dataset exact calendar split/purge assignments",
+      "passed": true,
+      "detail": ""
+    }
+  ],
+  "warnings": [
+    "Source URLs/licenses are not fully documented; raw files and hashes exist, but source bibliography remains an academic limitation.",
+    "Repeated synthetic captions are retained in market event tables; text-level ML excludes repeats. This is not an implemented Instagram spam detector."
+  ],
+  "cleaning": {
+    "raw_posts": 6612,
+    "exact_duplicate_caption_occurrences": 1944,
+    "canonical_duplicate_occurrences": 1944,
+    "original_text_groups_crossing_splits": 818,
+    "training_status_counts": {
+      "eligible": 4645,
+      "duplicate": 1918,
+      "pending": 49
+    },
+    "eligible_rows": 4645,
+    "eligible_cross_split_text_groups": 0,
+    "unknown_location_posts": 321,
+    "missing_cells_by_table": {
+      "regions": {},
+      "branches": {},
+      "categories": {},
+      "suppliers": {},
+      "ingredients": {},
+      "products": {},
+      "recipes": {},
+      "recipe_ingredients": {},
+      "market_trends": {},
+      "social_posts": {
+        "source_url": 6612,
+        "region_id": 321
+      },
+      "menu_mentions": {},
+      "menu_aspects": {},
+      "menu_market_signals": {},
+      "latent_demand": {},
+      "transactions": {},
+      "transaction_items": {},
+      "purchase_orders": {
+        "delivered_at": 23
+      },
+      "purchase_order_items": {},
+      "inventory_movements": {
+        "transaction_item_id": 4773,
+        "purchase_order_item_id": 217851
+      },
+      "inventory_snapshots": {},
+      "stockout_events": {},
+      "waste_records": {},
+      "restock_decision_dataset": {
+        "social_feature_max_at": 840,
+        "social_available_at": 840,
+        "social_period_start": 840,
+        "future_stockout_7d": 210
+      },
+      "inventory_risk_ml_dataset": {
+        "social_feature_max_at": 840,
+        "social_available_at": 840,
+        "social_period_start": 840,
+        "target_stockout": 210,
+        "risk_label": 210
+      },
+      "sentiment_ml_dataset": {
+        "region_id": 321
+      },
+      "trend_ml_dataset": {
+        "target_fulfilled_units_next_7d": 4
+      }
+    },
+    "policy": "Raw posts and regional signal counts are retained as synthetic events. For text ML keep earliest collected canonical text only; exclude later duplicates/conflicts and pending batches. Unknown regions stay NULL and are excluded from regional aggregates. No fitting or imputation performed."
+  },
+  "splits": {
+    "risk": {
+      "train": {
+        "rows": 7470,
+        "first_at": "2025-11-04T05:00:00+07:00",
+        "last_at": "2026-07-10T05:00:00+07:00"
+      },
+      "validation": {
+        "rows": 1440,
+        "first_at": "2026-07-18T05:00:00+07:00",
+        "last_at": "2026-09-03T05:00:00+07:00"
+      },
+      "test": {
+        "rows": 1410,
+        "first_at": "2026-09-11T05:00:00+07:00",
+        "last_at": "2026-10-27T05:00:00+07:00"
+      }
+    },
+    "restock_reference": {
+      "train": {
+        "rows": 7470,
+        "first_at": "2025-11-04T05:00:00+07:00",
+        "last_at": "2026-07-10T05:00:00+07:00"
+      },
+      "validation": {
+        "rows": 1440,
+        "first_at": "2026-07-18T05:00:00+07:00",
+        "last_at": "2026-09-03T05:00:00+07:00"
+      },
+      "test": {
+        "rows": 1620,
+        "first_at": "2026-09-11T05:00:00+07:00",
+        "last_at": "2026-11-03T05:00:00+07:00"
+      }
+    },
+    "sentiment": {
+      "train": {
+        "rows": 3361,
+        "first_at": "2025-12-01T07:00:00+07:00",
+        "last_at": "2026-07-01T07:00:00+07:00"
+      },
+      "validation": {
+        "rows": 664,
+        "first_at": "2026-08-01T07:00:00+07:00",
+        "last_at": "2026-09-01T07:00:00+07:00"
+      },
+      "test": {
+        "rows": 620,
+        "first_at": "2026-10-01T07:00:00+07:00",
+        "last_at": "2026-11-01T07:00:00+07:00"
+      }
+    },
+    "trend": {
+      "train": {
+        "rows": 144,
+        "first_at": "2025-11-04T00:00:00+07:00",
+        "last_at": "2026-07-07T00:00:00+07:00"
+      },
+      "validation": {
+        "rows": 28,
+        "first_at": "2026-07-21T00:00:00+07:00",
+        "last_at": "2026-09-01T00:00:00+07:00"
+      },
+      "test": {
+        "rows": 28,
+        "first_at": "2026-09-15T00:00:00+07:00",
+        "last_at": "2026-10-27T00:00:00+07:00"
+      }
+    }
+  },
+  "source_and_output_hashes_verified": true,
+  "model_training_performed": false,
+  "prepared_artifact_count": 36
+}

@@ -1,0 +1,66 @@
+{
+  "raw_posts": 6612,
+  "exact_duplicate_caption_occurrences": 1944,
+  "canonical_duplicate_occurrences": 1944,
+  "original_text_groups_crossing_splits": 818,
+  "training_status_counts": {
+    "eligible": 4645,
+    "duplicate": 1918,
+    "pending": 49
+  },
+  "eligible_rows": 4645,
+  "eligible_cross_split_text_groups": 0,
+  "unknown_location_posts": 321,
+  "missing_cells_by_table": {
+    "regions": {},
+    "branches": {},
+    "categories": {},
+    "suppliers": {},
+    "ingredients": {},
+    "products": {},
+    "recipes": {},
+    "recipe_ingredients": {},
+    "market_trends": {},
+    "social_posts": {
+      "source_url": 6612,
+      "region_id": 321
+    },
+    "menu_mentions": {},
+    "menu_aspects": {},
+    "menu_market_signals": {},
+    "latent_demand": {},
+    "transactions": {},
+    "transaction_items": {},
+    "purchase_orders": {
+      "delivered_at": 23
+    },
+    "purchase_order_items": {},
+    "inventory_movements": {
+      "transaction_item_id": 4773,
+      "purchase_order_item_id": 217851
+    },
+    "inventory_snapshots": {},
+    "stockout_events": {},
+    "waste_records": {},
+    "restock_decision_dataset": {
+      "social_feature_max_at": 840,
+      "social_available_at": 840,
+      "social_period_start": 840,
+      "future_stockout_7d": 210
+    },
+    "inventory_risk_ml_dataset": {
+      "social_feature_max_at": 840,
+      "social_available_at": 840,
+      "social_period_start": 840,
+      "target_stockout": 210,
+      "risk_label": 210
+    },
+    "sentiment_ml_dataset": {
+      "region_id": 321
+    },
+    "trend_ml_dataset": {
+      "target_fulfilled_units_next_7d": 4
+    }
+  },
+  "policy": "Raw posts and regional signal counts are retained as synthetic events. For text ML keep earliest collected canonical text only; exclude later duplicates/conflicts and pending batches. Unknown regions stay NULL and are excluded from regional aggregates. No fitting or imputation performed."
+}

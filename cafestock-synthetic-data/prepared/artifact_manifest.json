@@ -1,0 +1,482 @@
+[
+  {
+    "path": "prepared/05_split_70_15_15/risk/train_X.csv",
+    "rows": 7470,
+    "columns": [
+      "branch_id",
+      "ingredient_id",
+      "history_days",
+      "mean_daily_consumption_14d",
+      "on_hand",
+      "on_order",
+      "lead_time_days",
+      "shelf_life_days",
+      "package_size",
+      "minimum_order_qty",
+      "market_interest_latest",
+      "market_interest_lag_1w",
+      "social_post_count_latest_month",
+      "menu_sentiment_latest_month",
+      "social_data_available",
+      "social_age_days"
+    ],
+    "sha256": "b2abadb8911d1d87a8537cf18884858865dd7969e599767e7dfe52711646cc84"
+  },
+  {
+    "path": "prepared/05_split_70_15_15/risk/train_y.csv",
+    "rows": 7470,
+    "columns": [
+      "target_stockout"
+    ],
+    "sha256": "0daf85961484d26694c92f09bc5c81ded524f85be605383c852ed00ef4def6c1"
+  },
+  {
+    "path": "prepared/05_split_70_15_15/risk/train_metadata.csv",
+    "rows": 7470,
+    "columns": [
+      "risk_row_id",
+      "decision_at",
+      "baseline_purchase_qty",
+      "market_feature_max_at",
+      "social_feature_max_at",
+      "social_available_at",
+      "social_period_start",
+      "label_window_end",
+      "label_observed",
+      "split",
+      "risk_label"
+    ],
+    "sha256": "6d3778c287a54ab85c94e47b0d9c6668a9743da99f9d27ee85f5a573406f96a5"
+  },
+  {
+    "path": "prepared/05_split_70_15_15/risk/validation_X.csv",
+    "rows": 1440,
+    "columns": [
+      "branch_id",
+      "ingredient_id",
+      "history_days",
+      "mean_daily_consumption_14d",
+      "on_hand",
+      "on_order",
+      "lead_time_days",
+      "shelf_life_days",
+      "package_size",
+      "minimum_order_qty",
+      "market_interest_latest",
+      "market_interest_lag_1w",
+      "social_post_count_latest_month",
+      "menu_sentiment_latest_month",
+      "social_data_available",
+      "social_age_days"
+    ],
+    "sha256": "cb59134e87dea26767fb63a25f011d195fe3d88e9c7e87db58e7f5d525145c1f"
+  },
+  {
+    "path": "prepared/05_split_70_15_15/risk/validation_y.csv",
+    "rows": 1440,
+    "columns": [
+      "target_stockout"
+    ],
+    "sha256": "97d267d91c8fa377cddabdfbda4acabd8a57741c70510f235350a68529618783"
+  },
+  {
+    "path": "prepared/05_split_70_15_15/risk/validation_metadata.csv",
+    "rows": 1440,
+    "columns": [
+      "risk_row_id",
+      "decision_at",
+      "baseline_purchase_qty",
+      "market_feature_max_at",
+      "social_feature_max_at",
+      "social_available_at",
+      "social_period_start",
+      "label_window_end",
+      "label_observed",
+      "split",
+      "risk_label"
+    ],
+    "sha256": "8084e8dd4cdf20c91051f1d3ed9dbe01922f35cafdc60343467ccbda36b32236"
+  },
+  {
+    "path": "prepared/05_split_70_15_15/risk/test_X.csv",
+    "rows": 1410,
+    "columns": [
+      "branch_id",
+      "ingredient_id",
+      "history_days",
+      "mean_daily_consumption_14d",
+      "on_hand",
+      "on_order",
+      "lead_time_days",
+      "shelf_life_days",
+      "package_size",
+      "minimum_order_qty",
+      "market_interest_latest",
+      "market_interest_lag_1w",
+      "social_post_count_latest_month",
+      "menu_sentiment_latest_month",
+      "social_data_available",
+      "social_age_days"
+    ],
+    "sha256": "a0553ec24121845c420c2c3aaf86120d96a8c4386df05d07246cc9fe90025a07"
+  },
+  {
+    "path": "prepared/05_split_70_15_15/risk/test_y.csv",
+    "rows": 1410,
+    "columns": [
+      "target_stockout"
+    ],
+    "sha256": "f7c3db82c4190e8bc9a28cdc9d573fb44c26e02c32129b7a014e66ef5216eedc"
+  },
+  {
+    "path": "prepared/05_split_70_15_15/risk/test_metadata.csv",
+    "rows": 1410,
+    "columns": [
+      "risk_row_id",
+      "decision_at",
+      "baseline_purchase_qty",
+      "market_feature_max_at",
+      "social_feature_max_at",
+      "social_available_at",
+      "social_period_start",
+      "label_window_end",
+      "label_observed",
+      "split",
+      "risk_label"
+    ],
+    "sha256": "62c08783d2f45699169a8f2bd00b9ee09096e5366952fa564f9dbbf37b58bc4d"
+  },
+  {
+    "path": "prepared/05_split_70_15_15/restock_reference/train_X.csv",
+    "rows": 7470,
+    "columns": [
+      "branch_id",
+      "ingredient_id",
+      "history_days",
+      "mean_daily_consumption_14d",
+      "on_hand",
+      "on_order",
+      "lead_time_days",
+      "shelf_life_days",
+      "package_size",
+      "minimum_order_qty",
+      "market_interest_latest",
+      "market_interest_lag_1w",
+      "social_post_count_latest_month",
+      "menu_sentiment_latest_month",
+      "social_data_available",
+      "social_age_days"
+    ],
+    "sha256": "b2abadb8911d1d87a8537cf18884858865dd7969e599767e7dfe52711646cc84"
+  },
+  {
+    "path": "prepared/05_split_70_15_15/restock_reference/train_y.csv",
+    "rows": 7470,
+    "columns": [
+      "baseline_purchase_qty"
+    ],
+    "sha256": "9b0067d0a95ee116bb2ea7f83508999ae738e69ae17eedc4c2b99f604b74d9bd"
+  },
+  {
+    "path": "prepared/05_split_70_15_15/restock_reference/train_metadata.csv",
+    "rows": 7470,
+    "columns": [
+      "decision_id",
+      "decision_at",
+      "market_feature_max_at",
+      "social_feature_max_at",
+      "social_available_at",
+      "social_period_start",
+      "label_window_end",
+      "future_stockout_7d",
+      "label_observed",
+      "split"
+    ],
+    "sha256": "0b5223a40c81c06339c97085e7d09ef0bf66848e0a6402f223effca369c0b635"
+  },
+  {
+    "path": "prepared/05_split_70_15_15/restock_reference/validation_X.csv",
+    "rows": 1440,
+    "columns": [
+      "branch_id",
+      "ingredient_id",
+      "history_days",
+      "mean_daily_consumption_14d",
+      "on_hand",
+      "on_order",
+      "lead_time_days",
+      "shelf_life_days",
+      "package_size",
+      "minimum_order_qty",
+      "market_interest_latest",
+      "market_interest_lag_1w",
+      "social_post_count_latest_month",
+      "menu_sentiment_latest_month",
+      "social_data_available",
+      "social_age_days"
+    ],
+    "sha256": "cb59134e87dea26767fb63a25f011d195fe3d88e9c7e87db58e7f5d525145c1f"
+  },
+  {
+    "path": "prepared/05_split_70_15_15/restock_reference/validation_y.csv",
+    "rows": 1440,
+    "columns": [
+      "baseline_purchase_qty"
+    ],
+    "sha256": "360a0647e6a66dcf8d31a21761029244f3491b22dafd26de910d7489eb122aff"
+  },
+  {
+    "path": "prepared/05_split_70_15_15/restock_reference/validation_metadata.csv",
+    "rows": 1440,
+    "columns": [
+      "decision_id",
+      "decision_at",
+      "market_feature_max_at",
+      "social_feature_max_at",
+      "social_available_at",
+      "social_period_start",
+      "label_window_end",
+      "future_stockout_7d",
+      "label_observed",
+      "split"
+    ],
+    "sha256": "892b064a78231e055e4db25e12f9d4bdff60f6312e76aaba77a34ec8b99c3fbd"
+  },
+  {
+    "path": "prepared/05_split_70_15_15/restock_reference/test_X.csv",
+    "rows": 1620,
+    "columns": [
+      "branch_id",
+      "ingredient_id",
+      "history_days",
+      "mean_daily_consumption_14d",
+      "on_hand",
+      "on_order",
+      "lead_time_days",
+      "shelf_life_days",
+      "package_size",
+      "minimum_order_qty",
+      "market_interest_latest",
+      "market_interest_lag_1w",
+      "social_post_count_latest_month",
+      "menu_sentiment_latest_month",
+      "social_data_available",
+      "social_age_days"
+    ],
+    "sha256": "ee37eaa8e63b199319d056ecb79cfc3d9f134752bcf898ecf2cdb38507023aeb"
+  },
+  {
+    "path": "prepared/05_split_70_15_15/restock_reference/test_y.csv",
+    "rows": 1620,
+    "columns": [
+      "baseline_purchase_qty"
+    ],
+    "sha256": "b935f4323bae0c3467e8184231fb3dfdd135d845e15cbf49046071c707b45107"
+  },
+  {
+    "path": "prepared/05_split_70_15_15/restock_reference/test_metadata.csv",
+    "rows": 1620,
+    "columns": [
+      "decision_id",
+      "decision_at",
+      "market_feature_max_at",
+      "social_feature_max_at",
+      "social_available_at",
+      "social_period_start",
+      "label_window_end",
+      "future_stockout_7d",
+      "label_observed",
+      "split"
+    ],
+    "sha256": "6604ee577b43ec4d7733a20fb87b201b6af59f692a2f0ab0efe0af02c244cd2e"
+  },
+  {
+    "path": "prepared/05_split_70_15_15/sentiment/train_X.csv",
+    "rows": 3361,
+    "columns": [
+      "content_text"
+    ],
+    "sha256": "25a492f3b35c9bb88a6cbba94008071ba77ca78a0a44412dbd5c3de3be3add97"
+  },
+  {
+    "path": "prepared/05_split_70_15_15/sentiment/train_y.csv",
+    "rows": 3361,
+    "columns": [
+      "sentiment_label"
+    ],
+    "sha256": "69ef0594cfb16c07c2c808487de663c563e2fe614d0814cfa0243abd14160a78"
+  },
+  {
+    "path": "prepared/05_split_70_15_15/sentiment/train_metadata.csv",
+    "rows": 3361,
+    "columns": [
+      "sentiment_row_id",
+      "mention_id",
+      "post_id",
+      "product_id",
+      "region_id",
+      "published_at",
+      "collected_at",
+      "label_provenance",
+      "split",
+      "text_fingerprint",
+      "training_status"
+    ],
+    "sha256": "ddfe3a924a7370a19b9e11b7b028c6cf83ca1f0156fd6eb4055cef94e87199b1"
+  },
+  {
+    "path": "prepared/05_split_70_15_15/sentiment/validation_X.csv",
+    "rows": 664,
+    "columns": [
+      "content_text"
+    ],
+    "sha256": "0d2b972f8e0da97c32b9f89f51efeddb5dd6d6536159e3c01ad00b9a98087c7b"
+  },
+  {
+    "path": "prepared/05_split_70_15_15/sentiment/validation_y.csv",
+    "rows": 664,
+    "columns": [
+      "sentiment_label"
+    ],
+    "sha256": "5485beba717aeef7cf1d9e831c0fae641547fa55a33b296c0ac2a4a7b65994ff"
+  },
+  {
+    "path": "prepared/05_split_70_15_15/sentiment/validation_metadata.csv",
+    "rows": 664,
+    "columns": [
+      "sentiment_row_id",
+      "mention_id",
+      "post_id",
+      "product_id",
+      "region_id",
+      "published_at",
+      "collected_at",
+      "label_provenance",
+      "split",
+      "text_fingerprint",
+      "training_status"
+    ],
+    "sha256": "97747bab63e46b39b5cf78771de8e03e5a9e23860f95a75ba69b59a8c1840812"
+  },
+  {
+    "path": "prepared/05_split_70_15_15/sentiment/test_X.csv",
+    "rows": 620,
+    "columns": [
+      "content_text"
+    ],
+    "sha256": "118a1301ac5db06a94fbd7d2a8bee33059c9cb3482a1e3a2e906b5e21176f1da"
+  },
+  {
+    "path": "prepared/05_split_70_15_15/sentiment/test_y.csv",
+    "rows": 620,
+    "columns": [
+      "sentiment_label"
+    ],
+    "sha256": "51eb9c807dc41eed8726d098150d1b75f98db0107c9e5f6bea96d02e1b14db72"
+  },
+  {
+    "path": "prepared/05_split_70_15_15/sentiment/test_metadata.csv",
+    "rows": 620,
+    "columns": [
+      "sentiment_row_id",
+      "mention_id",
+      "post_id",
+      "product_id",
+      "region_id",
+      "published_at",
+      "collected_at",
+      "label_provenance",
+      "split",
+      "text_fingerprint",
+      "training_status"
+    ],
+    "sha256": "191122ecab05ed4f81bc0225054ba66243af219047c5bda9168851285e038109"
+  },
+  {
+    "path": "prepared/05_split_70_15_15/trend/train_X.csv",
+    "rows": 144,
+    "columns": [
+      "category_id",
+      "interest_lag_1w"
+    ],
+    "sha256": "9cc732bff593626cd282c3c85ccea6b1adec7004bb2cbecffaa0d795cbabbe52"
+  },
+  {
+    "path": "prepared/05_split_70_15_15/trend/train_y.csv",
+    "rows": 144,
+    "columns": [
+      "target_fulfilled_units_next_7d"
+    ],
+    "sha256": "2f81f8ce75296defa38dde482fcb0d9bca63f3ecf2e10c3ad1c8993ce76cfa25"
+  },
+  {
+    "path": "prepared/05_split_70_15_15/trend/train_metadata.csv",
+    "rows": 144,
+    "columns": [
+      "trend_row_id",
+      "decision_at",
+      "feature_max_at",
+      "label_observed",
+      "split"
+    ],
+    "sha256": "dc40a7ecd00be8ee3908b683429560df3943975fc675031a1a8cad172f51a772"
+  },
+  {
+    "path": "prepared/05_split_70_15_15/trend/validation_X.csv",
+    "rows": 28,
+    "columns": [
+      "category_id",
+      "interest_lag_1w"
+    ],
+    "sha256": "8bc5fd68be1a9eb3f38004ca53f8e1de05d239152edbf2915ccd585e0dd8b3a6"
+  },
+  {
+    "path": "prepared/05_split_70_15_15/trend/validation_y.csv",
+    "rows": 28,
+    "columns": [
+      "target_fulfilled_units_next_7d"
+    ],
+    "sha256": "5d8e5b3b191500876ae737035109df057ec8ac63327e418111f44e8f618325ad"
+  },
+  {
+    "path": "prepared/05_split_70_15_15/trend/validation_metadata.csv",
+    "rows": 28,
+    "columns": [
+      "trend_row_id",
+      "decision_at",
+      "feature_max_at",
+      "label_observed",
+      "split"
+    ],
+    "sha256": "90006d89d41b84667d5c85b507478412d8726ad82e853fb14239f64831b7ebdf"
+  },
+  {
+    "path": "prepared/05_split_70_15_15/trend/test_X.csv",
+    "rows": 28,
+    "columns": [
+      "category_id",
+      "interest_lag_1w"
+    ],
+    "sha256": "78845bc24be3527d0f4a43488bf5442731ea1139982643c8444fc09dd66db994"
+  },
+  {
+    "path": "prepared/05_split_70_15_15/trend/test_y.csv",
+    "rows": 28,
+    "columns": [
+      "target_fulfilled_units_next_7d"
+    ],
+    "sha256": "fbc73e3f22bd29d4ea21a7ab2aedc6d559580aaf9abb44420384ebd341c1e473"
+  },
+  {
+    "path": "prepared/05_split_70_15_15/trend/test_metadata.csv",
+    "rows": 28,
+    "columns": [
+      "trend_row_id",
+      "decision_at",
+      "feature_max_at",
+      "label_observed",
+      "split"
+    ],
+    "sha256": "5731f35a01940d278218e59558b6f7b4c3d774c44f6fee983503da9c5177fcc6"
+  }
+]

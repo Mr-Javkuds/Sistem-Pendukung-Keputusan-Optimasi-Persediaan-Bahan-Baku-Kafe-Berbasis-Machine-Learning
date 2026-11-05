@@ -324,6 +324,8 @@ All output rows are synthetic; input/ contains preserved external observations. 
 | sentiment_label | text | Sentiment label |
 | label_provenance | text | Label provenance |
 | split | text | Chronological train/validation/test; boundary label rows are purged from training |
+| text_fingerprint | text | SHA-256 of NFKC/casefold/whitespace-normalized text, used for audit/dedup only; excluded from model inputs |
+| training_status | text | Use eligible only for modeling; later duplicate, label_conflict and pending records remain auditable but excluded |
 
 ## trend_ml_dataset
 

@@ -1,0 +1,77 @@
+{
+  "risk": {
+    "source": "inventory_risk_ml_dataset",
+    "X": [
+      "branch_id",
+      "ingredient_id",
+      "history_days",
+      "mean_daily_consumption_14d",
+      "on_hand",
+      "on_order",
+      "lead_time_days",
+      "shelf_life_days",
+      "package_size",
+      "minimum_order_qty",
+      "market_interest_latest",
+      "market_interest_lag_1w",
+      "social_post_count_latest_month",
+      "menu_sentiment_latest_month",
+      "social_data_available",
+      "social_age_days"
+    ],
+    "y": "target_stockout",
+    "rows": 10320,
+    "rule": "label_observed=1",
+    "fit_preprocessing": false,
+    "model_trained": false
+  },
+  "restock_reference": {
+    "source": "restock_decision_dataset",
+    "X": [
+      "branch_id",
+      "ingredient_id",
+      "history_days",
+      "mean_daily_consumption_14d",
+      "on_hand",
+      "on_order",
+      "lead_time_days",
+      "shelf_life_days",
+      "package_size",
+      "minimum_order_qty",
+      "market_interest_latest",
+      "market_interest_lag_1w",
+      "social_post_count_latest_month",
+      "menu_sentiment_latest_month",
+      "social_data_available",
+      "social_age_days"
+    ],
+    "y": "baseline_purchase_qty",
+    "rows": 10530,
+    "rule": "baseline reference policy; not a future-optimal quantity",
+    "fit_preprocessing": false,
+    "model_trained": false
+  },
+  "sentiment": {
+    "source": "sentiment_ml_dataset",
+    "X": [
+      "content_text"
+    ],
+    "y": "sentiment_label",
+    "rows": 4645,
+    "rule": "training_status=eligible",
+    "fit_preprocessing": false,
+    "model_trained": false
+  },
+  "trend": {
+    "source": "trend_ml_dataset",
+    "X": [
+      "category_id",
+      "interest_lag_1w"
+    ],
+    "y": "target_fulfilled_units_next_7d",
+    "rows": 200,
+    "rule": "label_observed=1",
+    "fit_preprocessing": false,
+    "model_trained": false
+  }
+}

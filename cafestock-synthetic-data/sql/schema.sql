@@ -344,7 +344,11 @@ CREATE TABLE sentiment_ml_dataset (
     sentiment_label text NOT NULL,
     label_provenance text NOT NULL,
     split text NOT NULL,
-    CHECK (sentiment_label IN ('positive','neutral','negative','mixed'))
+    text_fingerprint text NOT NULL,
+    training_status text NOT NULL,
+    CHECK (sentiment_label IN ('positive','neutral','negative','mixed')),
+    CHECK (training_status IN ('eligible','duplicate','label_conflict','pending')),
+    CHECK (length(text_fingerprint) = 64)
 );
 CREATE INDEX ON sentiment_ml_dataset (mention_id);
 CREATE INDEX ON sentiment_ml_dataset (post_id);

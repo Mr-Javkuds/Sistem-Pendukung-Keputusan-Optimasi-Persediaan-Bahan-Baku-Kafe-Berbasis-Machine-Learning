@@ -155,6 +155,22 @@ def validate(root,tables,config,source_profile=None):
         return 'train' if fraction<.7 else ('validation' if fraction<.85 else 'test')
     check('Social splits use ingestion time, not publication time',sentiment.split.eq(sentiment.collected_at.str[:10].map(expected_split)).all())
     check('Uncollected terminal batches excluded from training',sentiment.loc[sentiment.collected_at.str[:10]>config['end_date'],'split'].eq('pending').all())
+    # Independently reconstruct canonical hashes and time-ordered eligibility.
+    import re,unicodedata
+    hashes=sentiment.content_text.map(lambda v:hashlib.sha256(re.sub(r'\s+',' ',unicodedata.normalize('NFKC',v).casefold()).strip().encode('utf-8')).hexdigest())
+    check('Canonical text fingerprints independently verified',sentiment.text_fingerprint.eq(hashes).all())
+    chronological=sentiment.sort_values(['collected_at','post_id','mention_id'],kind='stable')
+    seen={}; expected_status={}
+    for r in chronological.itertuples():
+        if r.split=='pending': expected_status[r.Index]='pending'; continue
+        if r.text_fingerprint in seen:
+            expected_status[r.Index]='duplicate' if seen[r.text_fingerprint]==r.sentiment_label else 'label_conflict'
+        else:
+            seen[r.text_fingerprint]=r.sentiment_label; expected_status[r.Index]='eligible'
+    check('Earliest-ingestion text eligibility independently verified',sentiment.training_status.eq(sentiment.index.map(expected_status)).all())
+    eligible_sentiment=sentiment[sentiment.training_status=='eligible']
+    check('No eligible duplicate text within or across ML partitions',eligible_sentiment.text_fingerprint.is_unique)
+    check('Pending collection never eligible',not eligible_sentiment.split.eq('pending').any())
     decisions=t['restock_decision_dataset']
     for col in ['market_feature_max_at','social_feature_max_at','social_available_at']:
         mask=decisions[col].notna()
@@ -228,6 +244,10 @@ def validate(root,tables,config,source_profile=None):
     check('Market features independently reconstructed from past only',not market_errors,str(market_errors[:5]))
     risks=t['inventory_risk_ml_dataset']
     check('Risk target agrees with decision evaluation target',risks.target_stockout.fillna(-1).equals(decisions.future_stockout_7d.fillna(-1)))
+    aligned=risks.rename(columns={'risk_row_id':'decision_id','target_stockout':'future_stockout_7d'}).drop(columns=['risk_label'])
+    check('Risk and restock shared fields exactly synchronized',aligned.equals(decisions))
+    manifest=json.loads((root/'docs'/'feature_manifest.json').read_text(encoding='utf-8'))
+    check('Risk input allowlist exists and excludes target metadata',set(manifest['risk_features'])<=set(risks.columns) and not set(manifest['risk_features'])&{'target_stockout','risk_label','future_stockout_7d','label_window_end','baseline_purchase_qty','split'})
     check('Training windows purged across split boundaries',all(
         not ((decisions.split==split)&decisions.label_window_end.str[:10].ge(
              (pd.Timestamp(config['start_date'])+pd.Timedelta(days=int(np.ceil(((pd.Timestamp(config['end_date'])-pd.Timestamp(config['start_date'])).days+1)*fraction)))).date().isoformat())).any()

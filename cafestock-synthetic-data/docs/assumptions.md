@@ -45,7 +45,12 @@ tanpa penilaian. Sentimen tidak menggerakkan penjualan dalam generator; peneliti
 boleh menemukan kontribusi prediktif yang kecil atau nol.
 
 Template yang terbatas dapat menghasilkan pengulangan dan membuat tugas klasifikasi
-terlalu mudah. Lakukan audit overlap teks dan laporkan keterbatasan; jangan memakai
+terlalu mudah. Untuk ML, caption dinormalisasi NFKC/casefold/whitespace lalu dihash;
+kemunculan eligible pertama menurut collected_at dipertahankan dan kemunculan
+ulang/konflik label berikutnya dikeluarkan. Pending tetap tidak eligible. Tidak
+ada pemindahan catatan antarwaktu. Postingan dan sinyal pasar mentah tetap utuh
+untuk menjaga jejak event; kebijakan ini bukan pendeteksi konten bot. Lakukan
+audit kemiripan template dan laporkan keterbatasan; jangan memakai
 hasil ini untuk klaim performa NLP media sosial nyata. Komentar multi-menu dan
 hubungan reply belum disimulasikan, walau junction menu_mentions mendukung
 beberapa menu pada satu post. Engagement dan bot akun belum disimulasikan.

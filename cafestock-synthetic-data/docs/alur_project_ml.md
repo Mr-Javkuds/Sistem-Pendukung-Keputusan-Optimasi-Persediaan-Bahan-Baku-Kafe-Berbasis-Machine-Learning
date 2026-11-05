@@ -26,6 +26,10 @@ Hasil pemeriksaan aktual dibaca dari reports/, bukan dianggap sebagai akurasi ML
 - Sentimen: sentiment_ml_dataset.csv, X=content_text, y=sentiment_label; empat
   kelas positive/neutral/negative/mixed. Jangan masukkan product_id/region_id untuk
   menggantikan pembacaan teks. split=pending berada di luar ketersediaan data saat ini.
+  Gunakan training_status=eligible saja; duplikat kanonik dipertahankan pada waktu
+  pengambilan paling awal dan kemunculan berikutnya dikeluarkan. text_fingerprint
+  serta training_status bukan input model. Prepared X/y/metadata telah dipisahkan
+  oleh audit_steps_1_5.py; hasil aktual ada di reports/steps_1_5_audit.md.
 - Risiko: inventory_risk_ml_dataset.csv, X sesuai feature_manifest.json,
   y=target_stockout dalam 7 hari di bawah kebijakan historis. Gunakan label_observed=1
   dan split != purged. Jangan menggunakan label_window_end atau target sebagai fitur.

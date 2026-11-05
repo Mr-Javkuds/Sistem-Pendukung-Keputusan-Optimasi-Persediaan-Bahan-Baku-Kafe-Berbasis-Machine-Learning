@@ -15,6 +15,21 @@ uv pip install --python .venv/Scripts/python.exe -r requirements.txt
 .venv/Scripts/python.exe -m unittest discover -s tests -v
 ```
 
+## Bukti pelaksanaan tahap 01–05
+
+Setelah generator dan validasi selesai, jalankan:
+
+```powershell
+uv pip install --python .venv/Scripts/python.exe -r requirements-eda.txt
+.venv/Scripts/python.exe audit_steps_1_5.py
+```
+
+Helper memeriksa hash/relasi, membuat audit cleaning, EDA train, kontrak fitur,
+dan ekspor X/y/metadata train–validation–test di `prepared/`. Model belum dilatih.
+Renderer grafik dapat memakai interpreter lain yang sudah memiliki matplotlib
+dengan `--plot-python path/to/python.exe`; data preparation tetap berjalan pada
+Python 3.11+. Artefak grafik menyimpan versi renderer di laporan audit.
+
 Alternatif: buat venv menggunakan Python 3.11+ dan install requirements.txt dengan
 pip. Lingkungan yang dipakai dalam workspace ini berada di `../.venv`.
 `--config path/config.yaml` mengganti konfigurasi; lokasi output tetap relatif
@@ -51,6 +66,12 @@ Lokasi unknown tetap NULL dan dikeluarkan dari agregat regional.
 
 Gunakan allowlist docs/feature_manifest.json. Untuk sentimen, X=content_text dan
 y=sentiment_label. Label dibuat oleh aturan penyusunan teks, bukan prediksi model.
+Gunakan hanya `training_status=eligible` untuk model sentimen. Fingerprint teks
+NFKC/casefold/whitespace mempertahankan kemunculan yang paling awal dikumpulkan;
+kemunculan ulang/konflik yang lebih baru dikeluarkan, tanpa memindahkan split.
+Kolom fingerprint dan status hanya untuk audit, bukan fitur model. Postingan mentah
+dan agregat event tidak dihapus karena beberapa event sintetis bisa mempunyai
+caption identik; ini bukan implementasi pendeteksi spam Instagram nyata.
 Untuk risiko, y=target_stockout. Buang split=purged dan gunakan label_observed=1
 untuk evaluasi risiko; dataset sentimen menggunakan split sendiri dan mengecualikan
 pending. Fit TF-IDF, encoding/imputasi pada train saja.

@@ -28,6 +28,8 @@ wilayah. Semua data operasional dan konten Instagram yang dihasilkan adalah
 | [Asumsi dan provenance](cafestock-synthetic-data/docs/assumptions.md) | Batas observasi dan simulasi |
 | [Audit sumber](cafestock-synthetic-data/reports/source_audit.md) | Pemeriksaan sumber eksternal yang tersisa |
 | [Validasi](cafestock-synthetic-data/reports/validation_report.md) | Hasil pemeriksaan data terkini |
+| [Audit tahap 01–05](cafestock-synthetic-data/reports/steps_1_5_audit.md) | Sinkronisasi, cleaning, EDA, fitur dan split yang sudah dijalankan |
+| [Data siap tahap modeling](cafestock-synthetic-data/prepared/README.md) | X/y/metadata terpisah dan aturan eligibility |
 | [Reproduksibilitas](cafestock-synthetic-data/reports/reproducibility_report.md) | Hash CSV dua generasi |
 | [ERD](cafestock-synthetic-data/docs/erd.md) | Relasi operasional dan menu-wilayah |
 

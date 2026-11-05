@@ -1,6 +1,6 @@
 # Validation report
 
-366/366 checks passed.
+374/374 checks passed.
 
 | Check | Result | Detail |
 |---|---|---|
@@ -294,6 +294,8 @@
 | sentiment_ml_dataset required sentiment_label | PASS |  |
 | sentiment_ml_dataset required label_provenance | PASS |  |
 | sentiment_ml_dataset required split | PASS |  |
+| sentiment_ml_dataset required text_fingerprint | PASS |  |
+| sentiment_ml_dataset required training_status | PASS |  |
 | sentiment_ml_dataset FK mention_id | PASS |  |
 | sentiment_ml_dataset FK post_id | PASS |  |
 | sentiment_ml_dataset FK product_id | PASS |  |
@@ -352,6 +354,10 @@
 | Sentiment training rows retain correct caption and label | PASS |  |
 | Social splits use ingestion time, not publication time | PASS |  |
 | Uncollected terminal batches excluded from training | PASS |  |
+| Canonical text fingerprints independently verified | PASS |  |
+| Earliest-ingestion text eligibility independently verified | PASS |  |
+| No eligible duplicate text within or across ML partitions | PASS |  |
+| Pending collection never eligible | PASS |  |
 | No future feature market_feature_max_at | PASS |  |
 | No future feature social_feature_max_at | PASS |  |
 | No future feature social_available_at | PASS |  |
@@ -361,6 +367,8 @@
 | Baseline quantities independently reconstructed | PASS | [] |
 | Market features independently reconstructed from past only | PASS | [] |
 | Risk target agrees with decision evaluation target | PASS |  |
+| Risk and restock shared fields exactly synchronized | PASS |  |
+| Risk input allowlist exists and excludes target metadata | PASS |  |
 | Training windows purged across split boundaries | PASS |  |
 | Trend bounds and provenance | PASS |  |
 | Trend features and targets independently reconstructed | PASS | [] |
