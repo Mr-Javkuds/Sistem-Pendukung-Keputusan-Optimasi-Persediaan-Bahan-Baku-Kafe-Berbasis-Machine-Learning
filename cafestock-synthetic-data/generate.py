@@ -12,7 +12,7 @@ from src.profile import profile
 from src.generate_recipes import generate as recipes
 from src.generate_trends import generate as trends
 from src.generate_transactions import generate as transactions
-from src.generate_reviews import generate as reviews
+from src.generate_social import generate as social,aggregate
 from src.simulate_inventory import simulate
 from src.generate_ml_datasets import generate as ml
 from src.schema import emit,ORDER,sql_type
@@ -28,8 +28,9 @@ def pipeline(config,sales,stats):
     demand=transactions(config,tables,sales,streams[1])
     print(f'Simulating inventory for {len(demand):,} demand lines...',flush=True)
     tables.update(simulate(config,tables,demand,streams[2]))
-    print('Generating original reviews and point-in-time features...',flush=True)
-    tables['customer_reviews'],tables['review_aspects']=reviews(config,tables,stats,streams[3])
+    print('Generating synthetic Instagram menu discussion for Semarang...',flush=True)
+    tables.update(social(config,tables,streams[3]))
+    tables['menu_market_signals']=aggregate(tables)
     ml(config,tables)
     # Purge training/validation observations whose outcome windows overlap the next split.
     start=pd.Timestamp(config['start_date']); total=(pd.Timestamp(config['end_date'])-start).days+1
@@ -58,14 +59,16 @@ def run():
     if sys.version_info<(3,11): raise RuntimeError('Python 3.11+ required')
     config=yaml.safe_load(args.config.read_text(encoding='utf-8'))
     if pd.Timestamp(config['end_date'])<pd.Timestamp(config['start_date']): raise ValueError('Invalid date range')
-    if config['mean_daily_transactions_per_branch']<=0 or not 0<=config['review_probability']<=1: raise ValueError('Invalid size/probability')
+    if config['mean_daily_transactions_per_branch']<=0 or config['mean_daily_social_posts']<=0: raise ValueError('Invalid dataset size')
+    if config['data_mode']!='synthetic' or config['social_platform']!='instagram': raise ValueError('This generator produces synthetic Instagram-like data only')
+    if config['evaluation_horizon_days']!=7: raise ValueError('Current stockout target is defined for a seven-day horizon')
     for folder in ['output','reports','docs','sql']: (ROOT/folder).mkdir(exist_ok=True)
     frames,source_audit=audit(ROOT)
-    for required in ['coffee-shop-sales-revenue.csv','raw_yelp_review_data.csv','ratings_and_sentiments.csv','sentiments_by_shop.csv']:
+    for required in ['coffee-shop-sales-revenue.csv']:
         if required not in frames: raise FileNotFoundError(f'Missing essential source: {required}; see source_audit.md')
     sales,stats=profile(ROOT,frames)
     if args.audit_only:
-        print('Audit and source profile saved. geoMap(1).csv missing explicitly recorded.'); return
+        print('Audit/profile saved; no cafe-review sources are required.'); return
     tables=pipeline(config,sales,stats)
     hashes={}
     for name in ORDER:

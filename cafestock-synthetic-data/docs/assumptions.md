@@ -1,144 +1,126 @@
-# Generation assumptions and provenance
+# Asumsi, provenance dan batas eksperimen — Semarang
 
-CafeStock Coffee is fictional. Three NYC branches run from 2025-11-04 through
-2026-11-03 inclusive. No source business/customer IDs are joined to this company.
-Every row in output/ is simulated. Source bytes in input/ are preserved unchanged
-and hashed. All reported source counts precede profiling exclusions.
+## Skenario
 
-## Source use
+CafeStock Coffee adalah perusahaan fiktif; cabang Semarang Tengah, Semarang
+Selatan, dan Banyumanik bukan lokasi bisnis yang diverifikasi. Region Semarang
+adalah konteks pasar; nama wilayah bukan klaim adanya akun/kafe nyata di alamat
+tertentu. Periode simulasi 2025-11-04 s.d. 2026-11-03, zona Asia/Jakarta, IDR.
+Semua output adalah sintetis; input sumber tetap terpisah dan dihash.
 
-The pipe-delimited transaction CSV informs branch exposure, hourly patterns,
-weekday rates per observed calendar day, product-type popularity, conditional
-quantity and price samples. The source locations happen to match the requested
-fictional branch names: mapping uses names, never source store IDs. Sampling
-retains conditional quantity/price pairs within a product-type pool, generates
-new dates/times and assigns new IDs; no whole original transaction is copied.
-The source period is January–June 2023. No claim of measured 2025–26 demand is made.
-The default scale is 90 attempted transactions per branch per day, before seasonal
-effects, weekday effects and source branch weights; one line per transaction.
+## Penjualan dan harga
 
-The 10-product fictional menu uses source product-type proxies. Several source
-types (retail beans, branded goods, loose tea) are intentionally excluded from
-inventory analysis. Iced Matcha Latte uses a green-tea category fallback if its
-proxy has no exact source type. Blueberry Muffin uses the source Scone proxy.
-Prices are synthetic transaction-level USD prices sampled within the proxy;
-no single immutable list price is assumed. Quantities count product portions.
+CSV transaksi eksternal Januari–Juni 2023 memberi pola jam, weekday, popularitas
+proxy jenis produk dan kuantitas. Cabang Semarang memakai proxy eksplisit
+Lower Manhattan/Hell's Kitchen/Astoria hanya untuk variasi statistik. Tidak ada
+klaim bahwa transaksi sumber terjadi di Semarang atau pelanggan sama.
+Jumlah transaksi harian Poisson, skala konfigurasi default 90/cabang, dikalikan
+weekday per eksposur hari dan faktor musim amplitudo 10%. Produk dipilih menurut
+popularitas proxy dan bobot tren dengan lag minimal 7 hari.
 
-Raw Yelp reviews are deduplicated for rating and length statistics (701 exact
-duplicates excluded). The audit still reports all original rows. Transformed
-sentiment data excludes rows missing text/rating, drops exact duplicates, and
-coerces aspect values numerically. Invalid/missing aspect values count as absent
-for the *mention proxy only*; inputs are never rewritten. Integer sentiment
-scales have no supplied codebook and are never used as ground truth. The shop
-aggregates are audited as overlapping evidence, not pooled as independent reviews.
-The rating distribution is empirical; source review lengths parameterize a
-lognormal target with median equal to the empirical median, sigma 0.65, capped
-at 20–180 words plus one sentence. Reviews are original template compositions,
-not paraphrases of real reviews. They have lower linguistic diversity than real
-Yelp text: models evaluated on them measure recovery of these rules, not real-world
-sentiment performance. Some neutral filler repeats. Dates embedded in raw review
-text are not verified publication timestamps and are not remapped into CafeStock.
+Harga IDR diasumsikan per produk: Kopi Seduh 18.000; Espresso 18.000; Latte Panas
+25.000; Es Latte 28.000; Es Matcha Latte 30.000; Teh Chai 18.000; Teh Hijau 16.000;
+Cokelat Panas 25.000; Butter Croissant 18.000; Blueberry Muffin 20.000. Variasi
+ukuran/porsi ditiru dengan tambahan 0/2.000/4.000, peluang 70/20/10%. Ini bukan
+harga pasar yang diobservasi, bukan kurs konversi, dan bukan label optimal.
+Source USD prices dilaporkan terpisah dan tidak dibandingkan sebagai satu mata uang.
 
-geoMap.csv contains geographic interest with missing city values; these stay
-missing. geoMap(1).csv is absent. multiTimeline.csv contains actual weekly matcha
-interest in Central Java (53 points); it is an additional preserved source, not
-a replacement geographic export and not measured NYC history. Neither Google
-file calibrates NYC demand. The supplied parquet is an unused alternative sales
-container; the CSV is authoritative for this pipeline. Source observations are
-preserved in input/, separate from all generated output.
+## Instagram sintetis
 
-## Market and review rules
+Default jumlah postingan harian Poisson dengan mean 18, independen dari transaksi.
+Tiap postingan membahas satu menu, dalam bahasa Indonesia, dengan satu wilayah:
+Semarang kota 35%, Semarang Tengah 20%, Semarang Selatan 20%, Banyumanik 20%,
+unknown 5%. Pembagian ini asumsi simulasi, bukan cakupan Instagram sesungguhnya.
+Nama wilayah ditempatkan dalam teks sesuai skenario; bukan geotag terverifikasi.
+Tidak ada nama akun, nama individu, akun pelanggan, ataupun URL Instagram nyata.
+platform=instagram hanya menjelaskan bentuk data yang ditiru; provenance=synthetic.
+source_post_key berawalan SIM-IG-SMG-. Tidak ada rating atau hubungan ke pembelian.
 
-Weekly category interest uses 52 + 16*sin(2*pi*(dayofyear/365.25+category_id/8))
-plus AR(1) noise with coefficient 0.72 and innovation SD 4, clipped to [0,100].
-Ten synthetic pre-period weeks warm up lag features. Index availability is midnight
-at the start of the synthetic week, explicitly invented rather than claimed as
-Google publication timing. Demand weights multiply exp(0.012*(index-50)) using
-only an index at least seven days old. Daily seasonal amplitude is 10%; branch/day
-transaction counts are Poisson. All these constants are assumptions.
+Label menu memiliki peluang positive 45%, neutral 20%, negative 20%, mixed 15%.
+Teks dirakit dari frasa asli pendek dan variasi pembuka/penutup. Untuk positive,
+negative dan neutral, aspek taste/value mempunyai label yang sama. Mixed memakai
+aspek rasa positif dan nilai/harga negatif. Label berasal dari aturan generasi,
+bukan rating, hasil model, maupun Yelp. Label netral dapat berisi pembahasan menu
+tanpa penilaian. Sentimen tidak menggerakkan penjualan dalam generator; penelitian
+boleh menemukan kontribusi prediktif yang kecil atau nol.
 
-Reviews are sampled only from fulfilled purchases, with configured probability.
-Ratings >=4 imply positive; <=2 negative; 3 neutral. Independently, 20% become
-mixed: product and service have opposing polarities. Product prose follows its
-aspect label; service prose follows its own. Optional vibe, price and seating
-mentions follow numerically parsed source mention proxies and the product polarity.
-The product always appears; mixed reviews always mention service. Ground truth
-comes from these explicit composition rules, never an inferred model label.
-Publication is 15–119 minutes after purchase, within the simulation business day.
-Reviews contain product and branch names inherited from their purchased item;
-they do not carry redundant branch/product FKs. There is no synthetic customer ID.
+Template yang terbatas dapat menghasilkan pengulangan dan membuat tugas klasifikasi
+terlalu mudah. Lakukan audit overlap teks dan laporkan keterbatasan; jangan memakai
+hasil ini untuk klaim performa NLP media sosial nyata. Komentar multi-menu dan
+hubungan reply belum disimulasikan, walau junction menu_mentions mendukung
+beberapa menu pada satu post. Engagement dan bot akun belum disimulasikan.
 
-## Recipes and inventory
+## Waktu koleksi dan agregasi
 
-Recipes, supplier names, costs, package sizes and shelf lives are engineering
-assumptions in src/generate_recipes.py, not Kaggle measurements. Coffee 18 g per
-portion; latte milk 180–200 ml; matcha 5 g + 200 ml milk + 150 g ice + 15 ml syrup;
-tea 3–4 g; chocolate 25 g + 220 ml milk; bakery goods consume one prepared portion.
-Water is tracked as bought filtered-water containers; ice is purchased in bags.
-No conversion between g and ml is made; base units are g, ml or piece. A recipe
-quantity always uses its ingredient's unit; price is USD per base unit.
+published_at berada di periode simulasi. collected_at adalah tanggal 1 bulan
+berikutnya pukul 07:00 WIB. Ini asumsi jadwal pengambilan bulanan, bukan klaim
+scraping sudah dijalankan. Postingan November 2026 dapat disimpan tetapi baru
+tersedia 1 Desember; split=pending mengeluarkannya dari training/evaluasi saat ini.
 
-Inventory uses FEFO lots. Initial stock covers two prior-estimated demand days,
-rounded to package sizes. Initial usage prior is the equal-menu recipe average
-times configured daily transaction count times 1.5 portions, never future sales.
-Initial lots expire after the ingredient shelf life. At 01:00 expired lots are
-waste, at 02:00 an independent 0.8% daily chance records physical shrinkage of up
-to 2% of a package, at 04:00 scheduled deliveries arrive, at 05:00 decisions are
-made. Source-informed service hours are 06:00–20:59. Consumption is immediate.
-No negative lots or fractional fulfilled product portions are allowed. Full
-requested demand is saved; unfulfilled portions do not consume any ingredients.
-Stockout events identify ingredients that physically constrain an attempted sale;
-the same unfulfilled product may have multiple ingredient causes. Do not sum
-unfulfilled_product_qty across stockout causes to estimate lost product units.
-Use transaction_items requested_qty minus fulfilled_qty instead. transactions
-records all attempts, including zero-fulfilled attempts, to preserve this distinction.
+Agregat menu_market_signals mengelompokkan region_id, product_id dan bulan publikasi.
+Hanya lokasi diketahui yang masuk; tersedia ketika batch sudah dikumpulkan.
+Sentimen = (jumlah positive - jumlah negative)/jumlah postingan; mixed/neutral
+berskor 0. Jumlah postingan dan availability flag tetap disimpan: tidak ada data
+bukan berarti sentimen netral atau permintaan nol. Volume adalah jumlah sampel
+sintetis, bukan pangsa pasar.
 
-Suppliers have deterministic civil-calendar lead times of 1 or 3 days, including
-weekends. Receipt at 04:00 after a 05:00 order means elapsed hours are lead*24-1,
-with DST adjustment; compare NYC calendar dates, not a fixed 24-hour duration.
-Orders beyond the simulation end stay open with NULL delivered_at. No partial
-deliveries, supplier failures, product substitutions or price inflation are modeled.
+Fitur keputusan mengambil bulan terbaru yang tersedia sebelum decision_at,
+produk yang resepnya menggunakan bahan terkait, dan region kota plus region
+cabang. Pembahasan wilayah cabang lain dan unknown tidak masuk. Postingan kota
+dapat dipakai beberapa cabang: ini sinyal pasar bersama, bukan observasi penjualan
+independen di setiap cabang. market/social timestamp metadata tidak menjadi fitur ML.
 
-At DST fall-back the repeated 01:00 expiry is the standard-time occurrence;
-at spring-forward a nonexistent 02:00 adjustment shifts to 03:00. Deliveries,
-decisions and trading hours are outside these ambiguous/nonexistent hours.
+## Google Trends
 
-The baseline uses the trailing 14 *completed* days of fulfilled ingredient
-consumption (all available days during warm-up); zero days uses the engineering
-prior. Reorder if on_hand + on_order < mean*(lead+1). Target is
-mean*min(lead+2,shelf_life). Positive purchase quantities round up to package size
-and MOQ; otherwise zero. Outstanding supply is netted once. The policy does not
-forecast expiry by lot and can overbuy or underorder; that is a deliberate baseline
-for backtesting, not an optimal recommendation. Package rounding can exceed the
-shelf-life target. Fixed shelf lives make some waste unavoidable under this policy.
+geoMap.csv adalah geografi; multiTimeline.csv adalah deret matcha Jawa Tengah.
+Keduanya tetap disimpan sebagai konteks sumber, bukan pengukuran menu Semarang
+khusus. market_trends.csv adalah seri mingguan kategori Semarang yang sepenuhnya
+disimulasikan: 52 + 16*sin(2*pi*(dayofyear/365.25+category/8)) + AR(1), rho .72,
+innovation SD 4, clip [0,100], 10 minggu warm-up. Bobot pemilihan menu adalah
+exp(.012*(indeks_lag-50)), dinormalisasi antarproduk. Tren mengubah komposisi menu,
+bukan jumlah total transaksi harian. Permintaan mengikuti lag sekurangnya 7 hari.
+Fitur menyertakan indeks terakhir dan lag 1 minggu, hanya yang sudah tersedia.
+Karena hubungan tren diasumsikan, model yang berhasil hanya membuktikan pemulihan
+pola simulasi, bukan kausalitas pasar nyata. Harga/volume/sentimen tidak dapat
+ditafsirkan sebagai kondisi Instagram atau bisnis Semarang yang sebenarnya.
 
-## Experiment boundaries
+## Resep, biaya dan stok
 
-Decision features reflect the 05:00 state after deliveries but before its own
-purchase order. Market features are equal category means of latest previously
-available synthetic indices for menu products using the ingredient. Equal product
-category contributions avoid adding heterogeneous recipe units. Sentiment is the
-branch's prior 14-day mean of positive=1, negative=-1, mixed/neutral=0, with zero
-and review_count=0 for no reviews. Future stockout labels indicate a causal
-ingredient-shortage event during the configured evaluation horizon under the
-actual historical policy. They are policy-dependent outcomes, not counterfactual
-optimal purchases. Terminal incomplete windows have NULL targets and
-label_observed=0. No oracle purchase labels are generated.
+Resep dan atribut pemasok adalah asumsi di src/generate_recipes.py: kopi 18 g,
+susu latte 180–200 ml, matcha 5 g + 200 ml susu + 150 g es + 15 ml pemanis,
+teh 3–4 g, cokelat 25 g + 220 ml susu, bakery satu porsi siap olah. Air dimodelkan
+sebagai pembelian air tersaring dan es sebagai kantong pembelian. Tidak ada
+konversi g ke ml; kuantitas mengikuti ingredients.unit.
 
-ML tables are deliberate denormalized experiment snapshots. Feature allowlists
-are in docs/feature_manifest.json: rating is excluded from sentiment input because
-it contributes to labels; baseline_purchase_qty is the reference restock target,
-not an input to that task. Target and publication metadata must not be fed to ML.
-Chronological splits use 70/15/15; any train/validation outcome window reaching
-the following split is marked purged. Filter label_observed=1 for evaluation,
-exclude split=purged, and fit transformations on train only. Inventory histories
-are generated continuously across splits; this represents deployment with known
-past records. No final predictive model is trained. Trend targets are next-seven-
-day fulfilled category units; their features contain only the prior weekly index.
+Biaya dasar IDR: biji kopi 200/g, susu 20/ml, matcha 350/g, teh 100/g, cokelat
+80/g, pemanis 25/ml, es 2/g, adonan croissant 5.500/piece, muffin 4.500/piece,
+air .2/ml. Semua angka adalah asumsi engineering, bukan kutipan pemasok nyata.
+Masa simpan, kemasan, MOQ dan lead time tercantum di ingredients/suppliers.
 
-Limitations: two independently sourced datasets cannot establish a measured
-causal link between real consumer sentiment, trends and NYC demand. Historical
-source distributions are only priors, not validated future business forecasts.
-Missing geoMap(1).csv prevents the original six-file completeness criterion from
-being met literally; this limitation is explicit and does not block an honest
-generator using the available sources.
+FEFO memilih lot terdekat kedaluwarsa. Stok awal prior menu rata-rata x transaksi
+harian konfigurasi x 1,5 porsi, untuk 2 hari, dibulatkan kemasan. Lot expired menjadi
+waste 01:00; discrepancy fisik bersimulasi peluang .8% per hari hingga 2% kemasan
+dicatat 02:00; receipt 04:00; keputusan 05:00; penjualan mengikuti jam sumber
+06:00–20:59. Lead time kalender pemasok 1 atau 3 hari, tanpa keterlambatan acak.
+Tidak ada stok negatif; hanya fulfilled_qty yang mengonsumsi bahan. requested_qty
+adalah permintaan laten. Kekurangan per bahan bisa mempunyai beberapa penyebab
+untuk satu transaksi; jangan jumlahkan unfulfilled_product_qty lintas penyebab.
+Pesanan di luar akhir periode tetap open dengan delivered_at NULL.
+
+Aturan baseline: rata-rata konsumsi 14 hari selesai, warm-up memakai prior;
+reorder bila on_hand + on_order < mean*(lead+1); target mean*min(lead+2,shelf_life).
+Kebutuhan positif dibulatkan ke kemasan dan MOQ. Aturan dapat menghasilkan waste
+dan belum optimal; sinyal Instagram tidak langsung mengubah jumlah baseline.
+
+## Split dan evaluasi
+
+Split nominal 70/15/15 kronologis, label windows train/validation yang menyentuh
+split berikutnya dipurge. Risiko stockout 7 hari memakai label_observed=1 dan
+split != purged; terminal incomplete labels NULL. Sentimen split menurut collected_at,
+bukan published_at; pending tidak dipakai training/evaluasi. Fit preprocessing hanya
+pada train. Sinyal sentimen risiko saat ini memakai label aturan sebagai referensi;
+alur SVM operasional memerlukan prediksi historis out-of-fold sebelum agregasi.
+
+Tidak ada model final yang dilatih. Mengimitasi baseline_purchase_qty dengan
+regresi bukan optimasi. Kebijakan pembelian baru perlu disimulasikan ulang dengan
+permintaan laten yang sama dan metrik biaya/limbah/stockout yang didefinisikan.

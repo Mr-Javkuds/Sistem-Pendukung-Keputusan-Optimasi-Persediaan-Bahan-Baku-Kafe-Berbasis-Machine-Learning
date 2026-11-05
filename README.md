@@ -1,80 +1,53 @@
 # Sistem Pendukung Keputusan Optimasi Persediaan Bahan Baku Kafe Berbasis Machine Learning Menggunakan Analisis Tren Pasar dan Sentimen Konsumen
 
-Proyek akademik **CafeStock Intelligence** untuk menyiapkan dan menguji dukungan
-keputusan persediaan bahan baku kafe. Rancangan terbaru menggabungkan data
-operasional dengan sentimen pasar tentang menu di media sosial berdasarkan
-wilayah serta tren pencarian.
+**CafeStock Intelligence — skenario Semarang, Indonesia.** Proyek akademik ini
+menyiapkan dataset persediaan kafe serta sinyal pasar tentang menu berdasarkan
+wilayah. Semua data operasional dan konten Instagram yang dihasilkan adalah
+**sintetis**, bukan observasi bisnis atau hasil scraping Instagram nyata.
 
-## Status proyek
+## Ruang lingkup terbaru
 
-- Generator Python untuk skenario sintetis tiga cabang CafeStock tersedia.
-- 23 CSV tersedia, termasuk katalog, resep, permintaan, transaksi, persediaan,
-  pembelian, ulasan sintetis, dan dataset persiapan ML.
-- Validasi data: 144/144 pemeriksaan lulus; 23/23 CSV identik pada dua generasi.
-- Skema dan impor PostgreSQL telah diuji pada database sementara PostgreSQL 18.1.
-- Model ML, scraper media sosial, layanan prediksi, dan dashboard belum dibuat.
+- Tiga cabang fiktif: Semarang Tengah, Semarang Selatan, dan Banyumanik.
+- Tanggal simulasi 2025-11-04 s.d. 2026-11-03; waktu Asia/Jakarta, mata uang IDR.
+- Postingan Instagram sintetis berbahasa Indonesia membahas menu, rasa, dan nilai
+  produk pada wilayah Semarang. Tidak ada rating atau ulasan kafe Andi/CafeStock.
+- Postingan dipetakan melalui menu dan wilayah, bukan melalui transaksi pelanggan.
+- Pembaruan sosial bulanan: fitur hanya memakai batch yang sudah dikumpulkan
+  sebelum keputusan; lokasi tidak diketahui tidak masuk agregat regional.
+- Yelp, customer_reviews, review_aspects dan generator ulasan telah dikeluarkan
+  dari versi aktif. Data sumber asli di luar proyek tidak dihapus.
+- Model SVM/Random Forest dan aplikasi pemilik belum dilatih/dibuat.
 
-Hasil validasi di atas membuktikan konsistensi generator, bukan akurasi prediksi
-atau keberhasilan optimasi di kafe nyata.
+## Dokumen
 
-## Mulai dari sini
-
-| Dokumen | Isi |
+| Tautan | Isi |
 |---|---|
-| [Panduan generator](cafestock-synthetic-data/README.md) | Instalasi, konfigurasi, generasi ulang dan pemeriksaan |
-| [Rancangan sentimen pasar menu](cafestock-synthetic-data/docs/sentimen_pasar_menu.md) | Ruang lingkup terbaru: menu, media sosial dan wilayah |
-| [Alur proyek ML](cafestock-synthetic-data/docs/alur_project_ml.md) | Tahapan eksperimen dan batas rancangan awal |
-| [Asumsi generator](cafestock-synthetic-data/docs/assumptions.md) | Provenance, resep, simulasi dan keterbatasan |
-| [Audit sumber](cafestock-synthetic-data/reports/source_audit.md) | Struktur dan kualitas input yang diperiksa |
-| [ERD](cafestock-synthetic-data/docs/erd.md) | Hubungan antar tabel |
-| [Kamus data](cafestock-synthetic-data/docs/data_dictionary.md) | Kolom, satuan dan relasi |
+| [Panduan generator](cafestock-synthetic-data/README.md) | Cara menjalankan dan memeriksa data |
+| [Dataset Instagram Semarang](cafestock-synthetic-data/docs/sentimen_pasar_menu.md) | Struktur, contoh, label dan relasi pasar |
+| [Alur proyek ML](cafestock-synthetic-data/docs/alur_project_ml.md) | Tahapan eksperimen berikutnya |
+| [Asumsi dan provenance](cafestock-synthetic-data/docs/assumptions.md) | Batas observasi dan simulasi |
+| [Audit sumber](cafestock-synthetic-data/reports/source_audit.md) | Pemeriksaan sumber eksternal yang tersisa |
+| [Validasi](cafestock-synthetic-data/reports/validation_report.md) | Hasil pemeriksaan data terkini |
+| [Reproduksibilitas](cafestock-synthetic-data/reports/reproducibility_report.md) | Hash CSV dua generasi |
+| [ERD](cafestock-synthetic-data/docs/erd.md) | Relasi operasional dan menu-wilayah |
 
-## Struktur
+## Menjalankan
 
-```text
-.
-├── cafestock-synthetic-data/
-│   ├── input/        # Salinan sumber eksternal, terpisah dari simulasi
-│   ├── src/          # Audit, profiling, generator dan validator
-│   ├── output/       # 23 tabel CSV sintetis
-│   ├── reports/      # Audit, validasi, hash dan pengujian PostgreSQL
-│   ├── docs/         # Rancangan, asumsi, alur dan kamus data
-│   ├── sql/          # Skema, impor dan pemeriksaan constraint
-│   ├── config.yaml
-│   ├── requirements.txt
-│   └── generate.py
-├── doc/              # Contoh proposal untuk referensi struktur
-└── master_prompt.md  # Spesifikasi awal generator
-```
-
-## Menjalankan generator
-
-Python 3.11+ diperlukan. Dari direktori `cafestock-synthetic-data`:
+Python 3.11+; dari folder `cafestock-synthetic-data`:
 
 ```powershell
 uv venv --python 3.11 .venv
 uv pip install --python .venv/Scripts/python.exe -r requirements.txt
-.venv/Scripts/python.exe generate.py --audit-only
 .venv/Scripts/python.exe generate.py --verify-reproducibility
+.venv/Scripts/python.exe -m unittest discover -s tests -v
 .venv/Scripts/python.exe -m src.validate
 ```
 
-Parameter ukuran dan periode simulasi dapat diubah melalui `config.yaml`.
-Detail alternatif instalasi dan pengujian SQL tersedia pada panduan generator.
+`input/` mempertahankan penjualan sumber dan ekspor Google Trends terpisah dari
+`output/` sintetis. Harga IDR adalah asumsi, bukan konversi kurs dari harga sumber.
+`multiTimeline.csv` adalah sumber matcha Jawa Tengah, bukan pengamatan Semarang
+khusus; seri Semarang dalam `market_trends.csv` tetap sintetis.
 
-## Batas data dan rancangan
-
-Dataset output saat ini masih menggunakan skenario awal ulasan sintetis dari
-pembelian CafeStock. Fitur sentimen tersebut belum merupakan hasil scraping
-pasar menu. Revisi sumber dan feature engineering mengikuti rancangan terbaru
-perlu dikerjakan sebelum eksperimen operasional.
-
-Sumber penjualan, Yelp dan Google Trends berasal dari konteks berbeda dan tidak
-digabung sebagai transaksi bisnis nyata yang sama. `geoMap(1).csv` tidak tersedia;
-ketiadaan ini dicatat dalam audit. `multiTimeline.csv` merupakan sumber tambahan
-tren matcha Jawa Tengah, bukan pengamatan pasar NYC. Simulasi CafeStock memakai
-tren sintetis yang diberi provenance tersendiri.
-
-Sumber eksternal dan contoh dokumen mempertahankan hak serta ketentuan sumbernya;
-repositori ini tidak memberikan lisensi baru atas materi pihak ketiga. Informasi
-URL dan lisensi sumber masih perlu dilengkapi untuk pengumpulan akademik final.
+Spesifikasi `master_prompt.md` dan PDF contoh proposal merupakan referensi awal;
+ketentuan NYC/Yelp di sana telah digantikan instruksi pengguna tentang Semarang
+dan Instagram sintetis. Hak/ketentuan materi pihak ketiga tetap mengikuti sumbernya.

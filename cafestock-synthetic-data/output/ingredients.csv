@@ -1,11 +1,11 @@
-ingredient_id,ingredient_name,unit,shelf_life_days,unit_cost_usd,package_size,minimum_order_qty,supplier_id
-1,Coffee beans,g,45,0.025000,1000,1000,1
-2,Milk,ml,5,0.001500,1000,2000,2
-3,Matcha powder,g,90,0.080000,250,250,1
-4,Tea leaves,g,120,0.035000,250,250,1
-5,Chocolate powder,g,90,0.018000,1000,1000,1
-6,Sweetener,ml,60,0.004000,750,750,1
-7,Ice,g,7,0.000200,5000,5000,2
-8,Croissant dough,piece,3,0.900000,12,24,2
-9,Muffin batter portion,piece,3,0.750000,12,24,2
-10,Filtered water,ml,7,0.000010,20000,20000,2
+ingredient_id,ingredient_name,unit,shelf_life_days,unit_cost_idr,package_size,minimum_order_qty,supplier_id
+1,Biji kopi,g,45,200.000000,1000,1000,1
+2,Susu,ml,5,20.000000,1000,2000,2
+3,Bubuk matcha,g,90,350.000000,250,250,1
+4,Daun teh,g,120,100.000000,250,250,1
+5,Bubuk cokelat,g,90,80.000000,1000,1000,1
+6,Pemanis,ml,60,25.000000,750,750,1
+7,Es batu,g,7,2.000000,5000,5000,2
+8,Adonan croissant,piece,3,5500.000000,12,24,2
+9,Porsi adonan muffin,piece,3,4500.000000,12,24,2
+10,Air tersaring,ml,7,0.200000,20000,20000,2

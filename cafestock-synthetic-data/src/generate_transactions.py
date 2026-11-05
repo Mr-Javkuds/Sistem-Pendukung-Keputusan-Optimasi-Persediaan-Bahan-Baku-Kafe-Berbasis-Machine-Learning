@@ -15,7 +15,7 @@ def generate(config, tables, sales, rng):
         known = trends[pd.to_datetime(trends.week_start) <= day-pd.Timedelta(days=7)]
         interest = known.groupby('category_id').tail(1).set_index('category_id').interest_index
         for branch in tables['branches'].itertuples():
-            source = sales[sales.store_location == branch.branch_name]
+            source = sales[sales.store_location == branch.source_location_proxy]
             scale = len(source)/mean_branch if len(source) else 1
             source = source if len(source) else sales
             seasonal = 1+.10*np.cos(2*np.pi*day.dayofyear/365.25)
@@ -42,5 +42,6 @@ def generate(config, tables, sales, rng):
                 hour=int(rng.choice(hour_counts.index,p=hour_counts.values))
                 at=(day+pd.Timedelta(hours=hour,minutes=int(rng.integers(60)),seconds=int(rng.integers(60)))).tz_localize(config['timezone'])
                 rows.append((len(rows)+1,branch.branch_id,pick+1,at.isoformat(),
-                             max(1,int(sample.transaction_qty)),round(float(sample.unit_price),2)))
-    return pd.DataFrame(rows,columns=['demand_id','branch_id','product_id','transaction_at','requested_qty','unit_price_usd']).sort_values(['transaction_at','demand_id']).reset_index(drop=True)
+                             max(1,int(sample.transaction_qty)),
+                             int(tables['products'].iloc[pick].base_price_idr+rng.choice([0,2000,4000],p=[.7,.2,.1]))))
+    return pd.DataFrame(rows,columns=['demand_id','branch_id','product_id','transaction_at','requested_qty','unit_price_idr']).sort_values(['transaction_at','demand_id']).reset_index(drop=True)

@@ -11,8 +11,11 @@
     "package_size",
     "minimum_order_qty",
     "market_interest_latest",
-    "review_count_14d",
-    "sentiment_mean_14d"
+    "market_interest_lag_1w",
+    "social_post_count_latest_month",
+    "menu_sentiment_latest_month",
+    "social_data_available",
+    "social_age_days"
   ],
   "restock_reference_target": "baseline_purchase_qty",
   "risk_features": [
@@ -27,12 +30,15 @@
     "package_size",
     "minimum_order_qty",
     "market_interest_latest",
-    "review_count_14d",
-    "sentiment_mean_14d"
+    "market_interest_lag_1w",
+    "social_post_count_latest_month",
+    "menu_sentiment_latest_month",
+    "social_data_available",
+    "social_age_days"
   ],
   "risk_target": "target_stockout",
   "sentiment_features": [
-    "review_text"
+    "content_text"
   ],
   "sentiment_target": "sentiment_label",
   "trend_features": [
@@ -40,5 +46,8 @@
     "interest_lag_1w"
   ],
   "trend_target": "target_fulfilled_units_next_7d",
-  "split_rule": "chronological 70/15/15; purge training label windows crossing next split boundary"
+  "split_rule": "chronological 70/15/15; purge training label windows crossing next split boundary",
+  "social_feature_contract": "Latest completed publication month collected before decision_at; mapped by city/district and recipe menu; unknown locations excluded.",
+  "sentiment_split_rule": "By collected_at; pending batches beyond simulation end excluded from training/evaluation.",
+  "sentiment_provenance": "synthetic Instagram-like Indonesian menu discussion; not real scraping or cafe reviews"
 }

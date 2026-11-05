@@ -1,125 +1,69 @@
-# Rancangan terbaru: sentimen pasar menu berdasarkan wilayah
+# Dataset Instagram sintetis — pembahasan menu di Semarang
 
-Pembaruan ruang lingkup, 2026-11-05: sentimen yang diinginkan adalah opini publik
-tentang menu/minuman di media sosial pada wilayah pasar yang relevan. Ulasan
-tentang kafe Andi sendiri tidak menjadi sumber fitur sentimen operasional.
-Dokumen ini menggantikan bagian sumber dan integrasi sentimen pada alur lama.
-
-## Pertanyaan penelitian
-
-Apakah penambahan minat pencarian dan sentimen publik tentang menu pada wilayah
-pasar terkait meningkatkan prediksi kebutuhan bahan atau risiko stockout,
-dibandingkan penggunaan data operasional kafe saja?
-
-Postingan pasar memberi sinyal minat dan pendapat, bukan bukti pembelian di kafe
-Andi. Data penjualan, resep, stok dan pemasok tetap merupakan data internal.
-
-## Alur yang dituju
+Sesuai keputusan pengguna, skenario memakai Semarang dan platform Instagram;
+datanya sintetis untuk eksperimen. Data ulasan kafe, rating dan sumber Yelp telah
+dikeluarkan dari input/output aktif. Tidak ada scraping Instagram nyata pada tahap ini.
 
 ```mermaid
 flowchart TD
-    A[Postingan publik tentang menu dan komentar terkait] --> B[Pemeriksaan relevansi menu, wilayah, waktu, dan spam]
-    B --> C[Sentimen per menu atau aspek menu]
-    C --> D[Agregat per menu, wilayah, dan periode]
-    E[Google Trends dengan wilayah dan istilah yang sesuai] --> D
-    D --> F[Pemetaan menu ke produk kafe dan bahan melalui resep]
-    G[POS, stok, pembelian, limbah, dan pemasok] --> H[Fitur keputusan per cabang dan bahan]
-    F --> H
-    H --> I[Prediksi kebutuhan atau risiko, lalu kebijakan pembelian]
-    I --> J[Prioritas dan rekomendasi untuk Andi]
+    A[Caption Instagram sintetis berbahasa Indonesia] --> B[Wilayah dan waktu publikasi/koleksi]
+    A --> C[Penyebutan menu dan aspek taste/value]
+    B --> D[Agregat per menu-wilayah-bulan]
+    C --> D
+    D --> E[Menu produk kafe]
+    E --> F[Resep dan bahan]
+    F --> G[Fitur per bahan-cabang-waktu]
+    H[Stok, konsumsi, pesanan, pemasok] --> G
+    I[Tren kategori Semarang sintetis] --> G
+    G --> J[Model risiko atau kebutuhan bahan]
+    J --> K[Informasi keputusan untuk pemilik]
 ```
 
-## Informasi yang dikumpulkan
+## Contoh bentuk konten
 
-| Informasi | Tujuan |
+Contoh ilustrasi teks: "Lagi bahas Es Matcha Latte: rasanya enak dan seimbang.
+Menurutku porsi dan rasanya sepadan. Bahasan wilayah Banyumanik. #Semarang"
+Ini tidak menilai CafeStock/Andi, tidak terkait pembelian seseorang, dan bukan
+kutipan dari akun Instagram nyata. Contoh baris aktual dapat dibaca di
+output/social_posts.csv dan dihubungkan melalui post_id ke menu_mentions.csv.
+
+## Relasi utama
+
+| Tabel | Hubungan |
 |---|---|
-| Platform dan ID/URL konten | Menelusuri sumber, deduplikasi dan pembaruan |
-| Teks postingan/caption dan komentar relevan | Mengenali menu dan sentimennya |
-| Waktu publikasi, waktu pengambilan, dan ID batch | Memisahkan periode serta menjaga ketersediaan fitur |
-| Nama menu yang disebut | Memetakan variasi sebutan ke menu standar |
-| Lokasi konten jika tersedia | Menentukan relevansi wilayah pasar |
-| Dasar penentuan lokasi dan tingkat kepastian | Membedakan lokasi eksplisit, indikasi dan lokasi tidak diketahui |
-| Status promosi/iklan jika dapat diketahui | Memisahkan perhatian organik dari materi promosi |
-| Engagement jika tersedia | Sinyal tambahan, bukan ukuran penjualan atau keaslian |
+| regions | Semarang kota dan tiga wilayah cabang |
+| branches | Cabang memiliki satu region lokal, tetap perusahaan fiktif |
+| social_posts | Satu post memiliki lokasi diketahui atau NULL unknown; tidak punya transaction FK |
+| menu_mentions | Junction post–product dengan label sentimen menu |
+| menu_aspects | Aspek rasa/nilai per mention; mixed mempunyai polaritas berbeda |
+| menu_market_signals | Jumlah dan rata-rata sentimen menu–region–bulan |
+| recipe_ingredients | Menghubungkan menu ke bahan |
+| restock_decision_dataset | Mengambil sinyal menu yang menggunakan bahan pada region kota dan region cabang |
 
-Lokasi pembuat akun, tempat yang disebut dalam teks dan lokasi pasar yang dituju
-tidak otomatis sama. Jangan menganggap lokasi akun sebagai bukti lokasi semua
-kontennya. Jika tidak ada bukti lokasi, tandai unknown; konten itu tidak masuk
-agregat wilayah terverifikasi, tetapi dapat dipisahkan sebagai agregat umum.
-Lokasi cabang kafe Andi dipetakan ke wilayah pasar yang sudah ditetapkan.
+Asal lokasi diberi location_evidence=synthetic_scenario atau unknown. Lokasi yang
+tidak diketahui tidak ditebak; tetap boleh menjadi contoh teks sentimen tetapi
+tidak masuk sinyal regional. Tidak ada account_id, username, data pribadi, atau
+tautan palsu; source_url NULL dan source_post_key berawalan SIM-IG-SMG-.
 
-Konten tentang pelayanan/kebersihan suatu kafe tidak otomatis menjadi sentimen
-tentang rasa atau minat pada menu. Contoh: "matcha enak tetapi pelayanannya lama"
-memiliki sentimen menu positif dan aspek pelayanan negatif. Teks yang menyebut
-beberapa menu harus dipetakan pada masing-masing menu bila didukung anotasi/model.
-Perlakukan komentar dan postingan dengan jelas agar percakapan yang sama tidak
-terhitung sebagai banyak sinyal independen tanpa pemeriksaan.
+## Pembaruan bulanan
 
-## Fitur yang direncanakan
+Koleksi dijadwalkan tanggal 1 bulan berikutnya pukul 07:00 WIB. Contoh: seluruh
+postingan November 2025 baru tersedia 1 Desember 2025 pukul 07:00. Keputusan
+1 Desember pukul 05:00 belum boleh memakainya; keputusan 2 Desember sudah boleh.
+Koleksi sosial tidak melatih ulang model otomatis. Input stok dapat diperbarui
+harian memakai batch pasar terakhir yang tersedia serta indikator kesegarannya.
 
-- Jumlah konten relevan dan konten unik per menu-wilayah-periode.
-- Jumlah opini positif, negatif, netral dan campuran tentang menu.
-- Rata-rata skor sentimen dan jumlah opini yang mendasarinya.
-- Perubahan volume pembahasan dibanding periode sebelumnya yang sebanding.
-- Indeks pencarian historis dan lag yang relevan dengan waktu keputusan.
-- Indikator cakupan: sumber tersedia, kesegaran data dan kepastian lokasi.
+## Arti fitur dan keterbatasan
 
-Volume konten hanya mewakili sampel yang berhasil dikumpulkan. Pertumbuhan bisa
-berasal dari perubahan cakupan scraper; simpan cakupan sumber dan perubahan
-proses pengambilan. Jangan menyebut volume sampel sebagai pangsa pasar menyeluruh.
-Jika memakai rasio, dokumentasikan penyebutnya; rasio positif saja tidak cukup
-tanpa jumlah dan periode observasi. Tidak adanya konten bukan berarti sentimen
-netral atau permintaan nol.
+menu_sentiment_latest_month adalah agregat opini menu regional, bukan tingkat
+kepuasan pelanggan kafe. social_post_count_latest_month memberikan dukungan jumlah
+observasi. social_data_available membedakan data kosong dari skor netral; lokasi
+unknown, batch belum tersedia, serta menu yang tidak relevan tidak dimasukkan.
+Source publication dan collection timestamps selalu mendahului decision_at.
 
-## Hubungan dengan produk dan bahan
-
-Contoh: pembahasan iced matcha latte di wilayah operasional Andi dipetakan ke
-produk Iced Matcha Latte pada katalog kafe, kemudian ke matcha, susu, es, dan
-pemanis melalui resep. Menu yang tidak dijual kafe dipisahkan sebagai peluang
-menu baru; jangan otomatis membuat rekomendasi stok tanpa produk dan resep.
-
-Menu-wilayah-periode menjadi penghubung fitur eksternal, bukan ID transaksi.
-Satu sinyal wilayah dapat digunakan beberapa cabang pada wilayah yang sama,
-tetapi riwayat penjualan dan kondisi persediaan tiap cabang tetap berbeda.
-
-## Pembaruan bulanan dan pencegahan leakage
-
-Ambil hanya konten baru/berubah, simpan jejak pembaruan, periksa kualitas, lalu
-buat agregat untuk prediksi setelah batch tersebut tersedia. Postingan dengan
-tanggal November yang baru dikumpulkan 1 Desember tidak boleh digunakan sebagai
-informasi yang seolah-olah sudah tersedia pada keputusan pertengahan November.
-Agregat bulanan yang sudah selesai dapat dipakai selama bulan berikutnya dengan
-penanda kesegaran. Penjualan dan stok internal tetap dapat diperbarui harian.
-
-Pembaruan data tidak berarti pelatihan ulang otomatis. Model yang sudah dilatih
-menerapkan preprocessing tersimpan; data baru hanya masuk training setelah
-proses kurasi, anotasi yang sah, evaluasi dan pencatatan versi.
-
-## Ketahanan data dan evaluasi
-
-Perubahan sumber tidak menghilangkan risiko manipulasi. Postingan pasar juga
-dapat berisi spam, promosi, pengulangan dan koordinasi. Simpan data mentah,
-tandai anomali tanpa menyamakan kritik negatif dengan serangan, serta uji dampak
-sinyal eksternal terhadap rekomendasi. Gunakan pembanding operasional ketika
-kualitas batch eksternal tidak memenuhi kriteria yang telah diuji.
-
-Bandingkan fitur operasional saja, ditambah tren, ditambah sentimen menu, serta
-keduanya; pisahkan volume pembahasan dari polaritas untuk mengukur kontribusinya.
-Gunakan pembagian waktu, bukan split acak. Data uji teks harus sesuai bahasa dan
-domain media sosial; keberhasilan pada Yelp/template sintetis belum membuktikan
-keberhasilan pada komentar media sosial. Label sentimen menu perlu pedoman dan
-anotasi terverifikasi; output model tidak otomatis menjadi ground truth.
-
-## Yang sudah ada dan yang perlu diubah
-
-- Generator lama dan output CSV tetap menggambarkan skenario ulasan pembelian
-  CafeStock. Data historis dan laporan validasi lama tidak diubah oleh dokumen ini.
-- customer_reviews dan review_aspects lama bukan data scraping pasar menu.
-- sentiment_mean_14d lama merupakan sentimen ulasan cabang, belum sesuai desain baru.
-- Perlu menentukan platform, akses pengumpulan yang diizinkan, bahasa, wilayah
-  dan daftar menu target sebelum implementasi scraper dan anotasi.
-- Perlu dataset eksternal, pemetaan menu/wilayah, agregasi bertimestamp dan revisi
-  feature engineering serta pengujian leakage; belum diimplementasikan.
-- geoMap.csv dan multiTimeline.csv yang tersedia berasal dari Indonesia, sedangkan
-  simulasi sekarang NYC. Jangan menggabungkannya sebagai pengamatan pasar yang sama.
-  Wilayah bisnis dan wilayah sumber baru harus diselaraskan dahulu.
+Distribusi label, volume postingan dan geografi semuanya asumsi; belum ada bukti
+popularitas menu Semarang nyata. Teks template harus diuji overlap dan tidak layak
+menjadi satu-satunya bukti generalisasi SVM. Bandingkan fitur operasional saja,
+ditambah tren, ditambah sentimen pasar menu, dan keduanya. Jangan mengharuskan
+model dengan sentimen menang. Bot/koordinasi konten dan proses scraping nyata
+belum diimplementasikan.

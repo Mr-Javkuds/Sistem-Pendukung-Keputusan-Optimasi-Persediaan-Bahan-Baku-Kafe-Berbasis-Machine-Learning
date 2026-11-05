@@ -87,7 +87,7 @@ def simulate(config,tables,demand,rng):
                 orders.append(dict(purchase_order_id=oid,branch_id=branch,supplier_id=int(ing.supplier_id),
                                    ordered_at=instant(day,5),expected_delivery_at=instant(due,4),
                                    delivered_at=None,status='open'))
-                poitems.append((oid,oid,i,qty,ing.unit_cost_usd))
+                poitems.append((oid,oid,i,qty,ing.unit_cost_idr))
                 pending.append(dict(id=oid,item_id=oid,key=key,due=due,qty=qty))
         todays=demands_by_day.get(date,[])
         for row in (todays.itertuples() if len(todays) else []):
@@ -96,7 +96,7 @@ def simulate(config,tables,demand,rng):
             fulfilled=min(row.requested_qty,min(capacities.values()))
             tid=len(transactions)+1; item_id=len(items)+1
             transactions.append((tid,row.branch_id,row.transaction_at))
-            items.append((item_id,tid,row.demand_id,row.product_id,row.requested_qty,fulfilled,row.unit_price_usd))
+            items.append((item_id,tid,row.demand_id,row.product_id,row.requested_qty,fulfilled,row.unit_price_idr))
             for i,q in recipe.items():
                 key=(row.branch_id,i)
                 if capacities[i]<row.requested_qty:
@@ -115,11 +115,11 @@ def simulate(config,tables,demand,rng):
     return {
         'latent_demand':demand,
         'transactions':pd.DataFrame(transactions,columns=['transaction_id','branch_id','transaction_at']),
-        'transaction_items':pd.DataFrame(items,columns=['transaction_item_id','transaction_id','demand_id','product_id','requested_qty','fulfilled_qty','unit_price_usd']),
+        'transaction_items':pd.DataFrame(items,columns=['transaction_item_id','transaction_id','demand_id','product_id','requested_qty','fulfilled_qty','unit_price_idr']),
         'inventory_movements':pd.DataFrame(moves,columns=['movement_id','branch_id','ingredient_id','movement_at','movement_type','quantity','transaction_item_id','purchase_order_item_id']),
         'inventory_snapshots':pd.DataFrame(snapshots,columns=['snapshot_id','branch_id','ingredient_id','date','opening_stock','receipts','consumption','waste','adjustments','closing_stock']),
         'purchase_orders':pd.DataFrame(orders,columns=['purchase_order_id','branch_id','supplier_id','ordered_at','expected_delivery_at','delivered_at','status']),
-        'purchase_order_items':pd.DataFrame(poitems,columns=['purchase_order_item_id','purchase_order_id','ingredient_id','quantity','unit_cost_usd']),
+        'purchase_order_items':pd.DataFrame(poitems,columns=['purchase_order_item_id','purchase_order_id','ingredient_id','quantity','unit_cost_idr']),
         'stockout_events':pd.DataFrame(events,columns=['stockout_event_id','transaction_item_id','ingredient_id','event_at','shortage_qty','unfulfilled_product_qty']),
         'waste_records':pd.DataFrame(waste,columns=['waste_id','movement_id','reason','quantity']),
         'decisions_internal':pd.DataFrame(decisions,columns=['decision_id','branch_id','ingredient_id','decision_at','history_days','mean_daily_consumption_14d','on_hand','on_order','lead_time_days','shelf_life_days','package_size','minimum_order_qty','baseline_purchase_qty'])}

@@ -6,7 +6,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 import yaml
-from .schema import PRIMARY,FKS,UNIQUE,ORDER
+from .schema import PRIMARY,FKS,UNIQUE,ORDER,is_nullable
 
 def load(root):
     return {name:pd.read_csv(root/'output'/f'{name}.csv',keep_default_na=True) for name in ORDER}
@@ -20,6 +20,8 @@ def validate(root,tables,config,source_profile=None):
         if name not in PRIMARY: continue
         pk=PRIMARY[name]
         check(name+' primary key',frame[pk].notna().all() and frame[pk].is_unique)
+        for col in frame:
+            if not is_nullable(name,col): check(name+' required '+col,frame[col].notna().all())
         for cols in UNIQUE.get(name,[]): check(name+' unique '+','.join(cols),not frame.duplicated(cols).any())
         for col,parent in FKS.get(name,{}).items():
             check(name+' FK '+col,frame[col].dropna().isin(t[parent][PRIMARY[parent]]).all())
@@ -27,7 +29,7 @@ def validate(root,tables,config,source_profile=None):
             if col.endswith('_at') or col=='label_window_end':
                 dates=pd.to_datetime(frame[col],utc=True,errors='coerce')
                 check(name+' timestamp '+col,dates.notna().sum()==frame[col].notna().sum())
-                if col in ('transaction_at','review_at','movement_at','decision_at','event_at','ordered_at'):
+                if col in ('transaction_at','published_at','movement_at','decision_at','event_at','ordered_at'):
                     low=pd.Timestamp(config['start_date']).tz_localize(config['timezone'])
                     high=(pd.Timestamp(config['end_date'])+pd.Timedelta(days=1)).tz_localize(config['timezone'])
                     check(name+' period '+col,((dates.dropna()>=low)&(dates.dropna()<high)).all())
@@ -106,33 +108,69 @@ def validate(root,tables,config,source_profile=None):
     waste=t['waste_records'].set_index('movement_id')
     wm=m[m.movement_type=='waste'].set_index('movement_id')
     check('Waste records reconcile ledger',set(waste.index)==set(wm.index) and np.allclose(waste.quantity,-wm.quantity.reindex(waste.index)))
-    reviews=t['customer_reviews']; itemmap=items.set_index('transaction_item_id')
-    check('Reviews reference fulfilled purchases',reviews.transaction_item_id.map(itemmap.fulfilled_qty).gt(0).all())
-    check('Reviews follow purchase', (pd.to_datetime(reviews.review_at,utc=True)>=pd.to_datetime(reviews.transaction_item_id.map(itemmap.transaction_id).map(tx.transaction_at),utc=True)).all())
-    labels=reviews.rating.map(lambda r:'positive' if r>=4 else ('negative' if r<=2 else 'neutral'))
-    check('Sentiment follows documented rules',reviews.sentiment_label.eq(labels).where(reviews.sentiment_label.ne('mixed'),True).all())
-    distinct=t['review_aspects'].groupby('review_id').sentiment_label.nunique()
-    check('Mixed reviews contain opposed aspects',reviews.loc[reviews.sentiment_label=='mixed','review_id'].map(distinct).eq(2).all())
-    check('No unrelated cafe names',reviews.review_text.str.contains('CafeStock Coffee',regex=False).all())
-    # Full source text copying check is exact; no real text is used by the generator.
-    from .audit import read_source
-    raw,_,_,_=read_source(root/'input'/'raw_yelp_review_data.csv')
-    check('No copied source reviews',not reviews.review_text.isin(raw.full_review_text).any())
+    itemmap=items.set_index('transaction_item_id')
+    posts=t['social_posts']; mentions=t['menu_mentions']; aspects=t['menu_aspects']
+    check('All branches are Semarang WIB',t['branches'].timezone.eq('Asia/Jakarta').all() and t['regions'].city.eq('Semarang').all())
+    check('No cafe-review tables or source files',not any(n in t for n in ['customer_reviews','review_aspects']) and
+          not any((root/'input'/n).exists() for n in ['raw_yelp_review_data.csv','ratings_and_sentiments.csv','sentiments_by_shop.csv']) and
+          not any((root/'output'/n).exists() for n in ['customer_reviews.csv','review_aspects.csv']))
+    check('Social posts are explicitly synthetic Instagram',posts.platform.eq('instagram').all() and posts.provenance.eq('synthetic').all() and posts.source_post_key.str.startswith('SIM-IG-SMG-').all())
+    check('No fabricated real Instagram URL or account',posts.source_url.isna().all() and not any('account' in c or 'username' in c for c in posts))
+    check('No purchase, cafe, or rating link in public discussion',not any(c in posts or c in mentions for c in ['transaction_item_id','transaction_id','branch_id','rating','review_text']) and not posts.content_text.str.contains('CafeStock',case=False,regex=False).any())
+    check('Indonesian menu discussion provenance',posts.language.eq('id').all() and mentions.label_provenance.eq('synthetic_rule').all())
+    check('Location uncertainty explicitly represented',posts.loc[posts.region_id.isna(),'location_evidence'].eq('unknown').all() and posts.loc[posts.region_id.notna(),'location_evidence'].eq('synthetic_scenario').all())
+    pub=pd.to_datetime(posts.published_at,utc=True); collected=pd.to_datetime(posts.collected_at,utc=True)
+    check('Collection follows publication',(collected>=pub).all())
+    expected_collection=posts.published_at.str[:7].map(lambda v:(pd.Timestamp(v+'-01')+pd.offsets.MonthBegin(1)+pd.Timedelta(hours=7)).tz_localize(config['timezone']).isoformat())
+    check('Monthly Instagram collection schedule',posts.collected_at.eq(expected_collection).all())
+    check('Menu names occur in corresponding caption',all(t['products'].set_index('product_id').loc[r.product_id,'product_name'] in posts.set_index('post_id').loc[r.post_id,'content_text'] for r in mentions.itertuples()))
+    aspect_sets=aspects.groupby('mention_id').sentiment_label.agg(set)
+    check('Menu sentiment ground truth consistent with aspects',all(
+        aspect_sets.loc[r.mention_id]==({'positive','negative'} if r.sentiment_label=='mixed' else {r.sentiment_label}) for r in mentions.itertuples()))
+    check('All four menu sentiment classes available',set(mentions.sentiment_label)=={'positive','neutral','negative','mixed'})
+    social_rows=mentions.merge(posts,on='post_id')
+    social_rows['period_start']=social_rows.published_at.str[:7]+'-01'
+    signals=t['menu_market_signals']
+    eligible=social_rows[social_rows.region_id.notna()]
+    groups={key:g for key,g in eligible.groupby(['region_id','product_id','period_start'])}
+    signal_errors=[]
+    for r in signals.itertuples():
+        g=groups.get((r.region_id,r.product_id,r.period_start))
+        if g is None: signal_errors.append(r.signal_id); continue
+        counts=g.sentiment_label.value_counts()
+        score=g.sentiment_label.map({'positive':1,'negative':-1,'neutral':0,'mixed':0}).mean()
+        valid=(r.post_count==g.post_id.nunique() and abs(r.sentiment_mean-score)<1e-5 and
+               r.available_at==g.collected_at.max() and r.source_max_published_at==g.published_at.max() and
+               all(getattr(r,k+'_count')==counts.get(k,0) for k in ['positive','neutral','negative','mixed']))
+        if not valid: signal_errors.append(r.signal_id)
+    check('Monthly region/menu signals independently reconstructed',not signal_errors and len(groups)==len(signals),str(signal_errors[:5]))
+    check('Regional signals exclude unknown locations',signals.region_id.notna().all() and set(signals.region_id)<=set(t['regions'].region_id))
+    sentiment=t['sentiment_ml_dataset']; postmap=posts.set_index('post_id')
+    check('Sentiment training rows retain correct caption and label',sentiment.content_text.eq(sentiment.post_id.map(postmap.content_text)).all() and
+          sentiment.sentiment_label.eq(sentiment.mention_id.map(mentions.set_index('mention_id').sentiment_label)).all())
+    start=pd.Timestamp(config['start_date']); total=(pd.Timestamp(config['end_date'])-start).days+1
+    def expected_split(day):
+        fraction=(pd.Timestamp(day)-start).days/total
+        if day>config['end_date']: return 'pending'
+        return 'train' if fraction<.7 else ('validation' if fraction<.85 else 'test')
+    check('Social splits use ingestion time, not publication time',sentiment.split.eq(sentiment.collected_at.str[:10].map(expected_split)).all())
+    check('Uncollected terminal batches excluded from training',sentiment.loc[sentiment.collected_at.str[:10]>config['end_date'],'split'].eq('pending').all())
     decisions=t['restock_decision_dataset']
-    for col in ['market_feature_max_at','sentiment_feature_max_at']:
+    for col in ['market_feature_max_at','social_feature_max_at','social_available_at']:
         mask=decisions[col].notna()
         check('No future feature '+col,(pd.to_datetime(decisions.loc[mask,col],utc=True)<pd.to_datetime(decisions.loc[mask,'decision_at'],utc=True)).all())
     # Recompute features, not merely their declared timestamp metadata.
-    re=reviews.copy(); re['branch_id']=re.transaction_item_id.map(itemmap.transaction_id).map(tx.branch_id)
-    re['time']=pd.to_datetime(re.review_at,utc=True)
-    re['score']=re.sentiment_label.map({'positive':1,'negative':-1,'neutral':0,'mixed':0})
+    social_rows['collected_time']=pd.to_datetime(social_rows.collected_at,utc=True)
     snapshot_index=s.set_index(['branch_id','ingredient_id','date'])
     daily_index=s.assign(date=pd.to_datetime(s.date)).set_index(['branch_id','ingredient_id']).sort_index()
     order_state=poi.merge(po.reset_index(),on='purchase_order_id')
     order_state['ordered_time']=pd.to_datetime(order_state.ordered_at,utc=True)
     order_state['delivered_time']=pd.to_datetime(order_state.delivered_at,utc=True)
     order_groups={key:g for key,g in order_state.groupby(['branch_id','ingredient_id'])}
-    review_cache={}
+    social_cache={}
+    branch_regions=t['branches'].set_index('branch_id').region_id
+    ingredient_products={i:set(g.recipe_id.map(t['recipes'].set_index('recipe_id').product_id))
+                         for i,g in t['recipe_ingredients'].groupby('ingredient_id')}
     errors=[]
     for row in decisions.itertuples():
         at=pd.Timestamp(row.decision_at); date=row.decision_at[:10]
@@ -141,19 +179,25 @@ def validate(root,tables,config,source_profile=None):
         usable=sr.opening_stock-sr.waste+sr.adjustments+sr.receipts
         history=daily_index.loc[key]
         before=history[(history.date<pd.Timestamp(date))&(history.date>=pd.Timestamp(date)-pd.Timedelta(days=14))]
-        cachekey=(row.branch_id,date)
-        if cachekey not in review_cache:
-            review_cache[cachekey]=re[(re.branch_id==row.branch_id)&(re.time<at)&(re.time>=at-pd.Timedelta(days=14))]
-        rr=review_cache[cachekey]
+        cachekey=(row.branch_id,date,tuple(sorted(ingredient_products[row.ingredient_id])))
+        if cachekey not in social_cache:
+            rr=social_rows[social_rows.region_id.isin([1,branch_regions[row.branch_id]])&
+                social_rows.product_id.isin(ingredient_products[row.ingredient_id])&(social_rows.collected_time<at)]
+            if len(rr): rr=rr[rr.period_start==rr.period_start.max()]
+            social_cache[cachekey]=rr
+        rr=social_cache[cachekey]
         outstanding=order_groups.get(key,order_state.iloc[:0])
         outstanding=outstanding[(outstanding.ordered_time<at)&
                                 (outstanding.delivered_time.isna()|(outstanding.delivered_time>at))]
         valid=(abs(usable-row.on_hand)<1e-5 and len(before)==row.history_days and
                (not len(before) or abs(before.consumption.mean()-row.mean_daily_consumption_14d)<1e-5) and
-               len(rr)==row.review_count_14d and abs((rr.score.mean() if len(rr) else 0)-row.sentiment_mean_14d)<1e-5 and
+               len(rr)==row.social_post_count_latest_month and
+               abs((rr.sentiment_label.map({'positive':1,'negative':-1,'neutral':0,'mixed':0}).mean() if len(rr) else 0)-row.menu_sentiment_latest_month)<1e-5 and
+               row.social_data_available==int(len(rr)>0) and
+               (not len(rr) or (rr.collected_at.max()==row.social_available_at and rr.published_at.max()==row.social_feature_max_at and rr.period_start.max()==row.social_period_start)) and
                abs(outstanding.quantity.sum()-row.on_order)<1e-5)
         if not valid: errors.append(row.decision_id)
-    check('Independent historical feature reconstruction',not errors,str(errors[:5]))
+    check('Independent historical operational and regional-menu feature reconstruction',not errors,str(errors[:5]))
     observed=decisions.label_observed.eq(1)
     check('Censored targets are NULL',decisions.loc[~observed,'future_stockout_7d'].isna().all() and decisions.loc[observed,'future_stockout_7d'].notna().all())
     ev=t['stockout_events'].copy()
@@ -177,7 +221,8 @@ def validate(root,tables,config,source_profile=None):
         purchase=max(r.minimum_order_qty,np.ceil(need/r.package_size)*r.package_size) if need>0 else 0
         if abs(purchase-r.baseline_purchase_qty)>1e-5: policy_errors.append(r.decision_id)
         known=trend_table[(trend_table.category_id.isin(category_map[r.ingredient_id]))&(trend_table.time<at)].sort_values('time').groupby('category_id').tail(1)
-        if abs(known.interest_index.mean()-r.market_interest_latest)>1e-5 or known.available_at.max()!=r.market_feature_max_at: market_errors.append(r.decision_id)
+        lagged=trend_table[(trend_table.category_id.isin(category_map[r.ingredient_id]))&(trend_table.time<=at-pd.Timedelta(days=7))].sort_values('time').groupby('category_id').tail(1)
+        if abs(known.interest_index.mean()-r.market_interest_latest)>1e-5 or abs(lagged.interest_index.mean()-r.market_interest_lag_1w)>1e-5 or known.available_at.max()!=r.market_feature_max_at: market_errors.append(r.decision_id)
     check('Future stockout labels independently reconstructed',not label_errors,str(label_errors[:5]))
     check('Baseline quantities independently reconstructed',not policy_errors,str(policy_errors[:5]))
     check('Market features independently reconstructed from past only',not market_errors,str(market_errors[:5]))
@@ -205,8 +250,7 @@ def validate(root,tables,config,source_profile=None):
     nonnull=trend_ml.feature_max_at.notna()
     check('Trend features precede decisions',(pd.to_datetime(trend_ml.loc[nonnull,'feature_max_at'],utc=True)<pd.to_datetime(trend_ml.loc[nonnull,'decision_at'],utc=True)).all())
     check('Trend terminal targets censored',trend_ml.loc[trend_ml.label_observed.eq(0),'target_fulfilled_units_next_7d'].isna().all())
-    check('Synthetic review provenance',reviews.label_provenance.eq('synthetic_rule').all())
-    check('Review rating bounds',reviews.rating.between(1,5).all())
+    check('Semarang trend region',trend.region_id.eq(1).all())
     check('All decision features finite',np.isfinite(decisions.select_dtypes(include='number').drop(columns=['future_stockout_7d']).to_numpy(dtype=float)).all())
     comparisons={}
     if source_profile:
@@ -215,22 +259,21 @@ def validate(root,tables,config,source_profile=None):
         delta=(genhours.reindex(range(24),fill_value=0)-src.reindex(range(24),fill_value=0)).abs().max()
         check('Hourly source distribution plausibility',delta<.08,f'max absolute probability difference={delta:.5f}')
         comparisons['hourly_max_probability_difference']=float(delta)
-        rating=reviews.rating.value_counts(normalize=True)
-        rsrc=pd.Series({int(float(k)):v for k,v in source_profile['rating'].items()})
-        rdelta=(rating.reindex(range(1,6),fill_value=0)-rsrc.reindex(range(1,6),fill_value=0)).abs().max()
-        # Finite-sample tolerance, rather than tuning to a desired success percentage.
-        tolerance=max(.08,4/np.sqrt(max(1,len(reviews))))
-        check('Rating source distribution plausibility',rdelta<tolerance,f'max difference={rdelta:.5f}; tolerance={tolerance:.5f}')
-        comparisons.update(rating_source=rsrc.to_dict(),rating_synthetic=rating.to_dict(),
+        actual_labels=mentions.sentiment_label.value_counts(normalize=True)
+        assumed=pd.Series({'positive':.45,'neutral':.20,'negative':.20,'mixed':.15})
+        difference=(actual_labels.reindex(assumed.index,fill_value=0)-assumed).abs().max()
+        tolerance=max(.08,4/np.sqrt(max(1,len(mentions))))
+        check('Synthetic sentiment distribution follows explicit assumptions',difference<tolerance,f'max difference={difference:.5f}; tolerance={tolerance:.5f}')
+        comparisons.update(sentiment_assumptions=assumed.to_dict(),sentiment_generated=actual_labels.to_dict(),
             quantity_source=source_profile['quantity'],quantity_synthetic=items.requested_qty.value_counts(normalize=True).to_dict(),
-            source_price_quantiles=source_profile['price_quantiles'],synthetic_price_quantiles=items.unit_price_usd.quantile([0,.1,.5,.9,1]).to_dict(),
-            source_review_length_quantiles=source_profile['review_length_quantiles'],
-            synthetic_review_length_quantiles=reviews.review_text.str.split().str.len().quantile([0,.1,.5,.9,1]).to_dict(),
+            source_price_usd_quantiles=source_profile['source_price_usd_quantiles'],synthetic_price_idr_quantiles=items.unit_price_idr.quantile([0,.1,.5,.9,1]).to_dict(),
             source_category_probabilities=source_profile['category'],
             synthetic_product_counts=items.product_id.value_counts().to_dict())
     summary={'table_rows':{n:len(f) for n,f in t.items()},'requested_units':int(items.requested_qty.sum()),
              'fulfilled_units':int(items.fulfilled_qty.sum()),'unfulfilled_units':int((items.requested_qty-items.fulfilled_qty).sum()),
-             'sentiment_counts':reviews.sentiment_label.value_counts().to_dict(),
+             'sentiment_counts':mentions.sentiment_label.value_counts().to_dict(),
+             'unknown_location_posts':int(posts.region_id.isna().sum()),
+             'social_pending_rows':int(sentiment.split.eq('pending').sum()),
              'stockout_target_counts':decisions.future_stockout_7d.value_counts(dropna=False).astype(str).to_dict()}
     # NaN keys need a JSON-safe representation.
     summary['stockout_target_counts']={str(k):v for k,v in summary['stockout_target_counts'].items()}
@@ -241,8 +284,8 @@ def validate(root,tables,config,source_profile=None):
                '','## Distribution comparisons','```json',json.dumps(comparisons,indent=2),'```',
                '', 'The fictional menu is a subset/proxy of source categories, so exact product/category '
                'marginals are not expected. Seasonal and trend effects intentionally perturb demand. '
-               'Review lengths are capped at 180 target words plus one filler sentence; this differs from long Yelp outliers. '
-               'Source sentiment codes have no verified semantics and are not treated as labels. '
+               'Instagram-like text is synthetic Indonesian menu discussion, not a cafe review or actual scrape. '
+               'USD source prices and synthetic IDR prices are reported separately, never compared as the same currency. '
                'This report contains actual checks, not predictive accuracy or claims of business optimality.']
     (root/'reports'/'validation_report.md').write_text('\n'.join(report),encoding='utf-8')
     (root/'reports'/'validation_results.json').write_text(json.dumps({'checks':checks,'summary':summary,'comparisons':comparisons},indent=2),encoding='utf-8')

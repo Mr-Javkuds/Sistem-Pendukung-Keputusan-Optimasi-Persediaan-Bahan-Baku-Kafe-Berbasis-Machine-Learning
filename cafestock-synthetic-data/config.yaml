@@ -1,7 +1,11 @@
 seed: 20261104
 start_date: '2025-11-04'
 end_date: '2026-11-03'
-timezone: America/New_York
+timezone: Asia/Jakarta
+city: Semarang
+currency: IDR
+social_platform: instagram
+data_mode: synthetic
 mean_daily_transactions_per_branch: 90
-review_probability: 0.035
+mean_daily_social_posts: 18
 evaluation_horizon_days: 7

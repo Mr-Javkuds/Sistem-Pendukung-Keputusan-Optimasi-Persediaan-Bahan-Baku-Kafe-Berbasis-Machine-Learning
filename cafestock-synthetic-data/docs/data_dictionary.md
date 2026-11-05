@@ -1,6 +1,15 @@
 # Data dictionary
 
-All output rows are synthetic; input/ contains preserved external observations. Money is USD; quantities use ingredients.unit (g, ml, piece); timestamps include NYC UTC offset. Empty CSV cells import as SQL NULL. IDs are stable application-assigned bigint keys.
+All output rows are synthetic; input/ contains preserved external observations. Money is IDR; quantities use ingredients.unit (g, ml, piece); timestamps use Asia/Jakarta (+07:00). Empty CSV cells import as SQL NULL. IDs are stable application-assigned bigint keys.
+
+## regions
+
+| Field | PostgreSQL type | Meaning |
+|---|---|---|
+| region_id | bigint | Region id; primary key |
+| region_name | text | Region name |
+| city | text | City |
+| region_level | text | Region level |
 
 ## branches
 
@@ -9,7 +18,9 @@ All output rows are synthetic; input/ contains preserved external observations. 
 | branch_id | bigint | Branch id; primary key |
 | business_name | text | Business name |
 | branch_name | text | Branch name |
+| region_id | bigint | Region id; FK to regions |
 | timezone | text | Timezone |
+| source_location_proxy | text | Explicit unrelated source location used only to transfer transaction patterns |
 
 ## categories
 
@@ -34,7 +45,7 @@ All output rows are synthetic; input/ contains preserved external observations. 
 | ingredient_name | text | Ingredient name |
 | unit | text | Unit |
 | shelf_life_days | integer | Shelf life days |
-| unit_cost_usd | numeric(20,6) | USD per ingredient base unit |
+| unit_cost_idr | numeric(20,6) | IDR per ingredient base unit; invented local cost, not an FX conversion |
 | package_size | numeric(20,6) | Purchase-package quantity in ingredient base units |
 | minimum_order_qty | numeric(20,6) | Minimum purchase units, a package multiple |
 | supplier_id | bigint | Supplier id; FK to suppliers |
@@ -47,6 +58,7 @@ All output rows are synthetic; input/ contains preserved external observations. 
 | product_name | text | Product name |
 | category_id | bigint | Category id; FK to categories |
 | source_product_type_proxy | text | Explicit source type used for statistical sampling; not source identity |
+| base_price_idr | numeric(20,6) | Base price idr |
 
 ## recipes
 
@@ -70,10 +82,65 @@ All output rows are synthetic; input/ contains preserved external observations. 
 | Field | PostgreSQL type | Meaning |
 |---|---|---|
 | trend_id | bigint | Trend id; primary key |
+| region_id | bigint | Region id; FK to regions |
 | category_id | bigint | Category id; FK to categories |
 | week_start | date | Week start |
 | available_at | timestamptz | Available at |
 | interest_index | numeric(20,6) | Interest index |
+| provenance | text | Provenance |
+
+## social_posts
+
+| Field | PostgreSQL type | Meaning |
+|---|---|---|
+| post_id | bigint | Post id; primary key |
+| platform | text | Platform |
+| source_post_key | text | Source post key |
+| source_url | text | NULL for synthetic content; no real Instagram link is claimed; nullable |
+| content_text | text | Original synthetic Indonesian discussion about a menu, not a cafe review |
+| published_at | timestamptz | Published at |
+| collected_at | timestamptz | Simulated monthly ingestion time; later than publication; gates feature availability |
+| batch_key | text | Batch key |
+| region_id | bigint | Region id; FK to regions; nullable |
+| location_evidence | text | synthetic_scenario for assigned market or unknown; never inferred from account location |
+| language | text | Language |
+| provenance | text | Provenance |
+
+## menu_mentions
+
+| Field | PostgreSQL type | Meaning |
+|---|---|---|
+| mention_id | bigint | Mention id; primary key |
+| post_id | bigint | Post id; FK to social_posts |
+| product_id | bigint | Product id; FK to products |
+| sentiment_label | text | Sentiment label |
+| label_provenance | text | Label provenance |
+
+## menu_aspects
+
+| Field | PostgreSQL type | Meaning |
+|---|---|---|
+| menu_aspect_id | bigint | Menu aspect id; primary key |
+| mention_id | bigint | Mention id; FK to menu_mentions |
+| aspect | text | Aspect |
+| sentiment_label | text | Sentiment label |
+
+## menu_market_signals
+
+| Field | PostgreSQL type | Meaning |
+|---|---|---|
+| signal_id | bigint | Signal id; primary key |
+| region_id | bigint | Region id; FK to regions |
+| product_id | bigint | Product id; FK to products |
+| period_start | date | Period start |
+| available_at | timestamptz | Available at |
+| source_max_published_at | timestamptz | Source max published at |
+| post_count | integer | Post count |
+| positive_count | integer | Positive count |
+| neutral_count | integer | Neutral count |
+| negative_count | integer | Negative count |
+| mixed_count | integer | Mixed count |
+| sentiment_mean | numeric(20,6) | Sentiment mean |
 | provenance | text | Provenance |
 
 ## latent_demand
@@ -85,7 +152,7 @@ All output rows are synthetic; input/ contains preserved external observations. 
 | product_id | bigint | Product id; FK to products |
 | transaction_at | timestamptz | Transaction at |
 | requested_qty | integer | Simulated latent product units requested |
-| unit_price_usd | numeric(20,6) | Unit price usd |
+| unit_price_idr | numeric(20,6) | Unit price idr |
 
 ## transactions
 
@@ -105,28 +172,7 @@ All output rows are synthetic; input/ contains preserved external observations. 
 | product_id | bigint | Product id; FK to products |
 | requested_qty | integer | Simulated latent product units requested |
 | fulfilled_qty | integer | Product units actually fulfilled and consuming recipe ingredients |
-| unit_price_usd | numeric(20,6) | Unit price usd |
-
-## customer_reviews
-
-| Field | PostgreSQL type | Meaning |
-|---|---|---|
-| review_id | bigint | Review id; primary key |
-| transaction_item_id | bigint | Transaction item id; FK to transaction_items |
-| review_at | timestamptz | Review at |
-| rating | integer | Rating |
-| review_text | text | Review text |
-| sentiment_label | text | Sentiment label |
-| label_provenance | text | Label provenance |
-
-## review_aspects
-
-| Field | PostgreSQL type | Meaning |
-|---|---|---|
-| review_aspect_id | bigint | Review aspect id; primary key |
-| review_id | bigint | Review id; FK to customer_reviews |
-| aspect | text | Aspect |
-| sentiment_label | text | Sentiment label |
+| unit_price_idr | numeric(20,6) | Unit price idr |
 
 ## purchase_orders
 
@@ -148,7 +194,7 @@ All output rows are synthetic; input/ contains preserved external observations. 
 | purchase_order_id | bigint | Purchase order id; FK to purchase_orders |
 | ingredient_id | bigint | Ingredient id; FK to ingredients |
 | quantity | numeric(20,6) | Ingredient base units; signed delta only in inventory_movements |
-| unit_cost_usd | numeric(20,6) | USD per ingredient base unit |
+| unit_cost_idr | numeric(20,6) | IDR per ingredient base unit; invented local cost, not an FX conversion |
 
 ## inventory_movements
 
@@ -216,10 +262,15 @@ All output rows are synthetic; input/ contains preserved external observations. 
 | minimum_order_qty | numeric(20,6) | Minimum purchase units, a package multiple |
 | baseline_purchase_qty | numeric(20,6) | Reference policy quantity in base units; not mathematically optimal |
 | market_interest_latest | numeric(20,6) | Equal mean of latest known category indices associated via recipes |
+| market_interest_lag_1w | numeric(20,6) | Market interest lag 1w |
 | market_feature_max_at | timestamptz | Latest source timestamp of historical synthetic weekly interest feature |
-| review_count_14d | integer | Review count 14d |
-| sentiment_mean_14d | numeric(20,6) | Branch prior 14-day mean rule sentiment; mixed and neutral score 0 |
-| sentiment_feature_max_at | timestamptz | Latest review timestamp used; NULL means no prior review; nullable |
+| social_post_count_latest_month | integer | Count of available menu discussions for linked products in city plus branch district |
+| menu_sentiment_latest_month | numeric(20,6) | Mean menu opinion: positive=1, negative=-1, neutral/mixed=0; missing flagged separately |
+| social_feature_max_at | timestamptz | Latest publication time used in the historical menu sentiment feature; nullable |
+| social_available_at | timestamptz | Latest actual synthetic monthly collection time contributing to features; nullable |
+| social_period_start | date | Publication month represented in latest available regional menu signals; nullable |
+| social_data_available | integer | 0 means no eligible collected batch; score 0 must not be interpreted as observed neutrality |
+| social_age_days | integer | Days since contributing monthly batch availability; 0 with availability flag 0 means missing |
 | label_window_end | timestamptz | Label window end |
 | future_stockout_7d | integer | Evaluation target: shortage event in configured horizon; NULL if censored; nullable |
 | label_observed | integer | 1 if complete future outcome window is available, otherwise 0 |
@@ -243,10 +294,15 @@ All output rows are synthetic; input/ contains preserved external observations. 
 | minimum_order_qty | numeric(20,6) | Minimum purchase units, a package multiple |
 | baseline_purchase_qty | numeric(20,6) | Reference policy quantity in base units; not mathematically optimal |
 | market_interest_latest | numeric(20,6) | Equal mean of latest known category indices associated via recipes |
+| market_interest_lag_1w | numeric(20,6) | Market interest lag 1w |
 | market_feature_max_at | timestamptz | Latest source timestamp of historical synthetic weekly interest feature |
-| review_count_14d | integer | Review count 14d |
-| sentiment_mean_14d | numeric(20,6) | Branch prior 14-day mean rule sentiment; mixed and neutral score 0 |
-| sentiment_feature_max_at | timestamptz | Latest review timestamp used; NULL means no prior review; nullable |
+| social_post_count_latest_month | integer | Count of available menu discussions for linked products in city plus branch district |
+| menu_sentiment_latest_month | numeric(20,6) | Mean menu opinion: positive=1, negative=-1, neutral/mixed=0; missing flagged separately |
+| social_feature_max_at | timestamptz | Latest publication time used in the historical menu sentiment feature; nullable |
+| social_available_at | timestamptz | Latest actual synthetic monthly collection time contributing to features; nullable |
+| social_period_start | date | Publication month represented in latest available regional menu signals; nullable |
+| social_data_available | integer | 0 means no eligible collected batch; score 0 must not be interpreted as observed neutrality |
+| social_age_days | integer | Days since contributing monthly batch availability; 0 with availability flag 0 means missing |
 | label_window_end | timestamptz | Label window end |
 | target_stockout | integer | Same evaluation outcome as restock table; excluded from features; nullable |
 | label_observed | integer | 1 if complete future outcome window is available, otherwise 0 |
@@ -258,11 +314,15 @@ All output rows are synthetic; input/ contains preserved external observations. 
 | Field | PostgreSQL type | Meaning |
 |---|---|---|
 | sentiment_row_id | bigint | Sentiment row id; primary key |
-| review_id | bigint | Review id; FK to customer_reviews |
-| review_text | text | Review text |
+| mention_id | bigint | Mention id; FK to menu_mentions |
+| post_id | bigint | Post id; FK to social_posts |
+| product_id | bigint | Product id; FK to products |
+| region_id | bigint | Region id; FK to regions; nullable |
+| published_at | timestamptz | Published at |
+| collected_at | timestamptz | Simulated monthly ingestion time; later than publication; gates feature availability |
+| content_text | text | Original synthetic Indonesian discussion about a menu, not a cafe review |
 | sentiment_label | text | Sentiment label |
-| rating | integer | Rating |
-| review_at | timestamptz | Review at |
+| label_provenance | text | Label provenance |
 | split | text | Chronological train/validation/test; boundary label rows are purged from training |
 
 ## trend_ml_dataset

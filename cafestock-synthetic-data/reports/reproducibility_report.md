@@ -1,6 +1,6 @@
 # Reproducibility
 
-23/23 CSV files byte-identical across two independent generations.
+26/26 CSV files byte-identical across two independent generations.
 
 Mismatches: []
 

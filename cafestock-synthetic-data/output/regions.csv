@@ -1,0 +1,5 @@
+region_id,region_name,city,region_level
+1,Semarang,Semarang,city
+2,Semarang Tengah,Semarang,district
+3,Semarang Selatan,Semarang,district
+4,Banyumanik,Semarang,district

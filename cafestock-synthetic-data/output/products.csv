@@ -1,11 +1,11 @@
-product_id,product_name,category_id,source_product_type_proxy
-1,House Brewed Coffee,1,Gourmet brewed coffee
-2,Espresso,1,Barista Espresso
-3,Cafe Latte,1,Barista Espresso
-4,Iced Latte,1,Barista Espresso
-5,Iced Matcha Latte,2,Green tea
-6,Chai Tea,2,Brewed Chai tea
-7,Green Tea,2,Brewed Green tea
-8,Hot Chocolate,4,Hot chocolate
-9,Butter Croissant,3,Pastry
-10,Blueberry Muffin,3,Scone
+product_id,product_name,category_id,source_product_type_proxy,base_price_idr
+1,Kopi Seduh,1,Gourmet brewed coffee,18000
+2,Espresso,1,Barista Espresso,18000
+3,Latte Panas,1,Barista Espresso,25000
+4,Es Latte,1,Barista Espresso,28000
+5,Es Matcha Latte,2,Brewed Green tea,30000
+6,Teh Chai,2,Brewed Chai tea,18000
+7,Teh Hijau,2,Brewed Green tea,16000
+8,Cokelat Panas,4,Hot chocolate,25000
+9,Butter Croissant,3,Pastry,18000
+10,Blueberry Muffin,3,Scone,20000

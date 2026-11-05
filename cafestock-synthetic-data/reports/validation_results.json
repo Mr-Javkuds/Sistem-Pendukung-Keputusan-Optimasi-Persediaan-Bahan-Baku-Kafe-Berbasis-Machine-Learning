@@ -1,7 +1,67 @@
 {
   "checks": [
     [
+      "regions primary key",
+      true,
+      ""
+    ],
+    [
+      "regions required region_id",
+      true,
+      ""
+    ],
+    [
+      "regions required region_name",
+      true,
+      ""
+    ],
+    [
+      "regions required city",
+      true,
+      ""
+    ],
+    [
+      "regions required region_level",
+      true,
+      ""
+    ],
+    [
+      "regions unique region_name,city",
+      true,
+      ""
+    ],
+    [
       "branches primary key",
+      true,
+      ""
+    ],
+    [
+      "branches required branch_id",
+      true,
+      ""
+    ],
+    [
+      "branches required business_name",
+      true,
+      ""
+    ],
+    [
+      "branches required branch_name",
+      true,
+      ""
+    ],
+    [
+      "branches required region_id",
+      true,
+      ""
+    ],
+    [
+      "branches required timezone",
+      true,
+      ""
+    ],
+    [
+      "branches required source_location_proxy",
       true,
       ""
     ],
@@ -11,7 +71,22 @@
       ""
     ],
     [
+      "branches FK region_id",
+      true,
+      ""
+    ],
+    [
       "categories primary key",
+      true,
+      ""
+    ],
+    [
+      "categories required category_id",
+      true,
+      ""
+    ],
+    [
+      "categories required category_name",
       true,
       ""
     ],
@@ -26,7 +101,62 @@
       ""
     ],
     [
+      "suppliers required supplier_id",
+      true,
+      ""
+    ],
+    [
+      "suppliers required supplier_name",
+      true,
+      ""
+    ],
+    [
+      "suppliers required lead_time_days",
+      true,
+      ""
+    ],
+    [
       "ingredients primary key",
+      true,
+      ""
+    ],
+    [
+      "ingredients required ingredient_id",
+      true,
+      ""
+    ],
+    [
+      "ingredients required ingredient_name",
+      true,
+      ""
+    ],
+    [
+      "ingredients required unit",
+      true,
+      ""
+    ],
+    [
+      "ingredients required shelf_life_days",
+      true,
+      ""
+    ],
+    [
+      "ingredients required unit_cost_idr",
+      true,
+      ""
+    ],
+    [
+      "ingredients required package_size",
+      true,
+      ""
+    ],
+    [
+      "ingredients required minimum_order_qty",
+      true,
+      ""
+    ],
+    [
+      "ingredients required supplier_id",
       true,
       ""
     ],
@@ -46,6 +176,31 @@
       ""
     ],
     [
+      "products required product_id",
+      true,
+      ""
+    ],
+    [
+      "products required product_name",
+      true,
+      ""
+    ],
+    [
+      "products required category_id",
+      true,
+      ""
+    ],
+    [
+      "products required source_product_type_proxy",
+      true,
+      ""
+    ],
+    [
+      "products required base_price_idr",
+      true,
+      ""
+    ],
+    [
       "products unique product_name",
       true,
       ""
@@ -61,6 +216,21 @@
       ""
     ],
     [
+      "recipes required recipe_id",
+      true,
+      ""
+    ],
+    [
+      "recipes required product_id",
+      true,
+      ""
+    ],
+    [
+      "recipes required version",
+      true,
+      ""
+    ],
+    [
       "recipes unique product_id",
       true,
       ""
@@ -72,6 +242,26 @@
     ],
     [
       "recipe_ingredients primary key",
+      true,
+      ""
+    ],
+    [
+      "recipe_ingredients required recipe_ingredient_id",
+      true,
+      ""
+    ],
+    [
+      "recipe_ingredients required recipe_id",
+      true,
+      ""
+    ],
+    [
+      "recipe_ingredients required ingredient_id",
+      true,
+      ""
+    ],
+    [
+      "recipe_ingredients required quantity",
       true,
       ""
     ],
@@ -96,6 +286,41 @@
       ""
     ],
     [
+      "market_trends required trend_id",
+      true,
+      ""
+    ],
+    [
+      "market_trends required region_id",
+      true,
+      ""
+    ],
+    [
+      "market_trends required category_id",
+      true,
+      ""
+    ],
+    [
+      "market_trends required week_start",
+      true,
+      ""
+    ],
+    [
+      "market_trends required available_at",
+      true,
+      ""
+    ],
+    [
+      "market_trends required interest_index",
+      true,
+      ""
+    ],
+    [
+      "market_trends required provenance",
+      true,
+      ""
+    ],
+    [
       "market_trends unique category_id,week_start",
       true,
       ""
@@ -106,12 +331,302 @@
       ""
     ],
     [
+      "market_trends FK region_id",
+      true,
+      ""
+    ],
+    [
       "market_trends timestamp available_at",
       true,
       ""
     ],
     [
+      "social_posts primary key",
+      true,
+      ""
+    ],
+    [
+      "social_posts required post_id",
+      true,
+      ""
+    ],
+    [
+      "social_posts required platform",
+      true,
+      ""
+    ],
+    [
+      "social_posts required source_post_key",
+      true,
+      ""
+    ],
+    [
+      "social_posts required content_text",
+      true,
+      ""
+    ],
+    [
+      "social_posts required published_at",
+      true,
+      ""
+    ],
+    [
+      "social_posts required collected_at",
+      true,
+      ""
+    ],
+    [
+      "social_posts required batch_key",
+      true,
+      ""
+    ],
+    [
+      "social_posts required location_evidence",
+      true,
+      ""
+    ],
+    [
+      "social_posts required language",
+      true,
+      ""
+    ],
+    [
+      "social_posts required provenance",
+      true,
+      ""
+    ],
+    [
+      "social_posts unique platform,source_post_key",
+      true,
+      ""
+    ],
+    [
+      "social_posts FK region_id",
+      true,
+      ""
+    ],
+    [
+      "social_posts timestamp published_at",
+      true,
+      ""
+    ],
+    [
+      "social_posts period published_at",
+      true,
+      ""
+    ],
+    [
+      "social_posts timestamp collected_at",
+      true,
+      ""
+    ],
+    [
+      "menu_mentions primary key",
+      true,
+      ""
+    ],
+    [
+      "menu_mentions required mention_id",
+      true,
+      ""
+    ],
+    [
+      "menu_mentions required post_id",
+      true,
+      ""
+    ],
+    [
+      "menu_mentions required product_id",
+      true,
+      ""
+    ],
+    [
+      "menu_mentions required sentiment_label",
+      true,
+      ""
+    ],
+    [
+      "menu_mentions required label_provenance",
+      true,
+      ""
+    ],
+    [
+      "menu_mentions unique post_id,product_id",
+      true,
+      ""
+    ],
+    [
+      "menu_mentions FK post_id",
+      true,
+      ""
+    ],
+    [
+      "menu_mentions FK product_id",
+      true,
+      ""
+    ],
+    [
+      "menu_aspects primary key",
+      true,
+      ""
+    ],
+    [
+      "menu_aspects required menu_aspect_id",
+      true,
+      ""
+    ],
+    [
+      "menu_aspects required mention_id",
+      true,
+      ""
+    ],
+    [
+      "menu_aspects required aspect",
+      true,
+      ""
+    ],
+    [
+      "menu_aspects required sentiment_label",
+      true,
+      ""
+    ],
+    [
+      "menu_aspects unique mention_id,aspect",
+      true,
+      ""
+    ],
+    [
+      "menu_aspects FK mention_id",
+      true,
+      ""
+    ],
+    [
+      "menu_market_signals primary key",
+      true,
+      ""
+    ],
+    [
+      "menu_market_signals required signal_id",
+      true,
+      ""
+    ],
+    [
+      "menu_market_signals required region_id",
+      true,
+      ""
+    ],
+    [
+      "menu_market_signals required product_id",
+      true,
+      ""
+    ],
+    [
+      "menu_market_signals required period_start",
+      true,
+      ""
+    ],
+    [
+      "menu_market_signals required available_at",
+      true,
+      ""
+    ],
+    [
+      "menu_market_signals required source_max_published_at",
+      true,
+      ""
+    ],
+    [
+      "menu_market_signals required post_count",
+      true,
+      ""
+    ],
+    [
+      "menu_market_signals required positive_count",
+      true,
+      ""
+    ],
+    [
+      "menu_market_signals required neutral_count",
+      true,
+      ""
+    ],
+    [
+      "menu_market_signals required negative_count",
+      true,
+      ""
+    ],
+    [
+      "menu_market_signals required mixed_count",
+      true,
+      ""
+    ],
+    [
+      "menu_market_signals required sentiment_mean",
+      true,
+      ""
+    ],
+    [
+      "menu_market_signals required provenance",
+      true,
+      ""
+    ],
+    [
+      "menu_market_signals unique region_id,product_id,period_start",
+      true,
+      ""
+    ],
+    [
+      "menu_market_signals FK region_id",
+      true,
+      ""
+    ],
+    [
+      "menu_market_signals FK product_id",
+      true,
+      ""
+    ],
+    [
+      "menu_market_signals timestamp available_at",
+      true,
+      ""
+    ],
+    [
+      "menu_market_signals timestamp source_max_published_at",
+      true,
+      ""
+    ],
+    [
       "latent_demand primary key",
+      true,
+      ""
+    ],
+    [
+      "latent_demand required demand_id",
+      true,
+      ""
+    ],
+    [
+      "latent_demand required branch_id",
+      true,
+      ""
+    ],
+    [
+      "latent_demand required product_id",
+      true,
+      ""
+    ],
+    [
+      "latent_demand required transaction_at",
+      true,
+      ""
+    ],
+    [
+      "latent_demand required requested_qty",
+      true,
+      ""
+    ],
+    [
+      "latent_demand required unit_price_idr",
       true,
       ""
     ],
@@ -141,6 +656,21 @@
       ""
     ],
     [
+      "transactions required transaction_id",
+      true,
+      ""
+    ],
+    [
+      "transactions required branch_id",
+      true,
+      ""
+    ],
+    [
+      "transactions required transaction_at",
+      true,
+      ""
+    ],
+    [
       "transactions FK branch_id",
       true,
       ""
@@ -157,6 +687,41 @@
     ],
     [
       "transaction_items primary key",
+      true,
+      ""
+    ],
+    [
+      "transaction_items required transaction_item_id",
+      true,
+      ""
+    ],
+    [
+      "transaction_items required transaction_id",
+      true,
+      ""
+    ],
+    [
+      "transaction_items required demand_id",
+      true,
+      ""
+    ],
+    [
+      "transaction_items required product_id",
+      true,
+      ""
+    ],
+    [
+      "transaction_items required requested_qty",
+      true,
+      ""
+    ],
+    [
+      "transaction_items required fulfilled_qty",
+      true,
+      ""
+    ],
+    [
+      "transaction_items required unit_price_idr",
       true,
       ""
     ],
@@ -181,42 +746,37 @@
       ""
     ],
     [
-      "customer_reviews primary key",
-      true,
-      ""
-    ],
-    [
-      "customer_reviews FK transaction_item_id",
-      true,
-      ""
-    ],
-    [
-      "customer_reviews timestamp review_at",
-      true,
-      ""
-    ],
-    [
-      "customer_reviews period review_at",
-      true,
-      ""
-    ],
-    [
-      "review_aspects primary key",
-      true,
-      ""
-    ],
-    [
-      "review_aspects unique review_id,aspect",
-      true,
-      ""
-    ],
-    [
-      "review_aspects FK review_id",
-      true,
-      ""
-    ],
-    [
       "purchase_orders primary key",
+      true,
+      ""
+    ],
+    [
+      "purchase_orders required purchase_order_id",
+      true,
+      ""
+    ],
+    [
+      "purchase_orders required branch_id",
+      true,
+      ""
+    ],
+    [
+      "purchase_orders required supplier_id",
+      true,
+      ""
+    ],
+    [
+      "purchase_orders required ordered_at",
+      true,
+      ""
+    ],
+    [
+      "purchase_orders required expected_delivery_at",
+      true,
+      ""
+    ],
+    [
+      "purchase_orders required status",
       true,
       ""
     ],
@@ -256,6 +816,31 @@
       ""
     ],
     [
+      "purchase_order_items required purchase_order_item_id",
+      true,
+      ""
+    ],
+    [
+      "purchase_order_items required purchase_order_id",
+      true,
+      ""
+    ],
+    [
+      "purchase_order_items required ingredient_id",
+      true,
+      ""
+    ],
+    [
+      "purchase_order_items required quantity",
+      true,
+      ""
+    ],
+    [
+      "purchase_order_items required unit_cost_idr",
+      true,
+      ""
+    ],
+    [
       "purchase_order_items FK purchase_order_id",
       true,
       ""
@@ -267,6 +852,36 @@
     ],
     [
       "inventory_movements primary key",
+      true,
+      ""
+    ],
+    [
+      "inventory_movements required movement_id",
+      true,
+      ""
+    ],
+    [
+      "inventory_movements required branch_id",
+      true,
+      ""
+    ],
+    [
+      "inventory_movements required ingredient_id",
+      true,
+      ""
+    ],
+    [
+      "inventory_movements required movement_at",
+      true,
+      ""
+    ],
+    [
+      "inventory_movements required movement_type",
+      true,
+      ""
+    ],
+    [
+      "inventory_movements required quantity",
       true,
       ""
     ],
@@ -306,6 +921,56 @@
       ""
     ],
     [
+      "inventory_snapshots required snapshot_id",
+      true,
+      ""
+    ],
+    [
+      "inventory_snapshots required branch_id",
+      true,
+      ""
+    ],
+    [
+      "inventory_snapshots required ingredient_id",
+      true,
+      ""
+    ],
+    [
+      "inventory_snapshots required date",
+      true,
+      ""
+    ],
+    [
+      "inventory_snapshots required opening_stock",
+      true,
+      ""
+    ],
+    [
+      "inventory_snapshots required receipts",
+      true,
+      ""
+    ],
+    [
+      "inventory_snapshots required consumption",
+      true,
+      ""
+    ],
+    [
+      "inventory_snapshots required waste",
+      true,
+      ""
+    ],
+    [
+      "inventory_snapshots required adjustments",
+      true,
+      ""
+    ],
+    [
+      "inventory_snapshots required closing_stock",
+      true,
+      ""
+    ],
+    [
       "inventory_snapshots unique branch_id,ingredient_id,date",
       true,
       ""
@@ -322,6 +987,36 @@
     ],
     [
       "stockout_events primary key",
+      true,
+      ""
+    ],
+    [
+      "stockout_events required stockout_event_id",
+      true,
+      ""
+    ],
+    [
+      "stockout_events required transaction_item_id",
+      true,
+      ""
+    ],
+    [
+      "stockout_events required ingredient_id",
+      true,
+      ""
+    ],
+    [
+      "stockout_events required event_at",
+      true,
+      ""
+    ],
+    [
+      "stockout_events required shortage_qty",
+      true,
+      ""
+    ],
+    [
+      "stockout_events required unfulfilled_product_qty",
       true,
       ""
     ],
@@ -351,12 +1046,147 @@
       ""
     ],
     [
+      "waste_records required waste_id",
+      true,
+      ""
+    ],
+    [
+      "waste_records required movement_id",
+      true,
+      ""
+    ],
+    [
+      "waste_records required reason",
+      true,
+      ""
+    ],
+    [
+      "waste_records required quantity",
+      true,
+      ""
+    ],
+    [
       "waste_records FK movement_id",
       true,
       ""
     ],
     [
       "restock_decision_dataset primary key",
+      true,
+      ""
+    ],
+    [
+      "restock_decision_dataset required decision_id",
+      true,
+      ""
+    ],
+    [
+      "restock_decision_dataset required branch_id",
+      true,
+      ""
+    ],
+    [
+      "restock_decision_dataset required ingredient_id",
+      true,
+      ""
+    ],
+    [
+      "restock_decision_dataset required decision_at",
+      true,
+      ""
+    ],
+    [
+      "restock_decision_dataset required history_days",
+      true,
+      ""
+    ],
+    [
+      "restock_decision_dataset required mean_daily_consumption_14d",
+      true,
+      ""
+    ],
+    [
+      "restock_decision_dataset required on_hand",
+      true,
+      ""
+    ],
+    [
+      "restock_decision_dataset required on_order",
+      true,
+      ""
+    ],
+    [
+      "restock_decision_dataset required lead_time_days",
+      true,
+      ""
+    ],
+    [
+      "restock_decision_dataset required shelf_life_days",
+      true,
+      ""
+    ],
+    [
+      "restock_decision_dataset required package_size",
+      true,
+      ""
+    ],
+    [
+      "restock_decision_dataset required minimum_order_qty",
+      true,
+      ""
+    ],
+    [
+      "restock_decision_dataset required baseline_purchase_qty",
+      true,
+      ""
+    ],
+    [
+      "restock_decision_dataset required market_interest_latest",
+      true,
+      ""
+    ],
+    [
+      "restock_decision_dataset required market_interest_lag_1w",
+      true,
+      ""
+    ],
+    [
+      "restock_decision_dataset required market_feature_max_at",
+      true,
+      ""
+    ],
+    [
+      "restock_decision_dataset required social_post_count_latest_month",
+      true,
+      ""
+    ],
+    [
+      "restock_decision_dataset required menu_sentiment_latest_month",
+      true,
+      ""
+    ],
+    [
+      "restock_decision_dataset required social_data_available",
+      true,
+      ""
+    ],
+    [
+      "restock_decision_dataset required social_age_days",
+      true,
+      ""
+    ],
+    [
+      "restock_decision_dataset required label_window_end",
+      true,
+      ""
+    ],
+    [
+      "restock_decision_dataset required label_observed",
+      true,
+      ""
+    ],
+    [
+      "restock_decision_dataset required split",
       true,
       ""
     ],
@@ -391,7 +1221,12 @@
       ""
     ],
     [
-      "restock_decision_dataset timestamp sentiment_feature_max_at",
+      "restock_decision_dataset timestamp social_feature_max_at",
+      true,
+      ""
+    ],
+    [
+      "restock_decision_dataset timestamp social_available_at",
       true,
       ""
     ],
@@ -402,6 +1237,121 @@
     ],
     [
       "inventory_risk_ml_dataset primary key",
+      true,
+      ""
+    ],
+    [
+      "inventory_risk_ml_dataset required risk_row_id",
+      true,
+      ""
+    ],
+    [
+      "inventory_risk_ml_dataset required branch_id",
+      true,
+      ""
+    ],
+    [
+      "inventory_risk_ml_dataset required ingredient_id",
+      true,
+      ""
+    ],
+    [
+      "inventory_risk_ml_dataset required decision_at",
+      true,
+      ""
+    ],
+    [
+      "inventory_risk_ml_dataset required history_days",
+      true,
+      ""
+    ],
+    [
+      "inventory_risk_ml_dataset required mean_daily_consumption_14d",
+      true,
+      ""
+    ],
+    [
+      "inventory_risk_ml_dataset required on_hand",
+      true,
+      ""
+    ],
+    [
+      "inventory_risk_ml_dataset required on_order",
+      true,
+      ""
+    ],
+    [
+      "inventory_risk_ml_dataset required lead_time_days",
+      true,
+      ""
+    ],
+    [
+      "inventory_risk_ml_dataset required shelf_life_days",
+      true,
+      ""
+    ],
+    [
+      "inventory_risk_ml_dataset required package_size",
+      true,
+      ""
+    ],
+    [
+      "inventory_risk_ml_dataset required minimum_order_qty",
+      true,
+      ""
+    ],
+    [
+      "inventory_risk_ml_dataset required baseline_purchase_qty",
+      true,
+      ""
+    ],
+    [
+      "inventory_risk_ml_dataset required market_interest_latest",
+      true,
+      ""
+    ],
+    [
+      "inventory_risk_ml_dataset required market_interest_lag_1w",
+      true,
+      ""
+    ],
+    [
+      "inventory_risk_ml_dataset required market_feature_max_at",
+      true,
+      ""
+    ],
+    [
+      "inventory_risk_ml_dataset required social_post_count_latest_month",
+      true,
+      ""
+    ],
+    [
+      "inventory_risk_ml_dataset required menu_sentiment_latest_month",
+      true,
+      ""
+    ],
+    [
+      "inventory_risk_ml_dataset required social_data_available",
+      true,
+      ""
+    ],
+    [
+      "inventory_risk_ml_dataset required social_age_days",
+      true,
+      ""
+    ],
+    [
+      "inventory_risk_ml_dataset required label_window_end",
+      true,
+      ""
+    ],
+    [
+      "inventory_risk_ml_dataset required label_observed",
+      true,
+      ""
+    ],
+    [
+      "inventory_risk_ml_dataset required split",
       true,
       ""
     ],
@@ -431,7 +1381,12 @@
       ""
     ],
     [
-      "inventory_risk_ml_dataset timestamp sentiment_feature_max_at",
+      "inventory_risk_ml_dataset timestamp social_feature_max_at",
+      true,
+      ""
+    ],
+    [
+      "inventory_risk_ml_dataset timestamp social_available_at",
       true,
       ""
     ],
@@ -446,22 +1401,122 @@
       ""
     ],
     [
-      "sentiment_ml_dataset FK review_id",
+      "sentiment_ml_dataset required sentiment_row_id",
       true,
       ""
     ],
     [
-      "sentiment_ml_dataset timestamp review_at",
+      "sentiment_ml_dataset required mention_id",
       true,
       ""
     ],
     [
-      "sentiment_ml_dataset period review_at",
+      "sentiment_ml_dataset required post_id",
+      true,
+      ""
+    ],
+    [
+      "sentiment_ml_dataset required product_id",
+      true,
+      ""
+    ],
+    [
+      "sentiment_ml_dataset required published_at",
+      true,
+      ""
+    ],
+    [
+      "sentiment_ml_dataset required collected_at",
+      true,
+      ""
+    ],
+    [
+      "sentiment_ml_dataset required content_text",
+      true,
+      ""
+    ],
+    [
+      "sentiment_ml_dataset required sentiment_label",
+      true,
+      ""
+    ],
+    [
+      "sentiment_ml_dataset required label_provenance",
+      true,
+      ""
+    ],
+    [
+      "sentiment_ml_dataset required split",
+      true,
+      ""
+    ],
+    [
+      "sentiment_ml_dataset FK mention_id",
+      true,
+      ""
+    ],
+    [
+      "sentiment_ml_dataset FK post_id",
+      true,
+      ""
+    ],
+    [
+      "sentiment_ml_dataset FK product_id",
+      true,
+      ""
+    ],
+    [
+      "sentiment_ml_dataset FK region_id",
+      true,
+      ""
+    ],
+    [
+      "sentiment_ml_dataset timestamp published_at",
+      true,
+      ""
+    ],
+    [
+      "sentiment_ml_dataset period published_at",
+      true,
+      ""
+    ],
+    [
+      "sentiment_ml_dataset timestamp collected_at",
       true,
       ""
     ],
     [
       "trend_ml_dataset primary key",
+      true,
+      ""
+    ],
+    [
+      "trend_ml_dataset required trend_row_id",
+      true,
+      ""
+    ],
+    [
+      "trend_ml_dataset required category_id",
+      true,
+      ""
+    ],
+    [
+      "trend_ml_dataset required decision_at",
+      true,
+      ""
+    ],
+    [
+      "trend_ml_dataset required interest_lag_1w",
+      true,
+      ""
+    ],
+    [
+      "trend_ml_dataset required label_observed",
+      true,
+      ""
+    ],
+    [
+      "trend_ml_dataset required split",
       true,
       ""
     ],
@@ -503,7 +1558,7 @@
     [
       "No negative stock at any movement",
       true,
-      "min=-1.7763568394002505e-15"
+      "min=-3.552713678800501e-15"
     ],
     [
       "Independent FEFO expiry and lot reconstruction",
@@ -601,32 +1656,87 @@
       ""
     ],
     [
-      "Reviews reference fulfilled purchases",
+      "All branches are Semarang WIB",
       true,
       ""
     ],
     [
-      "Reviews follow purchase",
+      "No cafe-review tables or source files",
       true,
       ""
     ],
     [
-      "Sentiment follows documented rules",
+      "Social posts are explicitly synthetic Instagram",
       true,
       ""
     ],
     [
-      "Mixed reviews contain opposed aspects",
+      "No fabricated real Instagram URL or account",
       true,
       ""
     ],
     [
-      "No unrelated cafe names",
+      "No purchase, cafe, or rating link in public discussion",
       true,
       ""
     ],
     [
-      "No copied source reviews",
+      "Indonesian menu discussion provenance",
+      true,
+      ""
+    ],
+    [
+      "Location uncertainty explicitly represented",
+      true,
+      ""
+    ],
+    [
+      "Collection follows publication",
+      true,
+      ""
+    ],
+    [
+      "Monthly Instagram collection schedule",
+      true,
+      ""
+    ],
+    [
+      "Menu names occur in corresponding caption",
+      true,
+      ""
+    ],
+    [
+      "Menu sentiment ground truth consistent with aspects",
+      true,
+      ""
+    ],
+    [
+      "All four menu sentiment classes available",
+      true,
+      ""
+    ],
+    [
+      "Monthly region/menu signals independently reconstructed",
+      true,
+      "[]"
+    ],
+    [
+      "Regional signals exclude unknown locations",
+      true,
+      ""
+    ],
+    [
+      "Sentiment training rows retain correct caption and label",
+      true,
+      ""
+    ],
+    [
+      "Social splits use ingestion time, not publication time",
+      true,
+      ""
+    ],
+    [
+      "Uncollected terminal batches excluded from training",
       true,
       ""
     ],
@@ -636,12 +1746,17 @@
       ""
     ],
     [
-      "No future feature sentiment_feature_max_at",
+      "No future feature social_feature_max_at",
       true,
       ""
     ],
     [
-      "Independent historical feature reconstruction",
+      "No future feature social_available_at",
+      true,
+      ""
+    ],
+    [
+      "Independent historical operational and regional-menu feature reconstruction",
       true,
       "[]"
     ],
@@ -696,12 +1811,7 @@
       ""
     ],
     [
-      "Synthetic review provenance",
-      true,
-      ""
-    ],
-    [
-      "Review rating bounds",
+      "Semarang trend region",
       true,
       ""
     ],
@@ -713,16 +1823,17 @@
     [
       "Hourly source distribution plausibility",
       true,
-      "max absolute probability difference=0.00308"
+      "max absolute probability difference=0.00191"
     ],
     [
-      "Rating source distribution plausibility",
+      "Synthetic sentiment distribution follows explicit assumptions",
       true,
-      "max difference=0.00663; tolerance=0.08000"
+      "max difference=0.00266; tolerance=0.08000"
     ]
   ],
   "summary": {
     "table_rows": {
+      "regions": 4,
       "branches": 3,
       "categories": 4,
       "suppliers": 2,
@@ -731,52 +1842,54 @@
       "recipes": 10,
       "recipe_ingredients": 25,
       "market_trends": 252,
-      "latent_demand": 98492,
-      "transactions": 98492,
-      "transaction_items": 98492,
-      "customer_reviews": 3083,
-      "review_aspects": 5426,
-      "purchase_orders": 4098,
-      "purchase_order_items": 4098,
-      "inventory_movements": 214836,
+      "social_posts": 6612,
+      "menu_mentions": 6612,
+      "menu_aspects": 13224,
+      "menu_market_signals": 508,
+      "latent_demand": 98128,
+      "transactions": 98128,
+      "transaction_items": 98128,
+      "purchase_orders": 4294,
+      "purchase_order_items": 4294,
+      "inventory_movements": 222122,
       "inventory_snapshots": 10950,
-      "stockout_events": 8335,
-      "waste_records": 403,
+      "stockout_events": 7733,
+      "waste_records": 383,
       "restock_decision_dataset": 10950,
       "inventory_risk_ml_dataset": 10950,
-      "sentiment_ml_dataset": 3083,
+      "sentiment_ml_dataset": 6612,
       "trend_ml_dataset": 212
     },
-    "requested_units": 140263,
-    "fulfilled_units": 129096,
-    "unfulfilled_units": 11167,
+    "requested_units": 140084,
+    "fulfilled_units": 129494,
+    "unfulfilled_units": 10590,
     "sentiment_counts": {
-      "positive": 1981,
-      "mixed": 622,
-      "negative": 251,
-      "neutral": 229
+      "positive": 2993,
+      "negative": 1332,
+      "neutral": 1307,
+      "mixed": 980
     },
+    "unknown_location_posts": 321,
+    "social_pending_rows": 49,
     "stockout_target_counts": {
-      "1.0": "5890",
-      "0.0": "4850",
+      "1.0": "5543",
+      "0.0": "5197",
       "nan": "210"
     }
   },
   "comparisons": {
-    "hourly_max_probability_difference": 0.0030786974733137684,
-    "rating_source": {
-      "1": 0.036587129428778016,
-      "2": 0.058279103398409256,
-      "3": 0.09689081706435286,
-      "4": 0.3099060014461316,
-      "5": 0.49833694866232825
+    "hourly_max_probability_difference": 0.0019070579947023797,
+    "sentiment_assumptions": {
+      "positive": 0.45,
+      "neutral": 0.2,
+      "negative": 0.2,
+      "mixed": 0.15
     },
-    "rating_synthetic": {
-      "5": 0.5027570548167369,
-      "4": 0.3032760298410639,
-      "3": 0.09276678559844308,
-      "2": 0.06162828413882582,
-      "1": 0.03957184560493026
+    "sentiment_generated": {
+      "positive": 0.45266182698124624,
+      "negative": 0.2014519056261343,
+      "neutral": 0.19767090139140955,
+      "mixed": 0.1482153660012099
     },
     "quantity_source": {
       "1": 0.5845046809195525,
@@ -787,37 +1900,24 @@
       "8": 6.706188470720782e-05
     },
     "quantity_synthetic": {
-      "1": 0.5977338260975511,
-      "2": 0.38042683669739674,
-      "3": 0.021839337205052187
+      "1": 0.5938773846404696,
+      "2": 0.384701614218164,
+      "3": 0.021400619598891245,
+      "4": 2.038154247513452e-05
     },
-    "source_price_quantiles": {
+    "source_price_usd_quantiles": {
       "0.0": 0.8,
       "0.1": 2.2,
       "0.5": 3.0,
       "0.9": 4.25,
       "1.0": 45.0
     },
-    "synthetic_price_quantiles": {
-      "0.0": 2.0,
-      "0.1": 2.5,
-      "0.5": 3.25,
-      "0.9": 4.25,
-      "1.0": 9.25
-    },
-    "source_review_length_quantiles": {
-      "0.0": 5.0,
-      "0.1": 27.0,
-      "0.5": 81.0,
-      "0.9": 207.0,
-      "1.0": 945.0
-    },
-    "synthetic_review_length_quantiles": {
-      "0.0": 21.0,
-      "0.1": 39.0,
-      "0.5": 88.0,
-      "0.9": 180.0,
-      "1.0": 193.0
+    "synthetic_price_idr_quantiles": {
+      "0.0": 16000.0,
+      "0.1": 18000.0,
+      "0.5": 20000.0,
+      "0.9": 28000.0,
+      "1.0": 34000.0
     },
     "source_category_probabilities": {
       "Bakery": 0.15287427237855092,
@@ -831,16 +1931,16 @@
       "Tea": 0.30478955980578876
     },
     "synthetic_product_counts": {
-      "6": 20167,
-      "1": 19443,
-      "8": 13102,
-      "10": 11975,
-      "9": 7927,
-      "7": 6684,
-      "3": 6420,
-      "4": 6329,
-      "2": 6266,
-      "5": 179
+      "6": 20061,
+      "1": 19535,
+      "8": 13225,
+      "10": 11654,
+      "9": 7936,
+      "3": 6404,
+      "2": 6309,
+      "4": 6263,
+      "5": 3407,
+      "7": 3334
     }
   }
 }

@@ -6,8 +6,8 @@ import json
 from pathlib import Path
 import pandas as pd
 
-REQUIRED = ['coffee-shop-sales-revenue.csv', 'geoMap.csv', 'geoMap(1).csv',
-            'raw_yelp_review_data.csv', 'ratings_and_sentiments.csv', 'sentiments_by_shop.csv']
+REQUIRED = ['coffee-shop-sales-revenue.csv']
+OPTIONAL = ['geoMap.csv','multiTimeline.csv']
 
 def read_source(path):
     raw = path.read_bytes()
@@ -29,8 +29,9 @@ def read_source(path):
 def audit(root):
     frames, records = {}, {}
     parts = ['# Source audit', '', 'Source observations are external evidence, not CafeStock records. '
-             'Source review text is never reproduced in this report or generated reviews.', '']
-    for name in REQUIRED + ['multiTimeline.csv']:
+             'Cafe reviews and all Yelp files were removed from the active project by user request. '
+             'Instagram discussion is generated synthetically and is not a scraped source.', '']
+    for name in REQUIRED + OPTIONAL:
         path = root / 'input' / name
         if not path.exists():
             records[name] = {'status': 'missing'}
@@ -46,23 +47,11 @@ def audit(root):
         if name.startswith('geoMap'):
             rec['format'] = 'Geographic interest by city; not a historical time series; Indonesian scope.'
         if name == 'multiTimeline.csv':
-            rec['format'] = 'Weekly matcha interest, Central Java; measured source series, not NYC.'
+            rec['format'] = 'Weekly matcha interest, Central Java; contextual source, not Semarang city measurements.'
         for c in frame:
             if 'date' in c or c == 'Minggu':
                 dates = pd.to_datetime(frame[c], errors='coerce')
                 rec[c + '_range'] = [str(dates.min()), str(dates.max())]
-        if name in ('raw_yelp_review_data.csv','ratings_and_sentiments.csv'):
-            col='full_review_text' if 'full_review_text' in frame else 'review_text'
-            embedded=frame[col].str.extract(r'^\s*(\d{1,2}/\d{1,2}/\d{4})')[0]
-            parsed=pd.to_datetime(embedded,format='%m/%d/%Y',errors='coerce')
-            rec['embedded_review_date_note']='Unverified leading dates in text; not structured timestamps.'
-            rec['embedded_review_dates_parsed']=int(parsed.notna().sum())
-            rec['embedded_review_date_range']=[str(parsed.min()),str(parsed.max())]
-            rec['blank_rows']=int(frame.isna().all(axis=1).sum())
-        for c in frame:
-            if c.endswith('_sent'):
-                numeric=pd.to_numeric(frame[c],errors='coerce')
-                rec['columns'][c]['numeric_parse_failures']=int((frame[c].notna()&numeric.isna()).sum())
         records[name] = rec
         parts += [f'## {name}', '```json', json.dumps(rec, indent=2, ensure_ascii=False), '```', '']
     (root / 'reports' / 'source_audit.md').write_text('\n'.join(parts), encoding='utf-8')

@@ -1,4 +1,4 @@
-branch_id,business_name,branch_name,timezone
-1,CafeStock Coffee,Lower Manhattan,America/New_York
-2,CafeStock Coffee,Hell's Kitchen,America/New_York
-3,CafeStock Coffee,Astoria,America/New_York
+branch_id,business_name,branch_name,region_id,timezone,source_location_proxy
+1,CafeStock Coffee,Semarang Tengah,2,Asia/Jakarta,Lower Manhattan
+2,CafeStock Coffee,Semarang Selatan,3,Asia/Jakarta,Hell's Kitchen
+3,CafeStock Coffee,Banyumanik,4,Asia/Jakarta,Astoria
