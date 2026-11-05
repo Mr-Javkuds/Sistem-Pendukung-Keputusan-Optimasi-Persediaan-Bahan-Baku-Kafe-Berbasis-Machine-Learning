@@ -1,6 +1,11 @@
-# Prepared stages 01–05
+# Panduan data siap eksperimen
 
-Tahap selanjutnya sudah tersedia di [06_encoding/](06_encoding/README.md).
+[Panduan menjalankan](../README.md) · [Alur dan progres](../docs/alur_project_ml.md)
+
+## Tahap 01–05 — tersedia di Git
+
+Dokumentasi tahap selanjutnya tersedia di [06_encoding/](06_encoding/README.md).
+Kode, laporan, dan matriks tahap 06 sudah tersedia di repository.
 Pernyataan tidak ada preprocessing yang di-fit di bawah berlaku untuk tahap 01–05;
 tahap 06 secara terpisah mempelajari preprocessing dari train saja.
 

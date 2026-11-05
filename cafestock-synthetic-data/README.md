@@ -1,27 +1,33 @@
-# CafeStock Intelligence — Semarang synthetic research data
+# Panduan menjalankan CafeStock Intelligence
+
+[README utama](../README.md) · [Alur dan progres](docs/alur_project_ml.md) · [Indeks dokumentasi](docs/README.md)
 
 Generator Python 3.11+ untuk kafe fiktif di Semarang, dengan 3 cabang, 10 produk,
 resep, pemasok, permintaan, transaksi, inventori dan pembahasan menu Instagram.
 Periode 2025-11-04 s.d. 2026-11-03, WIB, mata uang IDR.
 
-## Jalankan
+## 1. Siapkan lingkungan
+
+Perintah berikut dijalankan dari folder `cafestock-synthetic-data`. Lingkungan
+Python disimpan di akar repository (`../.venv`), sesuai workspace saat ini.
+Jika lingkungan sudah ada, lewati pembuatan venv.
 
 ```powershell
-uv venv --python 3.11 .venv
-uv pip install --python .venv/Scripts/python.exe -r requirements.txt
-.venv/Scripts/python.exe generate.py --audit-only
-.venv/Scripts/python.exe generate.py --verify-reproducibility
-.venv/Scripts/python.exe -m src.validate
-.venv/Scripts/python.exe -m unittest discover -s tests -v
+uv venv --python 3.11 ../.venv
+uv pip install --python ../.venv/Scripts/python.exe -r requirements.txt -r requirements-eda.txt
+../.venv/Scripts/python.exe generate.py --audit-only
+../.venv/Scripts/python.exe generate.py --verify-reproducibility
+../.venv/Scripts/python.exe -m src.validate
+../.venv/Scripts/python.exe -m unittest discover -s tests -v
 ```
 
-## Bukti pelaksanaan tahap 01–05
+## 2. Jalankan persiapan tahap 01–05
 
 Setelah generator dan validasi selesai, jalankan:
 
 ```powershell
-uv pip install --python .venv/Scripts/python.exe -r requirements-eda.txt
-.venv/Scripts/python.exe audit_steps_1_5.py
+uv pip install --python ../.venv/Scripts/python.exe -r requirements-eda.txt
+../.venv/Scripts/python.exe audit_steps_1_5.py
 ```
 
 Helper memeriksa hash/relasi, membuat audit cleaning, EDA train, kontrak fitur,
@@ -36,7 +42,7 @@ pip. Lingkungan yang dipakai dalam workspace ini berada di `../.venv`.
 terhadap generate.py. Generator offline, tanpa API berbayar, dan menimpa output
 miliknya. Jangan menganggap perubahan config otomatis merombak basis data lama.
 
-## Data sosial yang menggantikan ulasan
+## 3. Pahami data sosial
 
 | File | Isi |
 |---|---|
@@ -62,14 +68,15 @@ dataset sentimen. Fitur stok memakai bulan publikasi terakhir yang sudah terkump
 menu yang memakai bahan tersebut, serta wilayah cabang dan kota Semarang.
 Lokasi unknown tetap NULL dan dikeluarkan dari agregat regional.
 
-## Eksperimen ML
+## 4. Encoding dan aturan eksperimen ML
 
-Tahap **06_encoding sudah tersedia**. Pasang dependensi ML dan jalankan:
+Tahap **06_encoding sudah selesai**; kode, dependensi, laporan, dan matriks
+tersedia di repository. Setelah audit tahap 01–05, jalankan:
 
 ```powershell
-uv pip install --python .venv/Scripts/python.exe -r requirements-ml.txt
-.venv/Scripts/python.exe encode.py --verify-reproducibility
-.venv/Scripts/python.exe -m unittest discover -s tests -v
+uv pip install --python ../.venv/Scripts/python.exe -r requirements-ml.txt
+../.venv/Scripts/python.exe encode.py --verify-reproducibility
+../.venv/Scripts/python.exe -m unittest discover -s tests -v
 ```
 
 Hasilnya di `prepared/06_encoding/`: TF-IDF sentimen, one-hot kategori dan
@@ -100,13 +107,13 @@ Jumlah pembelian baseline ditentukan oleh stok, konsumsi historis, lead time,
 kemasan dan MOQ, bukan oracle atau jumlah optimal. Penilaian kebijakan baru perlu
 backtest ulang, bukan sekadar mengganti jumlah pesanan pada ledger yang sama.
 
-## PostgreSQL dan validasi
+## 5. PostgreSQL dan validasi
 
 Dari direktori ini, gunakan database kosong yang khusus untuk eksperimen:
 
 ```powershell
 psql -v ON_ERROR_STOP=1 -d cafestock -f sql/schema.sql -f sql/import.sql
-.venv/Scripts/python.exe verify_postgres.py --pg-bin "C:/Program Files/PostgreSQL/18/bin"
+../.venv/Scripts/python.exe verify_postgres.py --pg-bin "C:/Program Files/PostgreSQL/18/bin"
 ```
 
 Helper membuat cluster sementara di 127.0.0.1:55440, mengimpor CSV, membandingkan

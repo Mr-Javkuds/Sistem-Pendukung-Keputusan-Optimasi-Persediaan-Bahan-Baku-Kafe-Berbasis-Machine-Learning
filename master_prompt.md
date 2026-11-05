@@ -1,4 +1,10 @@
-# CODEX TASK — CafeStock Synthetic Dataset Generator
+# Referensi awal — CafeStock Synthetic Dataset Generator
+
+> **Dokumen historis, bukan spesifikasi aktif.** Ketentuan NYC/Yelp dan ulasan
+> kafe di bawah telah digantikan oleh skenario Semarang dan Instagram sintetis.
+> Mulai dari [README proyek](README.md) dan ikuti
+> [alur serta progres terkini](cafestock-synthetic-data/docs/alur_project_ml.md).
+> Teks asli dipertahankan untuk menelusuri rancangan awal.
 
 ## 1. ROLE & OBJECTIVE
 

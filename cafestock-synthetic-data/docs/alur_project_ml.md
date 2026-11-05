@@ -1,6 +1,8 @@
-# Alur proyek ML — Semarang dan Instagram sintetis
+# Alur dan progres proyek ML
 
-## Status sekarang
+[README utama](../../README.md) · [Indeks dokumentasi](README.md) · [Panduan menjalankan](../README.md)
+
+## Status per 5 November 2026
 
 Persiapan data telah direvisi menjadi skenario Semarang; Instagram sintetis
 menggantikan ulasan pembelian kafe. Generator, fitur referensi, schema dan
@@ -9,6 +11,45 @@ imputer dan scaler dipelajari dari train saja. Matriks tetap terpisah per split;
 laporan aktual di reports/encoding_report.md. Model SVM/Random Forest, scraper
 nyata dan dashboard belum dibuat. Tahap berikutnya adalah 07_modeling.
 Hasil pemeriksaan aktual dibaca dari reports/, bukan dianggap sebagai akurasi ML.
+
+✅ Selesai dengan bukti tersimpan di Git · ⬜ Belum dikerjakan.
+Checklist menunjukkan penyelesaian tahap, bukan akurasi atau manfaat bisnis.
+
+- [x] **01 — Raw dataset:** input sumber, output sintetis, dan provenance tersedia.
+- [x] **02 — Data cleaning:** duplikasi, eligibility, NULL, label, dan waktu diaudit.
+- [x] **03 — EDA:** ringkasan serta grafik train tersedia.
+- [x] **04 — Feature engineering:** fitur historis dan target dipisahkan.
+- [x] **05 — Split 70/15/15:** partisi waktu serta ekspor X/y/metadata tersedia.
+- [x] **06 — Encoding:** TF-IDF, one-hot, imputasi/scaling train-only dan matriks tersedia.
+- [ ] **07 — Modeling:** latih model utama dan pembanding.
+- [ ] **08 — Evaluation:** evaluasi test, ablation, dan analisis kesalahan.
+- [ ] **09 — Explainability:** jelaskan kontribusi fitur dan contoh keputusan.
+- [ ] **10 — Optimasi pembelian:** prediksi kebutuhan bahan dan backtest kebijakan.
+- [ ] **11 — Aplikasi pemilik:** tampilkan rekomendasi, alasan, serta waktu data.
+
+### Bukti progres
+
+| Cakupan | Hasil tercatat | Sumber |
+|---|---|---|
+| Validasi dataset | 374/374 pemeriksaan lulus | [Validasi](../reports/validation_report.md) |
+| Tahap 01–05 | 239/239 pemeriksaan lulus | [Audit tahap 01–05](../reports/steps_1_5_audit.md) |
+| EDA train | Ringkasan dan grafik tersedia | [EDA](../reports/eda_report.md) |
+| Reproduksibilitas generator | 26/26 CSV identik pada dua generasi | [Reproduksibilitas](../reports/reproducibility_report.md) |
+| PostgreSQL | Impor dan constraint diperiksa | [Verifikasi PostgreSQL](../reports/postgres_verification.md) |
+| Tahap 06 | 196/196 pemeriksaan lulus | [Laporan encoding](../reports/encoding_report.md) |
+
+Hasil ini dibaca dari laporan yang tersedia, bukan pemeriksaan baru atau akurasi
+ML. Pernyataan belum ada encoding di laporan tahap 01–05 hanya berlaku untuk
+cakupan tahap tersebut. Encoding dikerjakan terpisah pada tahap 06.
+
+### Langkah berikutnya
+
+1. Gunakan artefak tahap 06 yang sesuai dengan generasi data saat ini; jika data
+   berubah, jalankan ulang audit tahap 01–05 dan encoding.
+2. Kerjakan tahap 07 sesuai model dan target di bawah. Saat cross-validation,
+   fit ulang preprocessing di setiap fold training.
+3. Bangun agregat sentimen dari prediksi historis out-of-fold sebelum mengklaim
+   integrasi SVM ke stok. Sinyal stok sekarang masih memakai label aturan referensi.
 
 ## Urutan eksperimen
 

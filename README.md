@@ -1,11 +1,33 @@
-# Sistem Pendukung Keputusan Optimasi Persediaan Bahan Baku Kafe Berbasis Machine Learning Menggunakan Analisis Tren Pasar dan Sentimen Konsumen
+# CafeStock Intelligence
+
+Sistem Pendukung Keputusan Optimasi Persediaan Bahan Baku Kafe Berbasis Machine
+Learning Menggunakan Analisis Tren Pasar dan Sentimen Konsumen.
 
 **CafeStock Intelligence — skenario Semarang, Indonesia.** Proyek akademik ini
 menyiapkan dataset persediaan kafe serta sinyal pasar tentang menu berdasarkan
 wilayah. Semua data operasional dan konten Instagram yang dihasilkan adalah
 **sintetis**, bukan observasi bisnis atau hasil scraping Instagram nyata.
 
-## Ruang lingkup terbaru
+## Mulai membaca
+
+1. Pahami ruang lingkup di bawah.
+2. Buka [alur dan progres proyek](cafestock-synthetic-data/docs/alur_project_ml.md).
+3. Ikuti [panduan menjalankan](cafestock-synthetic-data/README.md).
+4. Cari penjelasan data dan laporan melalui [indeks dokumentasi](cafestock-synthetic-data/docs/README.md).
+
+## Progres per 5 November 2026
+
+| Pekerjaan | Status | Bukti / langkah berikutnya |
+|---|---|---|
+| 01–05: dataset, cleaning, EDA, fitur, split | ✅ Selesai | [Audit 239/239 lulus](cafestock-synthetic-data/reports/steps_1_5_audit.md) |
+| 06: encoding | ✅ Selesai | [Laporan 196/196 lulus](cafestock-synthetic-data/reports/encoding_report.md) |
+| 07–09: modeling, evaluasi, explainability | ⬜ Belum dikerjakan | Latih model utama dan pembanding |
+| Optimasi pembelian dan aplikasi pemilik | ⬜ Belum dikerjakan | Simulasi ulang kebijakan dan integrasi aplikasi |
+
+Status mengacu pada artefak dan laporan, bukan akurasi model. Tahap 01–06
+sudah tersedia; pekerjaan berikutnya adalah tahap 07 modeling.
+
+## Ruang lingkup
 
 - Tiga cabang fiktif: Semarang Tengah, Semarang Selatan, dan Banyumanik.
 - Tanggal simulasi 2025-11-04 s.d. 2026-11-03; waktu Asia/Jakarta, mata uang IDR.
@@ -26,7 +48,7 @@ wilayah. Semua data operasional dan konten Instagram yang dihasilkan adalah
 |---|---|
 | [Panduan generator](cafestock-synthetic-data/README.md) | Cara menjalankan dan memeriksa data |
 | [Dataset Instagram Semarang](cafestock-synthetic-data/docs/sentimen_pasar_menu.md) | Struktur, contoh, label dan relasi pasar |
-| [Alur proyek ML](cafestock-synthetic-data/docs/alur_project_ml.md) | Tahapan eksperimen berikutnya |
+| [Alur proyek ML](cafestock-synthetic-data/docs/alur_project_ml.md) | Checklist progres, bukti, dan langkah berikutnya |
 | [Asumsi dan provenance](cafestock-synthetic-data/docs/assumptions.md) | Batas observasi dan simulasi |
 | [Audit sumber](cafestock-synthetic-data/reports/source_audit.md) | Pemeriksaan sumber eksternal yang tersisa |
 | [Validasi](cafestock-synthetic-data/reports/validation_report.md) | Hasil pemeriksaan data terkini |
@@ -39,15 +61,19 @@ wilayah. Semua data operasional dan konten Instagram yang dihasilkan adalah
 
 ## Menjalankan
 
-Python 3.11+; dari folder `cafestock-synthetic-data`:
+Python 3.11+. Dari akar repository, buat lingkungan sekali lalu jalankan:
 
 ```powershell
 uv venv --python 3.11 .venv
-uv pip install --python .venv/Scripts/python.exe -r requirements.txt
-.venv/Scripts/python.exe generate.py --verify-reproducibility
-.venv/Scripts/python.exe -m unittest discover -s tests -v
-.venv/Scripts/python.exe -m src.validate
+uv pip install --python .venv/Scripts/python.exe -r cafestock-synthetic-data/requirements.txt -r cafestock-synthetic-data/requirements-eda.txt
+Set-Location cafestock-synthetic-data
+../.venv/Scripts/python.exe generate.py --verify-reproducibility
+../.venv/Scripts/python.exe -m src.validate
+../.venv/Scripts/python.exe audit_steps_1_5.py
 ```
+
+Generator menulis ulang output miliknya. Petunjuk pengujian, encoding,
+dan PostgreSQL ada di panduan menjalankan proyek.
 
 `input/` mempertahankan penjualan sumber dan ekspor Google Trends terpisah dari
 `output/` sintetis. Harga IDR adalah asumsi, bukan konversi kurs dari harga sumber.
