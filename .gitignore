@@ -10,6 +10,8 @@ venv/
 /tmp/
 **/local/
 *.log
+/.taste-skill/
+/.awwwards/
 
 # Local credentials and editor settings
 .env
