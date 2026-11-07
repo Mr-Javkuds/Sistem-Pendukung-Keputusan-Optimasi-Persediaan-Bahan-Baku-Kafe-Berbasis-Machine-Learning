@@ -1,77 +1,812 @@
 <!doctype html>
 <html lang="id">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#173e32">
-  <meta name="description" content="CafeStock Intelligence: baca tren pasar, pantau bahan baku, dan susun rencana pembelian untuk setiap cabang kafe.">
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <link rel="preload" href="/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <title>CafeStock • Analisis persediaan</title>
-  <link rel="stylesheet" href="/dashboard.css">
-  <script src="/dashboard.js" defer></script>
-  <script src="/market_trends.js" defer></script>
-</head>
-<body>
-<svg xmlns="http://www.w3.org/2000/svg" class="icon-definitions" aria-hidden="true"><symbol id="i-coffee" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 2v2m4-2v2m2 4a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1M6 2v2"/></symbol><symbol id="i-chart-no-axes-combined" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 16v5m4-6.361V21m4-10.344V21m2-18l-8.646 8.646a.5.5 0 0 1-.708 0L9.354 8.354a.5.5 0 0 0-.707 0L2 15m2 3.463V21m4-6.344V21"/></symbol><symbol id="i-package" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path fill="currentColor" d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73zm1 .27V12"/><path fill="currentColor" d="M3.29 7L12 12l8.71-5M7.5 4.27l9 5.15"/></g></symbol><symbol id="i-scan-text" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7V5a2 2 0 0 1 2-2h2m10 0h2a2 2 0 0 1 2 2v2m0 10v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2m4-9h8m-8 4h10M7 16h6"/></symbol><symbol id="i-map-pin" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path fill="currentColor" d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle fill="currentColor" cx="12" cy="10" r="3"/></g></symbol><symbol id="i-chevron-down" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></symbol><symbol id="i-arrow-up-right" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h10v10M7 17L17 7"/></symbol><symbol id="i-download" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path fill="currentColor" d="M12 15V3m9 12v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path fill="currentColor" d="m7 10l5 5l5-5"/></g></symbol><symbol id="i-check" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 6L9 17l-5-5"/></symbol><symbol id="i-arrow-right" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7-7l7 7l-7 7"/></symbol><symbol id="i-trending-up" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path fill="currentColor" d="M16 7h6v6"/><path fill="currentColor" d="m22 7l-8.5 8.5l-5-5L2 17"/></g></symbol><symbol id="i-calendar-days" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path fill="currentColor" d="M8 2v3m8-3v3"/><rect fill="currentColor" width="18" height="18" x="3" y="3" rx="2"/><path fill="currentColor" d="M3 9h18M8 13h.01M12 13h.01M16 13h.01M8 17h.01M12 17h.01M16 17h.01"/></g></symbol><symbol id="i-info" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><circle fill="currentColor" cx="12" cy="12" r="10"/><path fill="currentColor" d="M12 16v-4m0-4h.01"/></g></symbol><symbol id="i-chevron-right" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 18l6-6l-6-6"/></symbol><symbol id="i-circle-check" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><circle fill="currentColor" cx="12" cy="12" r="10"/><path fill="currentColor" d="m16 9l-5.5 5.5L8 12"/></g></symbol><symbol id="i-layers" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path fill="currentColor" d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"/><path fill="currentColor" d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"/><path fill="currentColor" d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"/></g></symbol><symbol id="i-leaf" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path fill="currentColor" d="M11 20a10 10 0 0 0 10-10a25.9 25.9 0 0 0-1.04-7.281a1 1 0 0 0-1.755-.325C15.833 5.5 13 5.5 9.8 6.1A7 7 0 0 0 11 20"/><path fill="currentColor" d="M2 21a5 5 0 0 1 2.911-4.544C7.613 15.212 8.351 15.24 11 13"/></g></symbol></svg>
-<a class="skip-link" href="#main">Lewati ke konten utama</a>
-<aside class="sidebar" aria-label="Navigasi CafeStock">
-  <a class="brand" href="?view=analysis" translate="no"><span class="brand-mark"><svg class="icon" aria-hidden="true"><use href="#i-coffee"></use></svg></span><span>CafeStock<span class="brand-descriptor">INTELLIGENCE</span></span></a>
-  <div class="workspace"><span class="workspace-dot" aria-hidden="true"></span>Ruang operasional kafe</div>
-  <div class="nav-caption">Workspace</div>
-  <nav aria-label="Tampilan utama">
-    <a href="?view=analysis" data-route="analysis" aria-current="page"><svg class="icon" aria-hidden="true"><use href="#i-chart-no-axes-combined"></use></svg><span>Analisis pasar</span><svg class="icon" aria-hidden="true"><use href="#i-chevron-right"></use></svg></a>
-    <a href="?view=purchase" data-route="purchase"><svg class="icon" aria-hidden="true"><use href="#i-package"></use></svg><span>Pembelian</span><svg class="icon" aria-hidden="true"><use href="#i-chevron-right"></use></svg></a>
-    <a href="?view=evaluation" data-route="evaluation"><svg class="icon" aria-hidden="true"><use href="#i-scan-text"></use></svg><span>Evaluasi &amp; sentimen</span><svg class="icon" aria-hidden="true"><use href="#i-chevron-right"></use></svg></a>
-  </nav>
-  <div class="sidebar-note"><svg class="icon" aria-hidden="true"><use href="#i-leaf"></use></svg><p>Baca pasar.<br>Belanja terarah.</p><span>Setiap bahan, ada alasannya.</span></div>
-  <div class="sidebar-foot"><div class="snapshot-label"><svg class="icon" aria-hidden="true"><use href="#i-calendar-days"></use></svg><span>Snapshot keputusan</span></div><time id="date">Memuat tanggal…</time></div>
-  <div class="workspace-signature"><span class="workspace-avatar">CS</span><span>CafeStock Semarang<small>Perencanaan persediaan</small></span></div>
-</aside>
-<div class="app-frame">
-  <header class="topbar"><div class="breadcrumb">Workspace <span>/</span> <strong id="view-label">Analisis pasar</strong></div><label class="branch-control" for="branch"><svg class="icon" aria-hidden="true"><use href="#i-map-pin"></use></svg><span>Cabang</span><select id="branch" name="branch" autocomplete="off"><option value="1">Semarang Tengah</option><option value="2">Semarang Selatan</option><option value="3">Banyumanik</option></select></label></header>
-  <main id="main" tabindex="-1">
-    <div class="page-heading"><div><div class="page-context"><span class="context-dot" aria-hidden="true"></span>PERENCANAAN YANG LEBIH TERUKUR</div><h1 id="page-title">Analisis persediaan</h1><p id="page-description">Baca pergerakan pasar sebelum menentukan pembelian.</p></div><div class="page-actions"><a class="button" id="export" href="/api/export?branch=1" download="rencana-bahan.csv"><svg class="icon" aria-hidden="true"><use href="#i-download"></use></svg>Unduh CSV</a><button id="approve" class="primary" disabled><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Setujui rencana</button></div></div>
-    <div class="summary" aria-label="Ringkasan pembelian">
-      <div class="metric"><span>Bahan perlu dibeli</span><b id="count">—</b><small>Dari seluruh bahan cabang</small></div>
-      <div class="metric metric-cost"><span>Estimasi pembelian</span><b id="cost">—</b><small>Anggaran rencana cabang</small></div>
-      <div class="metric"><span>Permintaan terpenuhi</span><b id="coverage">—</b><small>Evaluasi kebijakan terpilih</small></div>
-      <div class="metric metric-policy"><span>Kebijakan persediaan</span><b id="policy">—</b><small>Dasar rekomendasi pembelian</small></div>
-    </div>
-    <div class="status-row"><p id="message" role="status" aria-live="polite">Memuat rekomendasi…</p><button id="retry-overview" class="text-button" hidden>Coba muat kembali</button></div>
-
-    <div data-view="analysis" id="analysis-view">
-      <div class="analysis-layout">
-        <section class="panel analytics-panel" aria-labelledby="trend-heading" id="trends-panel" aria-busy="true">
-          <div class="section-heading"><div><h2 id="trend-heading">Pergerakan pasar &amp; stok</h2><p class="subtle">Tren, sentimen, penjualan, dan nilai stok pada minggu yang sama.</p></div></div>
-          <div class="trend-controls"><label for="trend-category">Kategori<select id="trend-category" name="category" autocomplete="off"><option value="1">Kopi</option></select></label><label for="trend-period">Periode<select id="trend-period" name="weeks" autocomplete="off"><option value="4">4 minggu</option><option value="12" selected>12 minggu</option><option value="26">26 minggu</option><option value="52">52 minggu</option></select></label></div>
-          <fieldset class="series-toggles"><legend class="sr-only">Garis &amp; nilai terakhir</legend>
-            <label><input type="checkbox" id="series-interest_index" name="series" value="interest_index" checked><span class="series-swatch" data-swatch="interest_index" aria-hidden="true"></span><span>Tren pasar</span><strong id="legend-interest_index">—</strong></label>
-            <label><input type="checkbox" id="series-sentiment_score" name="series" value="sentiment_score" checked><span class="series-swatch" data-swatch="sentiment_score" aria-hidden="true"></span><span>Sentimen</span><strong id="legend-sentiment_score">—</strong></label>
-            <label><input type="checkbox" id="series-sales_units" name="series" value="sales_units" checked><span class="series-swatch" data-swatch="sales_units" aria-hidden="true"></span><span>Penjualan</span><strong id="legend-sales_units">—</strong></label>
-            <label><input type="checkbox" id="series-stock_value_idr" name="series" value="stock_value_idr" checked><span class="series-swatch" data-swatch="stock_value_idr" aria-hidden="true"></span><span>Nilai stok</span><strong id="legend-stock_value_idr">—</strong></label>
-          </fieldset>
-          <div id="trend-finding" class="finding" role="status" aria-live="polite">Memuat perbandingan…</div>
-          <div class="trend-chart-frame"><svg id="trend-chart" viewBox="0 0 960 260" role="img" aria-labelledby="trend-heading" aria-describedby="chart-scale-note"></svg></div>
-          <div class="scale-control"><label for="trend-scale">Skala<select id="trend-scale" name="scale" autocomplete="off"><option value="compare">Perbandingan 0–100</option><option value="original">Nilai asli per seri</option></select></label></div>
-          <p id="chart-scale-note" class="small">Skala 0–100 mengikuti minimum–maksimum tiap seri pada periode terpilih. Besar nilai antarseri tidak dapat disamakan.</p>
-          <div class="chart-status"><p id="trend-status" class="small" role="status" aria-live="polite">Memuat analisis tren…</p><button id="retry-trends" class="text-button" hidden>Coba muat tren</button></div>
-          <details class="disclosure"><summary>Ringkasan indeks &amp; menu terkait</summary><div class="trend-stats"><div><span>Indeks terbaru</span><strong id="trend-latest">—</strong></div><div><span>Vs minggu lalu</span><strong id="trend-weekly">—</strong></div><div><span>4 minggu vs 4 sebelumnya</span><strong id="trend-monthly">—</strong></div><div><span>Arah minat</span><strong id="trend-direction">—</strong></div></div><p id="trend-insight"></p><div class="trend-links"><div><h3>Menu terkait</h3><p id="trend-menus">—</p></div><div><h3>Bahan yang dipantau</h3><p id="trend-ingredients">—</p></div></div></details>
-        </section>
-        <aside class="panel purchase-preview" aria-labelledby="preview-heading"><div class="preview-heading"><span class="preview-icon"><svg class="icon" aria-hidden="true"><use href="#i-package"></use></svg></span><span>LANGKAH SELANJUTNYA</span></div><div class="section-heading"><h2 id="preview-heading">Prioritas pembelian</h2><span id="preview-count" class="preview-count">—</span></div><p class="subtle">Bahan yang perlu disiapkan untuk cabang Anda.</p><ul id="purchase-preview" class="preview-list"><li>Memuat bahan…</li></ul><div class="preview-budget"><span>Estimasi anggaran</span><strong id="preview-cost">—</strong></div><a href="?view=purchase" data-route="purchase" class="button full-width">Tinjau rencana beli<svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a><p class="small"><svg class="icon" aria-hidden="true"><use href="#i-info"></use></svg>Persetujuan tersimpan lokal.<br>Pesanan belum dikirim ke pemasok.</p></aside>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#173e32" />
+    <meta
+      name="description"
+      content="CafeStock Intelligence: baca tren pasar, pantau bahan baku, dan susun rencana pembelian untuk setiap cabang kafe."
+    />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link
+      rel="preload"
+      href="/manrope-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <title>CafeStock • Analisis persediaan</title>
+    <link rel="stylesheet" href="/dashboard.css" />
+    <script src="/dashboard.js" defer></script>
+    <script src="/market_trends.js" defer></script>
+  </head>
+  <body>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="icon-definitions"
+      aria-hidden="true"
+    >
+      <symbol id="i-coffee" viewBox="0 0 24 24">
+        <path
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M10 2v2m4-2v2m2 4a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1M6 2v2"
+        />
+      </symbol>
+      <symbol id="i-chart-no-axes-combined" viewBox="0 0 24 24">
+        <path
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M12 16v5m4-6.361V21m4-10.344V21m2-18l-8.646 8.646a.5.5 0 0 1-.708 0L9.354 8.354a.5.5 0 0 0-.707 0L2 15m2 3.463V21m4-6.344V21"
+        />
+      </symbol>
+      <symbol id="i-package" viewBox="0 0 24 24">
+        <g
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+        >
+          <path
+            fill="none"
+            d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73zm1 .27V12"
+          />
+          <path fill="none" d="M3.29 7L12 12l8.71-5M7.5 4.27l9 5.15" />
+        </g>
+      </symbol>
+      <symbol id="i-scan-text" viewBox="0 0 24 24">
+        <path
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M3 7V5a2 2 0 0 1 2-2h2m10 0h2a2 2 0 0 1 2 2v2m0 10v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2m4-9h8m-8 4h10M7 16h6"
+        />
+      </symbol>
+      <symbol id="i-map-pin" viewBox="0 0 24 24">
+        <g
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+        >
+          <path
+            fill="none"
+            d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"
+          />
+          <circle fill="none" cx="12" cy="10" r="3" />
+        </g>
+      </symbol>
+      <symbol id="i-chevron-down" viewBox="0 0 24 24">
+        <path
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="m6 9l6 6l6-6"
+        />
+      </symbol>
+      <symbol id="i-arrow-up-right" viewBox="0 0 24 24">
+        <path
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M7 7h10v10M7 17L17 7"
+        />
+      </symbol>
+      <symbol id="i-download" viewBox="0 0 24 24">
+        <g
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+        >
+          <path
+            fill="none"
+            d="M12 15V3m9 12v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"
+          />
+          <path fill="none" d="m7 10l5 5l5-5" />
+        </g>
+      </symbol>
+      <symbol id="i-check" viewBox="0 0 24 24">
+        <path
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M20 6L9 17l-5-5"
+        />
+      </symbol>
+      <symbol id="i-arrow-right" viewBox="0 0 24 24">
+        <path
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M5 12h14m-7-7l7 7l-7 7"
+        />
+      </symbol>
+      <symbol id="i-trending-up" viewBox="0 0 24 24">
+        <g
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+        >
+          <path fill="none" d="M16 7h6v6" />
+          <path fill="none" d="m22 7l-8.5 8.5l-5-5L2 17" />
+        </g>
+      </symbol>
+      <symbol id="i-calendar-days" viewBox="0 0 24 24">
+        <g
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+        >
+          <path fill="none" d="M8 2v3m8-3v3" />
+          <rect fill="none" width="18" height="18" x="3" y="3" rx="2" />
+          <path
+            fill="none"
+            d="M3 9h18M8 13h.01M12 13h.01M16 13h.01M8 17h.01M12 17h.01M16 17h.01"
+          />
+        </g>
+      </symbol>
+      <symbol id="i-info" viewBox="0 0 24 24">
+        <g
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+        >
+          <circle fill="none" cx="12" cy="12" r="10" />
+          <path fill="none" d="M12 16v-4m0-4h.01" />
+        </g>
+      </symbol>
+      <symbol id="i-chevron-right" viewBox="0 0 24 24">
+        <path
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="m9 18l6-6l-6-6"
+        />
+      </symbol>
+      <symbol id="i-circle-check" viewBox="0 0 24 24">
+        <g
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+        >
+          <circle fill="none" cx="12" cy="12" r="10" />
+          <path fill="none" d="m16 9l-5.5 5.5L8 12" />
+        </g>
+      </symbol>
+      <symbol id="i-layers" viewBox="0 0 24 24">
+        <g
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+        >
+          <path
+            fill="none"
+            d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"
+          />
+          <path
+            fill="none"
+            d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"
+          />
+          <path
+            fill="none"
+            d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"
+          />
+        </g>
+      </symbol>
+      <symbol id="i-leaf" viewBox="0 0 24 24">
+        <g
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+        >
+          <path
+            fill="none"
+            d="M11 20a10 10 0 0 0 10-10a25.9 25.9 0 0 0-1.04-7.281a1 1 0 0 0-1.755-.325C15.833 5.5 13 5.5 9.8 6.1A7 7 0 0 0 11 20"
+          />
+          <path
+            fill="none"
+            d="M2 21a5 5 0 0 1 2.911-4.544C7.613 15.212 8.351 15.24 11 13"
+          />
+        </g>
+      </symbol>
+    </svg>
+    <a class="skip-link" href="#main">Lewati ke konten utama</a>
+    <aside class="sidebar" aria-label="Navigasi CafeStock">
+      <a class="brand" href="?view=analysis" translate="no"
+        ><span class="brand-mark"
+          ><svg class="icon" aria-hidden="true">
+            <use href="#i-coffee"></use></svg></span
+        ><span
+          >CafeStock<span class="brand-descriptor">INTELLIGENCE</span></span
+        ></a
+      >
+      <div class="workspace">
+        <span class="workspace-dot" aria-hidden="true"></span>Ruang operasional
+        kafe
       </div>
-      <section class="panel relation-panel" aria-labelledby="relation-heading"><div class="section-heading"><div><h2 id="relation-heading">Hubungan pergerakan</h2><p class="subtle">Perubahan mingguan, sesuai garis yang Anda pilih.</p></div><details class="method-help"><summary><svg class="icon" aria-hidden="true"><use href="#i-info"></use></svg>Cara membaca</summary><p>r ≥ 0,3 cenderung sejalan; r ≤ −0,3 berlawanan; sisanya lemah. Minimal enam pasangan dengan variasi cukup. Hubungan deskriptif ini bukan bukti sebab-akibat atau signifikansi statistik. Sentimen bulanan bertangga; pengulangan batch bukan sampel baru.</p></details></div><div class="overflow" tabindex="0" role="region" aria-label="Tabel hubungan pergerakan"><table><thead><tr><th scope="col">Pasangan seri</th><th scope="col">Arah hubungan</th><th scope="col">r perubahan</th><th scope="col">Pasangan minggu</th></tr></thead><tbody id="trend-comparisons"></tbody></table></div></section>
-      <section class="panel evidence-panel" aria-labelledby="evidence-heading"><h2 id="evidence-heading">Di balik angka</h2><p class="subtle">Telusuri sumber dan perhitungan yang mendasari analisis.</p><details class="disclosure"><summary>Nilai asli per minggu</summary><div class="overflow" tabindex="0" role="region" aria-label="Data asli mingguan"><table><thead><tr><th scope="col">Tanggal</th><th scope="col">Tren (0–100)</th><th scope="col">Sentimen (−1…1)</th><th scope="col">Batch sentimen</th><th scope="col">Penjualan 7 hari</th><th scope="col">Stok akhir (Rp)</th></tr></thead><tbody id="trend-values"></tbody></table></div></details><details class="disclosure"><summary>Asal data &amp; penyelarasan waktu</summary><p>Tren pasar merupakan seri simulasi kota Semarang. Penjualan adalah unit menu terpenuhi pada cabang terpilih selama tujuh hari sebelumnya. Nilai stok adalah bahan terkait pada akhir hari sebelumnya, dari kebijakan historis yang sama dengan penjualan. Bahan bersama dapat muncul di beberapa kategori; nilai antar kategori tidak boleh dijumlahkan.</p><p>Sentimen menggunakan prediksi SVM dari batch terakhir yang telah dikumpulkan, mencakup kota dan wilayah cabang. Batch bulanan digambar bertangga; data belum tersedia menjadi celah. Seri konstan pada skala perbandingan berada di 50.</p></details><details class="disclosure"><summary>Kontribusi tren pada model stok</summary><p id="trend-model"></p></details></section>
-    </div>
+      <div class="nav-caption">Workspace</div>
+      <nav aria-label="Tampilan utama">
+        <a href="?view=analysis" data-route="analysis" aria-current="page"
+          ><svg class="icon" aria-hidden="true">
+            <use href="#i-chart-no-axes-combined"></use></svg
+          ><span>Analisis pasar</span
+          ><svg class="icon" aria-hidden="true">
+            <use href="#i-chevron-right"></use></svg
+        ></a>
+        <a href="?view=purchase" data-route="purchase"
+          ><svg class="icon" aria-hidden="true">
+            <use href="#i-package"></use></svg
+          ><span>Pembelian</span
+          ><svg class="icon" aria-hidden="true">
+            <use href="#i-chevron-right"></use></svg
+        ></a>
+        <a href="?view=evaluation" data-route="evaluation"
+          ><svg class="icon" aria-hidden="true">
+            <use href="#i-scan-text"></use></svg
+          ><span>Evaluasi &amp; sentimen</span
+          ><svg class="icon" aria-hidden="true">
+            <use href="#i-chevron-right"></use></svg
+        ></a>
+      </nav>
+      <div class="sidebar-note">
+        <svg class="icon" aria-hidden="true"><use href="#i-leaf"></use></svg>
+        <p>Baca pasar.<br />Belanja terarah.</p>
+        <span>Setiap bahan, ada alasannya.</span>
+      </div>
+      <div class="sidebar-foot">
+        <div class="snapshot-label">
+          <svg class="icon" aria-hidden="true">
+            <use href="#i-calendar-days"></use></svg
+          ><span>Snapshot keputusan</span>
+        </div>
+        <time id="date">Memuat tanggal…</time>
+      </div>
+      <div class="workspace-signature">
+        <span class="workspace-avatar">CS</span
+        ><span>CafeStock Semarang<small>Perencanaan persediaan</small></span>
+      </div>
+    </aside>
+    <div class="app-frame">
+      <header class="topbar">
+        <div class="breadcrumb">
+          Workspace <span>/</span>
+          <strong id="view-label">Analisis pasar</strong>
+        </div>
+        <label class="branch-control" for="branch"
+          ><svg class="icon" aria-hidden="true">
+            <use href="#i-map-pin"></use></svg
+          ><span>Cabang</span
+          ><select
+            aria-label="Cabang kafe"
+            id="branch"
+            name="branch"
+            autocomplete="off"
+          >
+            <option value="1">Semarang Tengah</option>
+            <option value="2">Semarang Selatan</option>
+            <option value="3">Banyumanik</option>
+          </select></label
+        >
+      </header>
+      <main id="main" tabindex="-1">
+        <div class="page-heading">
+          <div>
+            <div class="page-context">
+              <span class="context-dot" aria-hidden="true"></span>PERENCANAAN
+              YANG LEBIH TERUKUR
+            </div>
+            <h1 id="page-title">Analisis persediaan</h1>
+            <p id="page-description">
+              Baca pergerakan pasar sebelum menentukan pembelian.
+            </p>
+          </div>
+          <div class="page-actions">
+            <a
+              class="button"
+              id="export"
+              href="/api/export?branch=1"
+              download="rencana-bahan.csv"
+              ><svg class="icon" aria-hidden="true">
+                <use href="#i-download"></use></svg
+              >Unduh CSV</a
+            ><button id="approve" class="primary" disabled>
+              <svg class="icon" aria-hidden="true">
+                <use href="#i-check"></use></svg
+              >Setujui rencana
+            </button>
+          </div>
+        </div>
+        <div class="summary" aria-label="Ringkasan pembelian">
+          <div class="metric">
+            <span>Bahan perlu dibeli</span><b id="count">—</b
+            ><small>Dari seluruh bahan cabang</small>
+          </div>
+          <div class="metric metric-cost">
+            <span>Estimasi pembelian</span><b id="cost">—</b
+            ><small>Anggaran rencana cabang</small>
+          </div>
+          <div class="metric">
+            <span>Permintaan terpenuhi</span><b id="coverage">—</b
+            ><small>Evaluasi kebijakan terpilih</small>
+          </div>
+          <div class="metric metric-policy">
+            <span>Kebijakan persediaan</span><b id="policy">—</b
+            ><small>Dasar rekomendasi pembelian</small>
+          </div>
+        </div>
+        <div class="status-row">
+          <p id="message" role="status" aria-live="polite">
+            Memuat rekomendasi…
+          </p>
+          <button id="retry-overview" class="text-button" hidden>
+            Coba muat kembali
+          </button>
+        </div>
 
-    <div data-view="purchase" id="purchase-view" hidden>
-      <section class="panel" aria-labelledby="purchase-heading"><div class="section-heading"><div><h2 id="purchase-heading">Rencana bahan baku</h2><p class="subtle">Jumlah beli mengikuti kemasan, minimum pesanan, dan kebijakan terpilih.</p></div><label class="check-filter"><input id="purchase-only" type="checkbox" name="purchaseOnly">Perlu dibeli saja</label></div><div class="overflow" tabindex="0" role="region" aria-label="Rekomendasi pembelian bahan"><table><thead><tr><th scope="col">Bahan &amp; alasan</th><th scope="col">Stok tersedia</th><th scope="col">Dalam pesanan</th><th scope="col">Beli</th><th scope="col">Estimasi biaya</th></tr></thead><tbody id="rows"></tbody></table></div><p id="purchase-total" class="small"></p></section>
+        <div data-view="analysis" id="analysis-view">
+          <div class="analysis-layout">
+            <section
+              class="panel analytics-panel"
+              aria-labelledby="trend-heading"
+              id="trends-panel"
+              aria-busy="true"
+            >
+              <div class="section-heading">
+                <div>
+                  <h2 id="trend-heading">Pergerakan pasar &amp; stok</h2>
+                  <p class="subtle">
+                    Tren, sentimen, penjualan, dan nilai stok pada minggu yang
+                    sama.
+                  </p>
+                </div>
+              </div>
+              <div class="trend-controls">
+                <label for="trend-category"
+                  >Kategori<select
+                    id="trend-category"
+                    name="category"
+                    autocomplete="off"
+                  >
+                    <option value="1">Kopi</option>
+                  </select></label
+                ><label for="trend-period"
+                  >Periode<select
+                    id="trend-period"
+                    name="weeks"
+                    autocomplete="off"
+                  >
+                    <option value="4">4 minggu</option>
+                    <option value="12" selected>12 minggu</option>
+                    <option value="26">26 minggu</option>
+                    <option value="52">52 minggu</option>
+                  </select></label
+                >
+              </div>
+              <fieldset class="series-toggles">
+                <legend class="sr-only">Garis &amp; nilai terakhir</legend>
+                <label
+                  ><input
+                    type="checkbox"
+                    id="series-interest_index"
+                    name="series"
+                    value="interest_index"
+                    checked
+                  /><span
+                    class="series-swatch"
+                    data-swatch="interest_index"
+                    aria-hidden="true"
+                  ></span
+                  ><span>Tren pasar</span
+                  ><strong id="legend-interest_index">—</strong></label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    id="series-sentiment_score"
+                    name="series"
+                    value="sentiment_score"
+                    checked
+                  /><span
+                    class="series-swatch"
+                    data-swatch="sentiment_score"
+                    aria-hidden="true"
+                  ></span
+                  ><span>Sentimen</span
+                  ><strong id="legend-sentiment_score">—</strong></label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    id="series-sales_units"
+                    name="series"
+                    value="sales_units"
+                    checked
+                  /><span
+                    class="series-swatch"
+                    data-swatch="sales_units"
+                    aria-hidden="true"
+                  ></span
+                  ><span>Penjualan</span
+                  ><strong id="legend-sales_units">—</strong></label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    id="series-stock_value_idr"
+                    name="series"
+                    value="stock_value_idr"
+                    checked
+                  /><span
+                    class="series-swatch"
+                    data-swatch="stock_value_idr"
+                    aria-hidden="true"
+                  ></span
+                  ><span>Nilai stok</span
+                  ><strong id="legend-stock_value_idr">—</strong></label
+                >
+              </fieldset>
+              <div
+                id="trend-finding"
+                class="finding"
+                role="status"
+                aria-live="polite"
+              >
+                Memuat perbandingan…
+              </div>
+              <div class="trend-chart-frame">
+                <svg
+                  id="trend-chart"
+                  viewBox="0 0 960 260"
+                  role="img"
+                  aria-labelledby="trend-heading"
+                  aria-describedby="chart-scale-note"
+                ></svg>
+              </div>
+              <div class="scale-control">
+                <label for="trend-scale"
+                  >Skala<select
+                    id="trend-scale"
+                    name="scale"
+                    autocomplete="off"
+                  >
+                    <option value="compare">Perbandingan 0–100</option>
+                    <option value="original">Nilai asli per seri</option>
+                  </select></label
+                >
+              </div>
+              <p id="chart-scale-note" class="small">
+                Skala 0–100 mengikuti minimum–maksimum tiap seri pada periode
+                terpilih. Besar nilai antarseri tidak dapat disamakan.
+              </p>
+              <div class="chart-status">
+                <p
+                  id="trend-status"
+                  class="small"
+                  role="status"
+                  aria-live="polite"
+                >
+                  Memuat analisis tren…
+                </p>
+                <button id="retry-trends" class="text-button" hidden>
+                  Coba muat tren
+                </button>
+              </div>
+              <details class="disclosure">
+                <summary>Ringkasan indeks &amp; menu terkait</summary>
+                <div class="trend-stats">
+                  <div>
+                    <span>Indeks terbaru</span
+                    ><strong id="trend-latest">—</strong>
+                  </div>
+                  <div>
+                    <span>Vs minggu lalu</span
+                    ><strong id="trend-weekly">—</strong>
+                  </div>
+                  <div>
+                    <span>4 minggu vs 4 sebelumnya</span
+                    ><strong id="trend-monthly">—</strong>
+                  </div>
+                  <div>
+                    <span>Arah minat</span
+                    ><strong id="trend-direction">—</strong>
+                  </div>
+                </div>
+                <p id="trend-insight"></p>
+                <div class="trend-links">
+                  <div>
+                    <h3>Menu terkait</h3>
+                    <p id="trend-menus">—</p>
+                  </div>
+                  <div>
+                    <h3>Bahan yang dipantau</h3>
+                    <p id="trend-ingredients">—</p>
+                  </div>
+                </div>
+              </details>
+            </section>
+            <aside
+              class="panel purchase-preview"
+              aria-labelledby="preview-heading"
+            >
+              <div class="preview-heading">
+                <span class="preview-icon"
+                  ><svg class="icon" aria-hidden="true">
+                    <use href="#i-package"></use></svg></span
+                ><span>LANGKAH SELANJUTNYA</span>
+              </div>
+              <div class="section-heading">
+                <h2 id="preview-heading">Prioritas pembelian</h2>
+                <span id="preview-count" class="preview-count">—</span>
+              </div>
+              <p class="subtle">
+                Bahan yang perlu disiapkan untuk cabang Anda.
+              </p>
+              <ul id="purchase-preview" class="preview-list">
+                <li>Memuat bahan…</li>
+              </ul>
+              <div class="preview-budget">
+                <span>Estimasi anggaran</span
+                ><strong id="preview-cost">—</strong>
+              </div>
+              <a
+                href="?view=purchase"
+                data-route="purchase"
+                class="button full-width"
+                >Tinjau rencana beli<svg class="icon" aria-hidden="true">
+                  <use href="#i-arrow-up-right"></use></svg
+              ></a>
+              <p class="small">
+                <svg class="icon" aria-hidden="true">
+                  <use href="#i-info"></use></svg
+                >Persetujuan tersimpan lokal.<br />Pesanan belum dikirim ke
+                pemasok.
+              </p>
+            </aside>
+          </div>
+          <section
+            class="panel relation-panel"
+            aria-labelledby="relation-heading"
+          >
+            <div class="section-heading">
+              <div>
+                <h2 id="relation-heading">Hubungan pergerakan</h2>
+                <p class="subtle">
+                  Perubahan mingguan, sesuai garis yang Anda pilih.
+                </p>
+              </div>
+              <details class="method-help">
+                <summary>
+                  <svg class="icon" aria-hidden="true">
+                    <use href="#i-info"></use></svg
+                  >Cara membaca
+                </summary>
+                <p>
+                  r ≥ 0,3 cenderung sejalan; r ≤ −0,3 berlawanan; sisanya lemah.
+                  Minimal enam pasangan dengan variasi cukup. Hubungan
+                  deskriptif ini bukan bukti sebab-akibat atau signifikansi
+                  statistik. Sentimen bulanan bertangga; pengulangan batch bukan
+                  sampel baru.
+                </p>
+              </details>
+            </div>
+            <div
+              class="overflow"
+              tabindex="0"
+              role="region"
+              aria-label="Tabel hubungan pergerakan"
+            >
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Pasangan seri</th>
+                    <th scope="col">Arah hubungan</th>
+                    <th scope="col">r perubahan</th>
+                    <th scope="col">Pasangan minggu</th>
+                  </tr>
+                </thead>
+                <tbody id="trend-comparisons"></tbody>
+              </table>
+            </div>
+          </section>
+          <section
+            class="panel evidence-panel"
+            aria-labelledby="evidence-heading"
+          >
+            <h2 id="evidence-heading">Di balik angka</h2>
+            <p class="subtle">
+              Telusuri sumber dan perhitungan yang mendasari analisis.
+            </p>
+            <details class="disclosure">
+              <summary>Nilai asli per minggu</summary>
+              <div
+                class="overflow"
+                tabindex="0"
+                role="region"
+                aria-label="Data asli mingguan"
+              >
+                <table>
+                  <thead>
+                    <tr>
+                      <th scope="col">Tanggal</th>
+                      <th scope="col">Tren (0–100)</th>
+                      <th scope="col">Sentimen (−1…1)</th>
+                      <th scope="col">Batch sentimen</th>
+                      <th scope="col">Penjualan 7 hari</th>
+                      <th scope="col">Stok akhir (Rp)</th>
+                    </tr>
+                  </thead>
+                  <tbody id="trend-values"></tbody>
+                </table>
+              </div>
+            </details>
+            <details class="disclosure">
+              <summary>Asal data &amp; penyelarasan waktu</summary>
+              <p>
+                Tren pasar merupakan seri simulasi kota Semarang. Penjualan
+                adalah unit menu terpenuhi pada cabang terpilih selama tujuh
+                hari sebelumnya. Nilai stok adalah bahan terkait pada akhir hari
+                sebelumnya, dari kebijakan historis yang sama dengan penjualan.
+                Bahan bersama dapat muncul di beberapa kategori; nilai antar
+                kategori tidak boleh dijumlahkan.
+              </p>
+              <p>
+                Sentimen menggunakan prediksi SVM dari batch terakhir yang telah
+                dikumpulkan, mencakup kota dan wilayah cabang. Batch bulanan
+                digambar bertangga; data belum tersedia menjadi celah. Seri
+                konstan pada skala perbandingan berada di 50.
+              </p>
+            </details>
+            <details class="disclosure">
+              <summary>Kontribusi tren pada model stok</summary>
+              <p id="trend-model"></p>
+            </details>
+          </section>
+        </div>
+
+        <div data-view="purchase" id="purchase-view" hidden>
+          <section class="panel" aria-labelledby="purchase-heading">
+            <div class="section-heading">
+              <div>
+                <h2 id="purchase-heading">Rencana bahan baku</h2>
+                <p class="subtle">
+                  Jumlah beli mengikuti kemasan, minimum pesanan, dan kebijakan
+                  terpilih.
+                </p>
+              </div>
+              <label class="check-filter"
+                ><input
+                  id="purchase-only"
+                  type="checkbox"
+                  name="purchaseOnly"
+                />Perlu dibeli saja</label
+              >
+            </div>
+            <div
+              class="overflow"
+              tabindex="0"
+              role="region"
+              aria-label="Rekomendasi pembelian bahan"
+            >
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Bahan &amp; alasan</th>
+                    <th scope="col">Stok tersedia</th>
+                    <th scope="col">Dalam pesanan</th>
+                    <th scope="col">Beli</th>
+                    <th scope="col">Estimasi biaya</th>
+                  </tr>
+                </thead>
+                <tbody id="rows"></tbody>
+              </table>
+            </div>
+            <p id="purchase-total" class="small"></p>
+          </section>
+        </div>
+        <div data-view="evaluation" id="evaluation-view" hidden>
+          <div class="evaluation-layout">
+            <section class="panel" aria-labelledby="policy-heading">
+              <h2 id="policy-heading">Evaluasi kebijakan</h2>
+              <p class="subtle">
+                Permintaan terpenuhi dan biaya setiap kebijakan pada data test.
+              </p>
+              <div
+                class="overflow"
+                tabindex="0"
+                role="region"
+                aria-label="Perbandingan kebijakan"
+              >
+                <table>
+                  <thead>
+                    <tr>
+                      <th scope="col">Kebijakan</th>
+                      <th scope="col">Permintaan terpenuhi</th>
+                      <th scope="col">Biaya perencanaan</th>
+                    </tr>
+                  </thead>
+                  <tbody id="policies"></tbody>
+                </table>
+              </div>
+              <p class="small">
+                Biaya mencakup bahan, simpan, dan nilai penjualan tak terpenuhi.
+                Kebijakan dipilih pada validation.
+              </p>
+            </section>
+            <section class="panel" aria-labelledby="sentiment-heading">
+              <h2 id="sentiment-heading">Analisis sentimen menu</h2>
+              <p class="subtle">
+                Coba pembahasan menu dan lihat hasil klasifikasinya.
+              </p>
+              <form id="sentiment-form" novalidate>
+                <label for="text">Teks pembahasan</label
+                ><textarea
+                  id="text"
+                  name="content_text"
+                  maxlength="4000"
+                  autocomplete="off"
+                  aria-describedby="sentiment"
+                  placeholder="Contoh: Matchanya enak, tetapi harganya mahal…"
+                ></textarea
+                ><button id="analyze" type="submit" class="primary">
+                  <svg class="icon" aria-hidden="true">
+                    <use href="#i-scan-text"></use></svg
+                  >Analisis teks<svg class="icon" aria-hidden="true">
+                    <use href="#i-arrow-right"></use>
+                  </svg>
+                </button>
+                <p id="sentiment" role="status" aria-live="polite">
+                  Masukkan teks untuk memulai analisis.
+                </p>
+              </form>
+            </section>
+          </div>
+        </div>
+        <footer>
+          <span
+            ><svg class="icon" aria-hidden="true">
+              <use href="#i-coffee"></use></svg
+            >CafeStock Intelligence</span
+          ><span>Direncanakan dengan data. Disiapkan dengan tepat.</span>
+        </footer>
+      </main>
     </div>
-    <div data-view="evaluation" id="evaluation-view" hidden>
-      <div class="evaluation-layout"><section class="panel" aria-labelledby="policy-heading"><h2 id="policy-heading">Evaluasi kebijakan</h2><p class="subtle">Permintaan terpenuhi dan biaya setiap kebijakan pada data test.</p><div class="overflow" tabindex="0" role="region" aria-label="Perbandingan kebijakan"><table><thead><tr><th scope="col">Kebijakan</th><th scope="col">Permintaan terpenuhi</th><th scope="col">Biaya perencanaan</th></tr></thead><tbody id="policies"></tbody></table></div><p class="small">Biaya mencakup bahan, simpan, dan nilai penjualan tak terpenuhi. Kebijakan dipilih pada validation.</p></section><section class="panel" aria-labelledby="sentiment-heading"><h2 id="sentiment-heading">Analisis sentimen menu</h2><p class="subtle">Coba pembahasan menu dan lihat hasil klasifikasinya.</p><form id="sentiment-form" novalidate><label for="text">Teks pembahasan</label><textarea id="text" name="content_text" maxlength="4000" autocomplete="off" aria-describedby="sentiment" placeholder="Contoh: Matchanya enak, tetapi harganya mahal…"></textarea><button id="analyze" type="submit" class="primary"><svg class="icon" aria-hidden="true"><use href="#i-scan-text"></use></svg>Analisis teks<svg class="icon" aria-hidden="true"><use href="#i-arrow-right"></use></svg></button><p id="sentiment" role="status" aria-live="polite">Masukkan teks untuk memulai analisis.</p></form></section></div>
-    </div>
-    <footer><span><svg class="icon" aria-hidden="true"><use href="#i-coffee"></use></svg>CafeStock Intelligence</span><span>Direncanakan dengan data. Disiapkan dengan tepat.</span></footer>
-  </main>
-</div>
-</body>
+  </body>
 </html>

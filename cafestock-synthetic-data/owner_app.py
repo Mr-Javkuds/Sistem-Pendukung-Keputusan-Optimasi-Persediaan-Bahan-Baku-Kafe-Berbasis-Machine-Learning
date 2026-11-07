@@ -179,6 +179,8 @@ class Handler(BaseHTTPRequestHandler):
                 writer = csv.DictWriter(stream, fieldnames=list(rows[0]))
                 writer.writeheader(); writer.writerows(rows)
                 return self.send(200, stream.getvalue(), 'text/csv; charset=utf-8')
+            if not url.path.startswith('/api/'):
+                return self.send(404, (ROOT / 'web/not-found.html').read_bytes(), 'text/html; charset=utf-8')
             self.send(404, json.dumps({'error': 'Halaman tidak ditemukan'}))
         except (ValueError, KeyError) as error:
             self.send(400, json.dumps({'error': str(error)}))

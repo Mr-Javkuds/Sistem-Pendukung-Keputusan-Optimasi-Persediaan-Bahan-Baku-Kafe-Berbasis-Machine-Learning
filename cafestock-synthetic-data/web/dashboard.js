@@ -9,6 +9,7 @@ function explanation(r){
   const e=r.purchase_explanation;
   const caption=document.createElement('figcaption');caption.textContent='Proyeksi stok ('+r.unit+') setelah keputusan hari ini';figure.append(caption);
   const wrap=document.createElement('div');wrap.className='stock-plot-wrap';
+  wrap.tabIndex=0;wrap.setAttribute('role','region');wrap.setAttribute('aria-label','Grafik proyeksi '+r.ingredient_name+'; geser untuk melihat seluruh waktu');
   const ns='http://www.w3.org/2000/svg',svg=document.createElementNS(ns,'svg');
   svg.setAttribute('viewBox','0 0 640 320');svg.setAttribute('role','img');
   svg.setAttribute('aria-label','Grafik proyeksi stok tanpa pembelian dan dengan rencana pembelian, serta titik pemesanan dan target stok.');
@@ -101,7 +102,7 @@ function renderPurchases(){
     const tr=document.createElement('tr'),name=cell(tr,r.ingredient_name);
     tr.dataset.ingredient=String(r.ingredient_id);
     const details=document.createElement('details'),summary=document.createElement('summary');
-    summary.textContent='Lihat alasan';details.append(summary,explanation(r));name.append(details);
+    summary.textContent='Lihat alasan';summary.setAttribute('aria-label','Lihat alasan '+r.ingredient_name);details.append(summary,explanation(r));name.append(details);
     details.addEventListener('toggle',()=>{
       tr.dataset.expanded=String(details.open);
       name.colSpan=details.open?5:1;
@@ -118,7 +119,7 @@ function renderPurchases(){
   $('preview-cost').textContent=money(rows.reduce((total,r)=>total+r.estimated_cost_idr,0));
   needed.slice(0,4).forEach(r=>{
     const li=document.createElement('li'),button=document.createElement('button'),content=document.createElement('span'),name=document.createElement('strong'),amount=document.createElement('small');
-    button.type='button';button.className='preview-item';button.setAttribute('aria-label','Lihat alasan pembelian '+r.ingredient_name);
+    button.type='button';button.className='preview-item';button.title='Buka alasan pembelian '+r.ingredient_name;
     name.textContent=r.ingredient_name;amount.textContent=num(r.purchase_qty)+' '+r.unit+' · '+money(r.estimated_cost_idr);
     content.append(name,amount);button.append(content,icon('arrow-up-right'));li.append(button);preview.append(li);
     button.addEventListener('click',()=>{

@@ -21,6 +21,15 @@ def run():
         page.wait_for_function("document.querySelectorAll('#rows tr').length===10")
         page.wait_for_function("document.querySelectorAll('#trend-values tr').length===12")
         assert page.locator('#trend-heading').is_visible()
+        assert page.locator('#coverage').inner_text() != '—'
+        assert page.evaluate("document.fonts.check('15px Manrope')")
+        assert page.locator('symbol [fill="currentColor"]').count() == 0
+        page.locator('.preview-item').first.click()
+        page.locator('#rows tr[data-expanded="true"]').wait_for()
+        assert page.locator('#rows details[open]').count() == 1
+        assert page.locator('#rows tr[data-expanded="true"] td').first.get_attribute('colspan') == '5'
+        page.locator('#rows details[open] summary').click()
+        page.locator('nav [data-route="analysis"]').click()
         assert page.locator('#trend-chart polyline').count() == 4
         assert page.locator('#trend-comparisons tr').count() == 6
         page.uncheck('#series-sales_units')
@@ -112,6 +121,8 @@ def run():
                        'original-unit panels', 'trend category and 52-week selection',
                        'task navigation', 'persisted URL filters', 'keyboard skip link',
                        'purchase-only filter', 'inline text validation', 'trend error and retry',
+                       'priority ingredient shortcut', 'full-row purchase explanation', 'local Manrope font',
+                       'consistent Lucide outline icons', 'selected policy service rate',
                        'mobile no page overflow', 'no JavaScript errors'],
             'source_sha256': {name: hashlib.sha256((out.parents[1]/name).read_bytes()).hexdigest()
                               for name in ('owner_app.py', 'market_analysis.py', 'web/index.html',
