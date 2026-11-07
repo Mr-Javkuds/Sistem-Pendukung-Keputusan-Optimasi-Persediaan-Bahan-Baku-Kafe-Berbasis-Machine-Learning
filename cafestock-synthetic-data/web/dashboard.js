@@ -2,6 +2,7 @@
 const $=id=>document.getElementById(id),money=n=>new Intl.NumberFormat('id-ID',{style:'currency',currency:'IDR',maximumFractionDigits:0}).format(n),num=n=>new Intl.NumberFormat('id-ID',{maximumFractionDigits:1}).format(n);
 async function request(url,body){const r=await fetch(url,body?{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}:{});const d=await r.json();if(!r.ok)throw Error(d.error||'Permintaan gagal');return d}
 function cell(row,text){const td=document.createElement('td');td.textContent=text;td.dataset.label=['Bahan / alasan','Stok tersedia','Dalam pesanan','Beli','Estimasi biaya'][row.children.length];row.append(td);return td}
+function icon(name){const svg=document.createElementNS('http://www.w3.org/2000/svg','svg'),use=document.createElementNS(svg.namespaceURI,'use');svg.classList.add('icon');svg.setAttribute('aria-hidden','true');use.setAttribute('href','#i-'+name);svg.append(use);return svg}
 function explanation(r){
   const box=document.createElement('div');box.className='reason-content';
   const figure=document.createElement('figure');figure.className='stock-chart';
@@ -98,8 +99,13 @@ function renderPurchases(){
   const filtered=$('purchase-only').checked?rows.filter(r=>r.purchase_qty>0):rows;
   for(const r of filtered){
     const tr=document.createElement('tr'),name=cell(tr,r.ingredient_name);
+    tr.dataset.ingredient=String(r.ingredient_id);
     const details=document.createElement('details'),summary=document.createElement('summary');
     summary.textContent='Lihat alasan';details.append(summary,explanation(r));name.append(details);
+    details.addEventListener('toggle',()=>{
+      tr.dataset.expanded=String(details.open);
+      name.colSpan=details.open?5:1;
+    });
     cell(tr,num(r.on_hand)+' '+r.unit);cell(tr,num(r.on_order)+' '+r.unit);
     cell(tr,r.purchase_qty?num(r.purchase_qty)+' '+r.unit:'Cukup').className=r.purchase_qty?'buy':'';
     cell(tr,money(r.estimated_cost_idr));$('rows').append(tr);
@@ -108,9 +114,22 @@ function renderPurchases(){
   $('purchase-total').textContent=filtered.length+' dari '+rows.length+' bahan ditampilkan. Total rencana '+money(rows.reduce((total,r)=>total+r.estimated_cost_idr,0))+'.';
   const preview=$('purchase-preview');preview.replaceChildren();
   const needed=rows.filter(r=>r.purchase_qty>0).sort((a,b)=>b.estimated_cost_idr-a.estimated_cost_idr);
+  $('preview-count').textContent=needed.length+' bahan';
+  $('preview-cost').textContent=money(rows.reduce((total,r)=>total+r.estimated_cost_idr,0));
   needed.slice(0,4).forEach(r=>{
-    const li=document.createElement('li'),name=document.createElement('strong'),amount=document.createElement('span');
-    name.textContent=r.ingredient_name;amount.textContent=num(r.purchase_qty)+' '+r.unit+' · '+money(r.estimated_cost_idr);li.append(name,amount);preview.append(li);
+    const li=document.createElement('li'),button=document.createElement('button'),content=document.createElement('span'),name=document.createElement('strong'),amount=document.createElement('small');
+    button.type='button';button.className='preview-item';button.setAttribute('aria-label','Lihat alasan pembelian '+r.ingredient_name);
+    name.textContent=r.ingredient_name;amount.textContent=num(r.purchase_qty)+' '+r.unit+' · '+money(r.estimated_cost_idr);
+    content.append(name,amount);button.append(content,icon('arrow-up-right'));li.append(button);preview.append(li);
+    button.addEventListener('click',()=>{
+      // A priority ingredient unfolds its own evidence in the purchasing ledger.
+      showView('purchase',true);
+      const row=[...$('rows').children].find(item=>item.dataset.ingredient===String(r.ingredient_id));
+      if(!row)return;
+      const disclosure=row.querySelector('details');disclosure.open=true;
+      const summary=disclosure.querySelector('summary');summary.focus({preventScroll:true});
+      row.scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
+    });
   });
   if(!needed.length){const li=document.createElement('li');li.textContent='Belum perlu pembelian tambahan.';preview.append(li);}
   if(needed.length>4){const li=document.createElement('li');li.textContent='+'+(needed.length-4)+' bahan pada rencana lengkap.';preview.append(li);}
@@ -128,10 +147,12 @@ async function load(){
     if(stamp)$('date').dateTime=stamp;
     $('count').textContent=rows.filter(r=>r.purchase_qty>0).length+' dari '+rows.length;
     $('cost').textContent=money(total);$('policy').textContent=d.optimization.recommended_policy;
+    const selected=d.optimization.policies[d.optimization.recommended_policy];
+    $('coverage').textContent=selected?new Intl.NumberFormat('id-ID',{style:'percent',maximumFractionDigits:1}).format(selected.test.fill_rate):'—';
     $('export').href='/api/export?branch='+$('branch').value;
     renderPurchases();$('policies').replaceChildren();
     for(const [name,result]of Object.entries(d.optimization.policies)){
-      const tr=document.createElement('tr');cell(tr,name);cell(tr,new Intl.NumberFormat('id-ID',{style:'percent',maximumFractionDigits:1}).format(result.test.fill_rate));cell(tr,money(result.test.objective_cost_idr));$('policies').append(tr);
+      const tr=document.createElement('tr');tr.dataset.selected=String(name===d.optimization.recommended_policy);cell(tr,name);cell(tr,new Intl.NumberFormat('id-ID',{style:'percent',maximumFractionDigits:1}).format(result.test.fill_rate));cell(tr,money(result.test.objective_cost_idr));$('policies').append(tr);
     }
     $('message').textContent=d.approvals.length?'Rencana snapshot ini sudah disetujui lokal.':'Rencana siap diperiksa. Persetujuan disimpan lokal.';
     $('approve').disabled=!rows.length;
@@ -139,7 +160,7 @@ async function load(){
   }catch(error){
     if(ticket!==sequence)return;
     overviewData=null;
-    for(const id of ['count','cost','policy'])$(id).textContent='Tidak tersedia';
+    for(const id of ['count','cost','policy','coverage','preview-count','preview-cost'])$(id).textContent='—';
     $('rows').replaceChildren();$('purchase-preview').replaceChildren();$('policies').replaceChildren();
     $('purchase-total').textContent='Rencana belum tersedia untuk cabang ini.';
     $('date').textContent='Snapshot belum tersedia';$('date').removeAttribute('datetime');

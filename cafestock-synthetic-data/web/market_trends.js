@@ -15,10 +15,10 @@
     return item;
   }
   const specs = [
-    {key:'interest_index', label:'Tren pasar', color:'#1b6c80', dash:'', unit:'indeks'},
-    {key:'sentiment_score', label:'Sentimen SVM', color:'#606469', dash:'7 4', unit:'skor −1 sampai 1'},
-    {key:'sales_units', label:'Penjualan 7 hari', color:'#93640d', dash:'', unit:'unit menu'},
-    {key:'stock_value_idr', label:'Nilai stok', color:'#2f70bb', dash:'3 3', unit:'Rp'}
+    {key:'interest_index', label:'Tren pasar', color:'var(--chart-1)', dash:'', unit:'indeks'},
+    {key:'sentiment_score', label:'Sentimen SVM', color:'var(--chart-2)', dash:'7 4', unit:'skor −1 sampai 1'},
+    {key:'sales_units', label:'Penjualan 7 hari', color:'var(--chart-3)', dash:'', unit:'unit menu'},
+    {key:'stock_value_idr', label:'Nilai stok', color:'var(--chart-4)', dash:'3 3', unit:'Rp'}
   ];
   function selectedSpecs() {return specs.filter(s=>el('series-'+s.key).checked);}
   function draw(category) {
@@ -28,17 +28,17 @@
     svg.setAttribute('viewBox','0 0 '+svgWidth+' '+(count*panelHeight+30));
     svg.append(node('title',{},'Perbandingan tren, sentimen, penjualan dan stok '+label(category.name)),
       node('desc',{},original?'Panel nilai asli dengan sumbu berbeda.':'Setiap seri diskalakan sendiri dari minimum ke maksimum periode menjadi 0–100. Tabel memuat nilai asli.'));
-    if(!rows.length||!selected.length){svg.append(node('text',{x:50,y:90,fill:'#526b77'},'Pilih minimal satu seri untuk menampilkan grafik.'));el('trend-comparisons').replaceChildren();return;}
+    if(!rows.length||!selected.length){svg.append(node('text',{x:50,y:90,fill:'var(--muted)'},'Pilih minimal satu seri untuk menampilkan grafik.'));el('trend-comparisons').replaceChildren();return;}
     const x=i=>52+(rows.length===1?plotWidth/2:i/(rows.length-1)*plotWidth);
     const drawAxis=(offset,lo,hi,title)=>{
-      svg.append(node('text',{x:52,y:offset+16,fill:'#183347','font-size':14},title));
+      svg.append(node('text',{x:52,y:offset+16,fill:'var(--text)','font-size':14},title));
       for(const f of [0,.25,.5,.75,1]){
         const y=offset+35+155*(1-f),value=lo+(hi-lo)*f;
-        svg.append(node('line',{x1:52,x2:svgWidth-28,y1:y,y2:y,stroke:'#d8e3e8'}),node('text',{x:44,y:y+4,'text-anchor':'end',fill:'#526b77','font-size':12},new Intl.NumberFormat('id-ID',{notation:Math.abs(value)>=10000?'compact':'standard',maximumFractionDigits:1}).format(value)));
+        svg.append(node('line',{x1:52,x2:svgWidth-28,y1:y,y2:y,stroke:'var(--rule)'}),node('text',{x:44,y:y+4,'text-anchor':'end',fill:'var(--muted)','font-size':12},new Intl.NumberFormat('id-ID',{notation:Math.abs(value)>=10000?'compact':'standard',maximumFractionDigits:1}).format(value)));
       }
       [...new Set([0,Math.floor((rows.length-1)/2),rows.length-1])].forEach(i=>{
         const labelDate=svgWidth<600?new Intl.DateTimeFormat('id-ID',{day:'numeric',month:'short'}).format(new Date(rows[i].week_start)):date(rows[i].week_start);
-        svg.append(node('text',{x:x(i),y:offset+215,'text-anchor':i===0?'start':i===rows.length-1?'end':'middle',fill:'#535e58','font-size':12},labelDate));
+        svg.append(node('text',{x:x(i),y:offset+215,'text-anchor':i===0?'start':i===rows.length-1?'end':'middle',fill:'var(--muted)','font-size':12},labelDate));
       });
     };
     if(!original)drawAxis(0,0,100,'Skala perbandingan 0–100 per seri');
