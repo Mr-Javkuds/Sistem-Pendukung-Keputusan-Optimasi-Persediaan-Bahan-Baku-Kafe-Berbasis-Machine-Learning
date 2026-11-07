@@ -4,14 +4,32 @@
     "page load",
     "three branches",
     "10 ingredient rows",
+    "40 bars with shared scale per ingredient",
+    "zero values have no bar",
+    "business explanations below charts",
+    "requested notices removed",
     "sentiment inference",
     "CSV download",
+    "four aligned comparison series",
+    "two-series toggle and pair comparison",
+    "original-unit panels",
+    "trend category and 52-week selection",
+    "task navigation",
+    "persisted URL filters",
+    "keyboard skip link",
+    "purchase-only filter",
+    "inline text validation",
+    "trend error and retry",
     "mobile no page overflow",
     "no JavaScript errors"
   ],
   "source_sha256": {
-    "owner_app.py": "8b5912b28524a037aba467abe9ef8d96298e50e5a92e55c8c22c34fa344f6fa0",
-    "web/index.html": "09ecaaf6d3aed637935b1d7ad2614ce2e880ae2358bc1f31300e20226cd45928"
+    "owner_app.py": "03ffc26c1c31e0082207c66df4ba8ebc825bff0132c418b8d4bef7d85641145d",
+    "market_analysis.py": "a7c3e74b0fd368d92c9b047b1b125d57fedfcf978fdb720a8cf466f1babfd0e2",
+    "web/index.html": "f8a062ced882ccb4b9a170587adcdb6c04bb1870d702e01ccfe20e3d20f76aa5",
+    "web/dashboard.css": "a142d115702a74f946f4e404fac705f984904c403a03cb3fdf4ae15e7f85bcfd",
+    "web/dashboard.js": "0a80287004af5b6ec134e8a37975af8cc165cfcc1e7a407d9ccd292d5c106b99",
+    "web/market_trends.js": "697cdf5bc7db012cfdea9431b754361444c3843956d15ac60f6cd579d8681c7e"
   },
   "passed": true
 }

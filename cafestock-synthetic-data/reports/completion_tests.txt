@@ -8,21 +8,33 @@ test_every_text_prediction_uses_strictly_earlier_labels (test_completed_pipeline
 test_regression_target_independently_matches_latent_demand (test_completed_pipeline.ArtifactTests.test_regression_target_independently_matches_latent_demand) ... ok
 test_risk_predictions_have_observed_test_labels_and_past_signals (test_completed_pipeline.ArtifactTests.test_risk_predictions_have_observed_test_labels_and_past_signals) ... ok
 test_upstream_sources_still_match_manifests (test_completed_pipeline.ArtifactTests.test_upstream_sources_still_match_manifests) ... ok
-test_approval_persists_without_duplicates (test_completed_pipeline.OwnerHTTPTests.test_approval_persists_without_duplicates) ... 127.0.0.1 - - [05/Nov/2026 11:02:22] "POST /api/approve HTTP/1.1" 200 -
-127.0.0.1 - - [05/Nov/2026 11:02:22] "POST /api/approve HTTP/1.1" 200 -
+test_weekly_direction_compares_changes_and_handles_gaps_constants (test_completed_pipeline.ArtifactTests.test_weekly_direction_compares_changes_and_handles_gaps_constants) ... ok
+test_approval_persists_without_duplicates (test_completed_pipeline.OwnerHTTPTests.test_approval_persists_without_duplicates) ... 127.0.0.1 - - [05/Nov/2026 16:49:42] "POST /api/approve HTTP/1.1" 200 -
+127.0.0.1 - - [05/Nov/2026 16:49:42] "POST /api/approve HTTP/1.1" 200 -
 ok
-test_page_and_three_branches_and_csv (test_completed_pipeline.OwnerHTTPTests.test_page_and_three_branches_and_csv) ... 127.0.0.1 - - [05/Nov/2026 11:02:22] "GET / HTTP/1.1" 200 -
-127.0.0.1 - - [05/Nov/2026 11:02:22] "GET /api/overview?branch=1 HTTP/1.1" 200 -
-127.0.0.1 - - [05/Nov/2026 11:02:22] "GET /api/export?branch=1 HTTP/1.1" 200 -
-127.0.0.1 - - [05/Nov/2026 11:02:22] "GET /api/overview?branch=2 HTTP/1.1" 200 -
-127.0.0.1 - - [05/Nov/2026 11:02:22] "GET /api/export?branch=2 HTTP/1.1" 200 -
-127.0.0.1 - - [05/Nov/2026 11:02:22] "GET /api/overview?branch=3 HTTP/1.1" 200 -
-127.0.0.1 - - [05/Nov/2026 11:02:22] "GET /api/export?branch=3 HTTP/1.1" 200 -
+test_chart_sales_stock_sentiment_match_sources_and_branch (test_completed_pipeline.OwnerHTTPTests.test_chart_sales_stock_sentiment_match_sources_and_branch) ... 127.0.0.1 - - [05/Nov/2026 16:49:42] "GET /api/trends?branch=2&weeks=12 HTTP/1.1" 200 -
+127.0.0.1 - - [05/Nov/2026 16:49:43] "GET /api/trends?branch=2&weeks=52 HTTP/1.1" 200 -
 ok
-test_text_inference_and_invalid_requests (test_completed_pipeline.OwnerHTTPTests.test_text_inference_and_invalid_requests) ... 127.0.0.1 - - [05/Nov/2026 11:02:22] "POST /api/sentiment HTTP/1.1" 200 -
-127.0.0.1 - - [05/Nov/2026 11:02:22] "POST /api/sentiment HTTP/1.1" 400 -
-127.0.0.1 - - [05/Nov/2026 11:02:22] "GET /api/overview?branch=999 HTTP/1.1" 400 -
-127.0.0.1 - - [05/Nov/2026 11:02:22] "POST /api/approve HTTP/1.1" 403 -
+test_market_trends_values_periods_and_future_exclusion (test_completed_pipeline.OwnerHTTPTests.test_market_trends_values_periods_and_future_exclusion) ... 127.0.0.1 - - [05/Nov/2026 16:49:43] "GET /api/trends?branch=1&weeks=4 HTTP/1.1" 200 -
+127.0.0.1 - - [05/Nov/2026 16:49:43] "GET /api/trends?branch=1&weeks=52 HTTP/1.1" 200 -
+127.0.0.1 - - [05/Nov/2026 16:49:44] "GET /api/trends?branch=1&weeks=4 HTTP/1.1" 200 -
+127.0.0.1 - - [05/Nov/2026 16:49:44] "GET /api/trends?weeks=0 HTTP/1.1" 400 -
+ok
+test_page_and_three_branches_and_csv (test_completed_pipeline.OwnerHTTPTests.test_page_and_three_branches_and_csv) ... 127.0.0.1 - - [05/Nov/2026 16:49:44] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [05/Nov/2026 16:49:44] "GET /dashboard.css HTTP/1.1" 200 -
+127.0.0.1 - - [05/Nov/2026 16:49:44] "GET /dashboard.js HTTP/1.1" 200 -
+127.0.0.1 - - [05/Nov/2026 16:49:44] "GET /market_trends.js HTTP/1.1" 200 -
+127.0.0.1 - - [05/Nov/2026 16:49:44] "GET /api/overview?branch=1 HTTP/1.1" 200 -
+127.0.0.1 - - [05/Nov/2026 16:49:44] "GET /api/export?branch=1 HTTP/1.1" 200 -
+127.0.0.1 - - [05/Nov/2026 16:49:44] "GET /api/overview?branch=2 HTTP/1.1" 200 -
+127.0.0.1 - - [05/Nov/2026 16:49:44] "GET /api/export?branch=2 HTTP/1.1" 200 -
+127.0.0.1 - - [05/Nov/2026 16:49:44] "GET /api/overview?branch=3 HTTP/1.1" 200 -
+127.0.0.1 - - [05/Nov/2026 16:49:44] "GET /api/export?branch=3 HTTP/1.1" 200 -
+ok
+test_text_inference_and_invalid_requests (test_completed_pipeline.OwnerHTTPTests.test_text_inference_and_invalid_requests) ... 127.0.0.1 - - [05/Nov/2026 16:49:44] "POST /api/sentiment HTTP/1.1" 200 -
+127.0.0.1 - - [05/Nov/2026 16:49:44] "POST /api/sentiment HTTP/1.1" 400 -
+127.0.0.1 - - [05/Nov/2026 16:49:44] "GET /api/overview?branch=999 HTTP/1.1" 400 -
+127.0.0.1 - - [05/Nov/2026 16:49:44] "POST /api/approve HTTP/1.1" 403 -
 ok
 test_negation_retained_and_changes_representation (test_encoding.EncodingTests.test_negation_retained_and_changes_representation) ... ok
 test_numeric_imputer_uses_training_median (test_encoding.EncodingTests.test_numeric_imputer_uses_training_median) ... ok
@@ -37,6 +49,6 @@ test_monthly_collection_not_retroactive (test_social_pipeline.SocialPipelineTest
 test_synthetic_discussion_independent_of_sales (test_social_pipeline.SocialPipelineTests.test_synthetic_discussion_independent_of_sales) ... ok
 
 ----------------------------------------------------------------------
-Ran 24 tests in 3.277s
+Ran 27 tests in 5.215s
 
 OK
