@@ -1,0 +1,19 @@
+{
+  "case_count": 2000,
+  "semantic_scenarios": 400,
+  "cases_sha256": "bff7e0a581a0b43b285322b8b158a0cd64a6789d229294415c65c64c65585564",
+  "model_sha256_before": "3a3ab9317bf7ccd1c06a8ac46ceccbe8e46405da4e1b991223cb4cf5ac667660",
+  "seed": "deterministic, no random sampling",
+  "rubric": {
+    "positive": "Explicit favorable taste/value, no contrary menu judgment.",
+    "negative": "Explicit unfavorable taste/value, no favorable menu judgment.",
+    "neutral": "Menu facts or questions without personal favorable/unfavorable judgment.",
+    "mixed": "Explicit favorable and unfavorable judgments on the same menu across taste/value."
+  },
+  "limitations": [
+    "400 controlled semantic scenarios, each with five surface variants; not 2000 independent human reviews.",
+    "Labels were authored before prediction; no independent annotator adjudication.",
+    "Cases are constructed Indonesian texts, not collected Instagram content.",
+    "This is a frozen-model challenge audit; no training, tuning, or endpoint model replacement."
+  ]
+}

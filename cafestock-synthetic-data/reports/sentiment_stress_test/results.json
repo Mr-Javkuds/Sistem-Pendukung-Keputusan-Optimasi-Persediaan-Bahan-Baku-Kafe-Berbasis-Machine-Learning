@@ -1,0 +1,135 @@
+{
+  "accuracy": 0.4025,
+  "macro_f1": 0.36210136522362957,
+  "classification_report": {
+    "positive": {
+      "precision": 0.38071065989847713,
+      "recall": 0.3,
+      "f1-score": 0.33557046979865773,
+      "support": 500.0
+    },
+    "negative": {
+      "precision": 0.4657534246575342,
+      "recall": 0.272,
+      "f1-score": 0.3434343434343434,
+      "support": 500.0
+    },
+    "neutral": {
+      "precision": 0.45326633165829144,
+      "recall": 0.902,
+      "f1-score": 0.6033444816053511,
+      "support": 500.0
+    },
+    "mixed": {
+      "precision": 0.21316614420062696,
+      "recall": 0.136,
+      "f1-score": 0.16605616605616605,
+      "support": 500.0
+    },
+    "accuracy": 0.4025,
+    "macro avg": {
+      "precision": 0.37822414010373245,
+      "recall": 0.4025000000000001,
+      "f1-score": 0.3621013652236296,
+      "support": 2000.0
+    },
+    "weighted avg": {
+      "precision": 0.37822414010373245,
+      "recall": 0.4025,
+      "f1-score": 0.3621013652236296,
+      "support": 2000.0
+    }
+  },
+  "confusion_matrix": [
+    [
+      150,
+      50,
+      147,
+      153
+    ],
+    [
+      19,
+      136,
+      247,
+      98
+    ],
+    [
+      46,
+      3,
+      451,
+      0
+    ],
+    [
+      179,
+      103,
+      150,
+      68
+    ]
+  ],
+  "label_order": [
+    "positive",
+    "negative",
+    "neutral",
+    "mixed"
+  ],
+  "api": {
+    "executed": true,
+    "requests": 2000,
+    "successful": 2000,
+    "errors": 0,
+    "matches_frozen_batch_model": 2000,
+    "accuracy": 0.4025,
+    "latency_median_ms": 20.12995001859963,
+    "latency_p95_ms": 36.913560010725625
+  },
+  "by_variant": {
+    "casing_punctuation": {
+      "count": 400,
+      "accuracy": 0.4075
+    },
+    "formal": {
+      "count": 400,
+      "accuracy": 0.4075
+    },
+    "informal": {
+      "count": 400,
+      "accuracy": 0.34
+    },
+    "social_context": {
+      "count": 400,
+      "accuracy": 0.435
+    },
+    "typo": {
+      "count": 400,
+      "accuracy": 0.4225
+    }
+  },
+  "by_phenomenon": {
+    "direct_opinion": {
+      "count": 490,
+      "accuracy": 0.3040816326530612
+    },
+    "factual_no_opinion": {
+      "count": 500,
+      "accuracy": 0.902
+    },
+    "negation_or_scope": {
+      "count": 510,
+      "accuracy": 0.26862745098039215
+    },
+    "taste_negative_value_positive": {
+      "count": 250,
+      "accuracy": 0.136
+    },
+    "taste_positive_value_negative": {
+      "count": 250,
+      "accuracy": 0.136
+    }
+  },
+  "mean_oov_fraction": 0.6942487980832427,
+  "all_five_variants_correct_scenarios": 112,
+  "scenario_count": 400,
+  "training_text_overlap": 0,
+  "model_sha256_after": "3a3ab9317bf7ccd1c06a8ac46ceccbe8e46405da4e1b991223cb4cf5ac667660",
+  "reference_cases_sha256": "bff7e0a581a0b43b285322b8b158a0cd64a6789d229294415c65c64c65585564"
+}

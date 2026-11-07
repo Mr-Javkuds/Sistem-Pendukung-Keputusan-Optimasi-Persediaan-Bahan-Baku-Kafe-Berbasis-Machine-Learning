@@ -2,7 +2,7 @@
 
 [README utama](../../README.md) · [Indeks dokumentasi](README.md) · [Panduan menjalankan](../README.md)
 
-## Status per 5 November 2026
+## Status per 7 November 2026
 
 Persiapan data telah direvisi menjadi skenario Semarang; Instagram sintetis
 menggantikan ulasan pembelian kafe. Generator, fitur referensi, schema dan
@@ -12,6 +12,12 @@ laporan aktual di reports/encoding_report.md. Tahap 07–11 juga telah dijalanka
 pelatihan/evaluasi, explainability, forecast kebutuhan, replay kebijakan dan
 dashboard lokal. Scraper nyata tidak diperlukan dalam lingkup Instagram sintetis.
 Hasil pemeriksaan aktual dibaca dari reports/, bukan dianggap sebagai akurasi ML.
+
+Form analisis teks dashboard kini memakai IndoBERT fine-tuned empat kelas.
+Pipeline sentimen historis yang menjadi fitur model risiko tetap memakai SVM
+kronologis. Challenge terkontrol 2.000 kalimat memberi akurasi IndoBERT 54,7%,
+namun recall positif hanya 7,6%; hasil ini belum membuktikan kinerja pada ulasan
+konsumen nyata. [Laporan challenge IndoBERT](../reports/indobert_experiment/report.md).
 
 ✅ Selesai dengan bukti tersimpan di Git · ⬜ Belum dikerjakan.
 Checklist menunjukkan penyelesaian tahap, bukan akurasi atau manfaat bisnis.
@@ -48,6 +54,8 @@ cakupan tahap tersebut. Encoding dikerjakan terpisah pada tahap 06.
 1. Pertahankan binding data/manifest; jika data berubah, ulangi persiapan dan encoding.
 2. Jalankan `train_models.py` untuk tahap 07–09 dan `optimize_inventory.py` untuk tahap 10.
 3. Jalankan `owner_app.py` untuk tahap 11, kemudian unit test dan uji browser.
+4. Untuk form IndoBERT, pasang `requirements-indobert.txt`, jalankan
+   `experiment_indobert.py`, lalu mulai ulang server. Bobot disimpan lokal di `tmp/`.
 
 Bukti: [model dan evaluasi](../reports/modeling_report.md),
 [optimasi](../reports/optimization_report.md), [aplikasi](aplikasi_pemilik.md),
@@ -68,6 +76,10 @@ dan [audit penyelesaian](../reports/completion_report.md).
 | 09_explainability | Periksa kontribusi fitur dan contoh keputusan; bedakan penjelasan model dari aturan restok | Alasan yang dipahami pemilik |
 | 10_optimization | Forecast kebutuhan bahan dan replay stok dengan permintaan sama | Kebijakan terpilih pada validation dan hasil test |
 | 11_owner_app | Dashboard lokal, ekspor, analisis teks, persetujuan rencana | Aplikasi pemilik diuji HTTP dan Chrome |
+
+Eksperimen IndoBERT merupakan model tambahan untuk form teks pada dashboard,
+bukan pengganti SVM kronologis yang mendasari fitur sentimen historis dan
+evaluasi risiko. Hasil uji 2.000 teks dan per kelas ada di laporan challenge.
 
 ## Data dan label
 

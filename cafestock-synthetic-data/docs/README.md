@@ -4,6 +4,10 @@
 
 ## Urutan membaca
 
+Baru mengenal proyek? Mulai dari [README utama](../../README.md), lalu lihat
+[alur tahap 01–11](alur_project_ml.md). Untuk menjalankan dashboard, ikuti
+[panduan aplikasi](aplikasi_pemilik.md).
+
 | Kebutuhan | Dokumen |
 |---|---|
 | Progres dan bukti penyelesaian | [Alur proyek ML](alur_project_ml.md) |
@@ -28,6 +32,9 @@
 | [Audit sumber](../reports/source_audit.md) | Asal dan keterbatasan input |
 | [Profil statistik](../reports/statistical_profile.md) | Ringkasan distribusi data |
 | [Migrasi Semarang](../reports/semarang_migration.md) | Perubahan dari rancangan awal |
+| [Challenge sentimen 2.000 teks](../reports/sentiment_stress_test/report.md) | Kelemahan model SVM pada variasi kalimat |
+| [Eksperimen IndoBERT](../reports/indobert_experiment/report.md) | Perbandingan per kelas, batas, dan checkpoint lokal |
+| [Audit keterbacaan UI](../reports/ui_readability_review.md) | Perubahan antarmuka dan pemeriksaan visual |
 
 Laporan membuktikan pelaksanaan pada data/config tertentu. Perubahan data perlu
 diikuti pemeriksaan ulang. Jumlah pemeriksaan bukan akurasi machine learning.
@@ -54,3 +61,9 @@ implementasi aktif, ikuti skenario Semarang dan Instagram sintetis di dokumen in
 - [Peramalan kebutuhan bahan dan optimasi kebijakan](../reports/optimization_report.md).
 - [Aplikasi pemilik dan cara menjalankannya](aplikasi_pemilik.md).
 - [Audit penyelesaian dan keterbatasan prototipe](../reports/completion_report.md).
+
+Form analisis teks di dashboard menggunakan IndoBERT fine-tuned empat kelas.
+Bobotnya tidak ikut repository karena berukuran besar; jalankan eksperimen sesuai
+[panduan aplikasi](aplikasi_pemilik.md) untuk membuat checkpoint lokal. Seri
+sentimen pada grafik historis tetap memakai prediksi SVM yang dipakai pipeline
+risiko. Kedua jalur ini berbeda dan hasilnya tidak boleh dianggap sama.

@@ -2,9 +2,19 @@
 
 [README utama](../README.md) · [Alur dan progres](docs/alur_project_ml.md) · [Indeks dokumentasi](docs/README.md)
 
-Generator Python 3.11+ untuk kafe fiktif di Semarang, dengan 3 cabang, 10 produk,
-resep, pemasok, permintaan, transaksi, inventori dan pembahasan menu Instagram.
-Periode 2025-11-04 s.d. 2026-11-03, WIB, mata uang IDR.
+Proyek simulasi Python 3.11+ untuk tiga cabang kafe fiktif di Semarang. Alurnya:
+generator dan pemeriksaan data → fitur dan split waktu → model → replay persediaan
+→ dashboard. Transaksi, stok, tren, dan pembahasan menu Instagram bersifat sintetis.
+
+## Jalur cepat
+
+| Tujuan | Mulai dari |
+|---|---|
+| Menjalankan ulang data dan audit | Bagian 1–2 di bawah |
+| Memahami dataset dan batasnya | [Data sosial](#3-pahami-data-sosial) dan [asumsi](docs/assumptions.md) |
+| Menjalankan modeling dan optimasi | [Encoding dan eksperimen ML](#4-encoding-dan-aturan-eksperimen-ml) |
+| Menjalankan dashboard | [Panduan aplikasi pemilik](docs/aplikasi_pemilik.md) |
+| Melihat bukti hasil | [Indeks laporan](docs/README.md) |
 
 ## 1. Siapkan lingkungan
 
@@ -136,12 +146,17 @@ uv pip install --python ../.venv/Scripts/python.exe -r requirements-ml.txt
 ../.venv/Scripts/python.exe optimize_inventory.py
 ../.venv/Scripts/python.exe analyze_results.py
 ../.venv/Scripts/python.exe -m unittest discover -s tests -v
+../.venv/Scripts/python.exe -m pip install -r requirements-indobert.txt
+../.venv/Scripts/python.exe experiment_indobert.py
 ../.venv/Scripts/python.exe owner_app.py
 ```
 
 Buka [dashboard lokal](http://127.0.0.1:8765). Pelatihan menulis model, prediksi,
 fitur sentimen historis, dan penjelasan di `prepared/07_modeling/`. Optimasi
 menulis forecast serta replay stok di `prepared/10_optimization/`.
+Eksperimen IndoBERT membuat checkpoint `../tmp/indobert-cafestock-fourclass` untuk
+form teks; jalankan setelah train/test challenge tersedia. Fine-tuning memerlukan
+internet saat mengunduh base model dan memakan sekitar 30 menit pada CPU.
 Baca [laporan model](reports/modeling_report.md), [laporan optimasi](reports/optimization_report.md),
 [petunjuk aplikasi](docs/aplikasi_pemilik.md), dan [bukti penyelesaian](reports/completion_report.md).
 Data sumber dan artefak tahap 01–06 tidak ditimpa oleh kedua script ini.

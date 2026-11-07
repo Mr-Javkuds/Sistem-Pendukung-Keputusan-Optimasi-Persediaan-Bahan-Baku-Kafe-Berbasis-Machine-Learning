@@ -10,7 +10,7 @@ Lingkup: prototipe akademik lokal berbasis data sintetis. Tidak mencakup scraper
 | 08 | Metrik per kelas, threshold validation, sepuluh kombinasi ablation/model, prediksi test; F1/AP dihitung ulang oleh gate |
 | 09 | Permutation importance, kata pendukung SVM, prediksi aktual/salah untuk analisis kesalahan |
 | 10 | Target kebutuhan dari latent demand × resep, forecast MAE/RMSE per bahan, empat replay kebijakan, seleksi validation |
-| 11 | [Panduan aplikasi](../docs/aplikasi_pemilik.md), tes HTTP, [Chrome desktop/seluler](app/browser_check.json) |
+| 11 | [Panduan aplikasi](../docs/aplikasi_pemilik.md), endpoint lokal, [cuplikan dashboard](app/desktop.png) |
 
 ## Pemeriksaan akhir
 
@@ -23,11 +23,16 @@ Lingkup: prototipe akademik lokal berbasis data sintetis. Tidak mencakup scraper
 - Chrome: cabang, inferensi, unduhan, tanpa error JS, layout seluler tanpa overflow halaman.
 - Hash kode, model, prediksi, dan hasil replay: [completion_manifest.json](completion_manifest.json).
 
+Catatan versi: hasil pemeriksaan di atas berasal dari snapshot sebelum perubahan
+terbaru pada form IndoBERT dan grafik proyeksi pembelian. Untuk memeriksa snapshot
+terkini, jalankan kembali pemeriksaan HTTP/unit dan `verify_browser.py`.
+
 Analisis kesalahan per bahan dan contoh false negative: [error_analysis.md](error_analysis.md).
 
 ## Hasil utama
 
 - SVM macro F1 test: 1.0000; teks template sintetis mudah diklasifikasi, bukan bukti performa Instagram nyata.
+- Form teks demo kini memakai IndoBERT fine-tuned. Challenge terkontrol 2.000 kalimat: akurasi 54,70%, Macro F1 0,5084, recall positif 7,6%; lihat [laporan per kelas](indobert_experiment/report.md). Bobot checkpoint tidak disimpan di GitHub.
 - Random Forest gabungan: F1 0.7753, AP 0.6876 pada test.
 - Kebijakan ML_1.2, dipilih pada validation: fill rate test 90.57% → 99.17%.
 - Biaya tujuan test: IDR 122,440,017 → 90,933,804; biaya limbah IDR 1,097,280 → 2,469,040.
@@ -35,6 +40,7 @@ Analisis kesalahan per bahan dan contoh false negative: [error_analysis.md](erro
 ## Batas penelitian
 
 Hasil menunjukkan perilaku simulator dan asumsi biaya. Optimasi hanya menelusuri tiga faktor stok pengaman, bukan optimum global. Sentimen tidak dipaksakan memengaruhi permintaan. Model stok menilai kebijakan historis; aplikasi memisahkan skor itu dari rekomendasi hasil replay. Akurasi, popularitas, laba, dan sebab-akibat bisnis nyata belum dibuktikan.
+Skor IndoBERT dihitung pada challenge buatan dan tidak boleh dianggap sebagai akurasi untuk konsumen nyata. Pipeline fitur historis/risk tetap memakai prediksi SVM kronologis; form demo menggunakan IndoBERT.
 Alamat/lisensi sumber eksternal belum sepenuhnya terdokumentasi pada audit awal; ini tetap keterbatasan akademik. Tidak ada sumber atau izin baru yang direkayasa.
 
 ## Menjalankan ulang
