@@ -4,11 +4,12 @@
     "page load",
     "three branches",
     "10 ingredient rows",
-    "40 bars with shared scale per ingredient",
-    "zero values have no bar",
-    "business explanations below charts",
+    "10 SVG stock projections",
+    "projected stock with/without purchase",
+    "reorder and target reference lines",
+    "policy math included in explanation",
     "requested notices removed",
-    "sentiment inference",
+    "IndoBERT sentiment inference",
     "CSV download",
     "four aligned comparison series",
     "two-series toggle and pair comparison",
@@ -24,12 +25,12 @@
     "no JavaScript errors"
   ],
   "source_sha256": {
-    "owner_app.py": "03ffc26c1c31e0082207c66df4ba8ebc825bff0132c418b8d4bef7d85641145d",
+    "owner_app.py": "73939b39892f7e0d4013418164c4fafc05192ca71f831f62dbac79a8a47cbc9f",
     "market_analysis.py": "a7c3e74b0fd368d92c9b047b1b125d57fedfcf978fdb720a8cf466f1babfd0e2",
-    "web/index.html": "f8a062ced882ccb4b9a170587adcdb6c04bb1870d702e01ccfe20e3d20f76aa5",
-    "web/dashboard.css": "a142d115702a74f946f4e404fac705f984904c403a03cb3fdf4ae15e7f85bcfd",
-    "web/dashboard.js": "0a80287004af5b6ec134e8a37975af8cc165cfcc1e7a407d9ccd292d5c106b99",
-    "web/market_trends.js": "697cdf5bc7db012cfdea9431b754361444c3843956d15ac60f6cd579d8681c7e"
+    "web/index.html": "300987cb327f90b0497f54466f6d68ee50b31a5bed127e4c5466db0b5a62347d",
+    "web/dashboard.css": "f527727e8fac3f0d94b7ce77e03053931d104e058db92bfb36ac1de99f1c68e2",
+    "web/dashboard.js": "c75b96345b6decabb23b717ae911a4e57b9827cd585ce7ae01be938192df2a9d",
+    "web/market_trends.js": "f0cd19a2ed2c7bb5f1a0a3dc7a33d875b836d07407d40c59bf49ebfc114fb393"
   },
   "passed": true
 }
