@@ -157,7 +157,9 @@ class Handler(BaseHTTPRequestHandler):
             if url.path == '/market_trends.js':
                 return self.send(200, (ROOT / 'web/market_trends.js').read_bytes(), 'text/javascript; charset=utf-8')
             assets = {'/dashboard.js': ('dashboard.js', 'text/javascript'),
-                      '/dashboard.css': ('dashboard.css', 'text/css')}
+                      '/dashboard.css': ('dashboard.css', 'text/css'),
+                      '/manrope-latin.woff2': ('manrope-latin.woff2', 'font/woff2'),
+                      '/favicon.svg': ('favicon.svg', 'image/svg+xml')}
             if url.path in assets:
                 name, kind = assets[url.path]
                 return self.send(200, (ROOT/'web'/name).read_bytes(), kind+'; charset=utf-8')

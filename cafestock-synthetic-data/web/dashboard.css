@@ -20,7 +20,7 @@
   --radius-card: 8px;
   --radius-control: 6px;
   --gap: 24px;
-  --font: 'Segoe UI', Arial, sans-serif;
+  --font: 'Manrope', 'Segoe UI', Arial, sans-serif;
   font-family: var(--font);
   background: var(--ground);
   color: var(--text);
@@ -28,7 +28,16 @@
   line-height: 1.5;
   -webkit-tap-highlight-color: rgba(27, 108, 128, .12);
 }
+@font-face {
+  font-family: 'Manrope';
+  src: url('/manrope-latin.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+}
 * { box-sizing: border-box; }
+.icon-definitions { display: none; }
+.icon { width: 1em; height: 1em; flex: none; vertical-align: middle; }
 body { margin: 0; }
 [hidden] { display: none !important; }
 /* 228px frame + remaining canvas; 24px gutters on both sheet edges. */
