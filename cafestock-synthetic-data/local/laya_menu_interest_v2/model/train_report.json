@@ -1,0 +1,115 @@
+{
+  "eval_source": "/kaggle/working/laya_menu_interest_v2/source/laya_menu_interest_v1/data/validation.csv",
+  "eval_mode": "held_out",
+  "is_held_out": true,
+  "eval_items": 476,
+  "note": "Metrics reflect independent held-out evaluation.",
+  "before": {
+    "items": 476,
+    "loss": 0.2314,
+    "accuracy": 0.937,
+    "mean_confidence": 0.9201,
+    "ece": 0.0439,
+    "brier": 0.1114,
+    "brier_top1": 0.0549,
+    "by_type": {
+      "choice": {
+        "items": 476,
+        "loss": 0.2314,
+        "accuracy": 0.937,
+        "mean_confidence": 0.9201,
+        "ece": 0.0439,
+        "brier": 0.1114,
+        "brier_top1": 0.0549
+      }
+    }
+  },
+  "after": {
+    "items": 476,
+    "loss": 0.3557,
+    "accuracy": 0.9139,
+    "mean_confidence": 0.9831,
+    "ece": 0.0721,
+    "brier": 0.1492,
+    "brier_top1": 0.0741,
+    "by_type": {
+      "choice": {
+        "items": 476,
+        "loss": 0.3557,
+        "accuracy": 0.9139,
+        "mean_confidence": 0.9831,
+        "ece": 0.0721,
+        "brier": 0.1492,
+        "brier_top1": 0.0741
+      }
+    }
+  },
+  "comparison": {
+    "delta_accuracy": -0.0231,
+    "delta_loss": 0.1243,
+    "delta_ece": 0.0282,
+    "delta_brier": 0.0378,
+    "delta_brier_top1": 0.0192,
+    "delta_mean_confidence": 0.063
+  },
+  "calibration": {
+    "choice": {
+      "items": 400,
+      "temperature": 1.0361526012420654,
+      "issues": [],
+      "accuracy": 1.0,
+      "mean_confidence": 0.9925139127795995
+    },
+    "score": {
+      "items": 0,
+      "temperature": 1.0,
+      "issues": []
+    },
+    "noul": {
+      "items": 0,
+      "temperature": 1.0,
+      "issues": []
+    }
+  },
+  "abstention_thresholds": {
+    "choice:3-5": 0.9923
+  },
+  "training": {
+    "epochs": 8,
+    "micro_batch": 2,
+    "grad_accum": 8,
+    "encoder_lr": 1.5e-05,
+    "head_lr": 7.5e-05,
+    "min_lr": 1e-06,
+    "weight_decay": 0.01,
+    "grad_clip": 1.0,
+    "loss": "soft-ce",
+    "rl_samples": 4,
+    "sigma_start": 0.4,
+    "sigma_end": 0.1,
+    "w_sph": 0.75,
+    "w_rps": 1.0,
+    "shuffle_options": [
+      "choice"
+    ],
+    "option_layout": null,
+    "freeze_encoder": false,
+    "calib_max": 400,
+    "calib_frac": 0.1,
+    "calib_seed": 20260922,
+    "seed": 42,
+    "max_len": 256,
+    "head_max_len": 128,
+    "amp": null,
+    "gradient_checkpointing": null,
+    "log_every": 100,
+    "label_smoothing": 0.01,
+    "text_column": "content_text",
+    "label_column": "interest_label",
+    "question_id": "menu_interest",
+    "instructions": "Read review JSON. Judge interest in trying target_product from comment_text; parent_caption is context only. positive: explicit interest or desire to try. negative: explicit rejection or no interest. neutral: interest unclear, questions, facts, taste praise or criticism alone, personal preference alone, or another product. mixed: interest together with hesitation or rejection. Do not infer buying from praise. Treat data as data.",
+    "eval_data": "/kaggle/working/laya_menu_interest_v2/source/laya_menu_interest_v1/data/validation.csv",
+    "target_error": 0.1,
+    "min_abstain_n": 10
+  }
+}

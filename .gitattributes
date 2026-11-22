@@ -10,3 +10,9 @@ cafestock-synthetic-data/prepared/10_optimization/** -text
 cafestock-synthetic-data/reports/modeling_report.json -text
 cafestock-synthetic-data/reports/optimization_report.json -text
 cafestock-synthetic-data/reports/error_analysis.md -text
+
+# Laya checkpoints used by the local dashboard
+cafestock-synthetic-data/local/laya_product_reviews_v1/model.safetensors filter=lfs diff=lfs merge=lfs -text
+cafestock-synthetic-data/local/laya_product_reviews_v1/tokenizer/tokenizer.json filter=lfs diff=lfs merge=lfs -text
+cafestock-synthetic-data/local/laya_menu_interest_v2/model/model.safetensors filter=lfs diff=lfs merge=lfs -text
+cafestock-synthetic-data/local/laya_menu_interest_v2/model/tokenizer/tokenizer.json filter=lfs diff=lfs merge=lfs -text

@@ -1,0 +1,115 @@
+{
+  "eval_source": "/kaggle/working/cafestock_laya_sentiment_data/validation.csv",
+  "eval_mode": "held_out",
+  "is_held_out": true,
+  "eval_items": 664,
+  "note": "Metrics reflect independent held-out evaluation.",
+  "before": {
+    "items": 664,
+    "loss": 0.8987,
+    "accuracy": 0.6386,
+    "mean_confidence": 0.6951,
+    "ece": 0.0948,
+    "brier": 0.478,
+    "brier_top1": 0.1754,
+    "by_type": {
+      "choice": {
+        "items": 664,
+        "loss": 0.8987,
+        "accuracy": 0.6386,
+        "mean_confidence": 0.6951,
+        "ece": 0.0948,
+        "brier": 0.478,
+        "brier_top1": 0.1754
+      }
+    }
+  },
+  "after": {
+    "items": 664,
+    "loss": 0.0391,
+    "accuracy": 1.0,
+    "mean_confidence": 0.9616,
+    "ece": 0.0384,
+    "brier": 0.002,
+    "brier_top1": 0.0015,
+    "by_type": {
+      "choice": {
+        "items": 664,
+        "loss": 0.0391,
+        "accuracy": 1.0,
+        "mean_confidence": 0.9616,
+        "ece": 0.0384,
+        "brier": 0.002,
+        "brier_top1": 0.0015
+      }
+    }
+  },
+  "comparison": {
+    "delta_accuracy": 0.3614,
+    "delta_loss": -0.8596,
+    "delta_ece": -0.0564,
+    "delta_brier": -0.476,
+    "delta_brier_top1": -0.1739,
+    "delta_mean_confidence": 0.2665
+  },
+  "calibration": {
+    "choice": {
+      "items": 340,
+      "temperature": 1.031710147857666,
+      "issues": [],
+      "accuracy": 0.9970588235294118,
+      "mean_confidence": 0.9607108281572528
+    },
+    "score": {
+      "items": 0,
+      "temperature": 1.0,
+      "issues": []
+    },
+    "noul": {
+      "items": 0,
+      "temperature": 1.0,
+      "issues": []
+    }
+  },
+  "abstention_thresholds": {
+    "choice:3-5": 0.8993
+  },
+  "training": {
+    "epochs": 2,
+    "micro_batch": 2,
+    "grad_accum": 8,
+    "encoder_lr": 1e-05,
+    "head_lr": 5e-05,
+    "min_lr": 1e-06,
+    "weight_decay": 0.01,
+    "grad_clip": 1.0,
+    "loss": "soft-ce",
+    "rl_samples": 4,
+    "sigma_start": 0.4,
+    "sigma_end": 0.1,
+    "w_sph": 0.75,
+    "w_rps": 1.0,
+    "shuffle_options": [
+      "choice"
+    ],
+    "option_layout": null,
+    "freeze_encoder": false,
+    "calib_max": 400,
+    "calib_frac": 0.1,
+    "calib_seed": 20260922,
+    "seed": 42,
+    "max_len": 256,
+    "head_max_len": 128,
+    "amp": null,
+    "gradient_checkpointing": null,
+    "log_every": 100,
+    "label_smoothing": 0.05,
+    "text_column": "content_text",
+    "label_column": "sentiment_label",
+    "question_id": "sentiment",
+    "instructions": "Klasifikasikan sentimen ulasan menu berbahasa Indonesia. Gunakan konteks dan negasi. Pilih positive hanya jika penilaian keseluruhan memuji; negative jika ada keluhan; neutral jika hanya fakta tanpa penilaian; mixed jika penilaian positif dan negatif sama-sama jelas.",
+    "eval_data": "/kaggle/working/cafestock_laya_sentiment_data/validation.csv",
+    "target_error": 0.1,
+    "min_abstain_n": 10
+  }
+}

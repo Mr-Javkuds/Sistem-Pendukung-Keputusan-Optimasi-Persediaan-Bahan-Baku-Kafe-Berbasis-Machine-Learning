@@ -1,0 +1,16 @@
+{
+  "model_id": "laya_product_reviews_v1",
+  "purpose": "Sentimen review pengalaman konsumsi produk; model tersimpan sebelum eksperimen komentar publik",
+  "source": "E:\\Mahasiswa\\SEM 3\\data mining\\Sistem Pendukung Keputusan Optimasi Persediaan Bahan Baku Kafe Berbasis Machine Learning Menggunakan Analisis Tren Pasar dan Sentimen Konsumen\\cafestock-synthetic-data\\local\\laya_cafestock_finetuned",
+  "backup": "E:\\Mahasiswa\\SEM 3\\data mining\\Sistem Pendukung Keputusan Optimasi Persediaan Bahan Baku Kafe Berbasis Machine Learning Menggunakan Analisis Tren Pasar dan Sentimen Konsumen\\cafestock-synthetic-data\\local\\laya_product_reviews_v1",
+  "saved_date": "2026-11-08",
+  "sha256": {
+    "model.safetensors": "73b12264ab04d723c07f19a4bcb2565e29f34f662eec6c154f327fb8da5187ef",
+    "questions.json": "5861c012290a9c7a18122fca9174ffea6c7f09d500d776021b2bdf68b4904496",
+    "rl_agent_config.json": "4522b7e92cabbc7b004eff80866cd8bb0eb48c54bfcc4d652a7aa1c53d724fae",
+    "train_report.json": "db447a47f89d171e147a8342f4203216fd996570944f11f4e8b6344ae46765f9",
+    "encoder\\config.json": "b0a87bc9689d4b7897838c5e45d17de7ff3d756590d7f3b7d36bfc83e99c4525",
+    "tokenizer\\tokenizer.json": "dbba919c6e5e492bc22beb80abb64e6fcc7e8744dc696e8388b8c977767afa4b",
+    "tokenizer\\tokenizer_config.json": "f2ff584a8f78ac9f3b6fd0afcf9ab310e41c2d445ef628f9ab4b0d594e992b7a"
+  }
+}

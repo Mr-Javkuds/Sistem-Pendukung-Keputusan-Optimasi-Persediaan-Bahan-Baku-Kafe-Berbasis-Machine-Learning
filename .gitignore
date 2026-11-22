@@ -8,7 +8,11 @@ venv/
 
 # Local render previews and temporary work
 /tmp/
-**/local/
+**/local/*
+!/cafestock-synthetic-data/local/laya_product_reviews_v1/
+!/cafestock-synthetic-data/local/laya_product_reviews_v1/**
+!/cafestock-synthetic-data/local/laya_menu_interest_v2/
+!/cafestock-synthetic-data/local/laya_menu_interest_v2/**
 *.log
 /.taste-skill/
 /.awwwards/

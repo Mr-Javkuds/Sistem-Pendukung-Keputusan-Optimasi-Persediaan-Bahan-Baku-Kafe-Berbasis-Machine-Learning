@@ -1,0 +1,12 @@
+{
+  "sentiment": {
+    "type": "choice",
+    "instructions": "Klasifikasikan sentimen ulasan menu berbahasa Indonesia. Gunakan konteks dan negasi. Pilih positive hanya jika penilaian keseluruhan memuji; negative jika ada keluhan; neutral jika hanya fakta tanpa penilaian; mixed jika penilaian positif dan negatif sama-sama jelas.",
+    "criteria": [
+      "positive",
+      "mixed",
+      "negative",
+      "neutral"
+    ]
+  }
+}
