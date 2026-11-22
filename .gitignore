@@ -8,6 +8,9 @@ venv/
 
 # Local render previews and temporary work
 /tmp/
+!/tmp/
+!/tmp/indobert-cafestock-fourclass/
+!/tmp/indobert-cafestock-fourclass/**
 **/local/*
 !/cafestock-synthetic-data/local/laya_product_reviews_v1/
 !/cafestock-synthetic-data/local/laya_product_reviews_v1/**

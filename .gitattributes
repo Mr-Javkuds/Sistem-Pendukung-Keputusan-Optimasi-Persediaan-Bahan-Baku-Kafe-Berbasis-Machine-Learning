@@ -16,3 +16,4 @@ cafestock-synthetic-data/local/laya_product_reviews_v1/model.safetensors filter=
 cafestock-synthetic-data/local/laya_product_reviews_v1/tokenizer/tokenizer.json filter=lfs diff=lfs merge=lfs -text
 cafestock-synthetic-data/local/laya_menu_interest_v2/model/model.safetensors filter=lfs diff=lfs merge=lfs -text
 cafestock-synthetic-data/local/laya_menu_interest_v2/model/tokenizer/tokenizer.json filter=lfs diff=lfs merge=lfs -text
+tmp/indobert-cafestock-fourclass/model.safetensors filter=lfs diff=lfs merge=lfs -text
