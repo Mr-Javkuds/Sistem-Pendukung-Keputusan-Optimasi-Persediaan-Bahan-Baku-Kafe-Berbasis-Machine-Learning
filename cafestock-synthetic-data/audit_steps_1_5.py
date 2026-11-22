@@ -88,7 +88,7 @@ def main():
         'train_risk_labels':{str(int(k)):int(v) for k,v in train.target_stockout.value_counts().items()},
         'train_product_units':{product_names.loc[k]:int(v) for k,v in product_units.items()},
         'train_daily_sales':{str(k):int(v) for k,v in train_daily.items()},
-        'train_social_batches':{str(k):int(v) for k,v in train_posts.groupby(train_posts.collected_at.str[:7]).size().items()},
+        'train_social_batches':{str(k):int(v) for k,v in train_posts.groupby(train_posts.collected_at.str[:10]).size().items()},
         'train_social_availability':{str(int(k)):int(v) for k,v in train.social_data_available.value_counts().items()},
         'train_risk_feature_description':train[features['risk_features']].describe().to_dict(),
         'train_unknown_location_posts':int(train_posts.region_id.isna().sum()),

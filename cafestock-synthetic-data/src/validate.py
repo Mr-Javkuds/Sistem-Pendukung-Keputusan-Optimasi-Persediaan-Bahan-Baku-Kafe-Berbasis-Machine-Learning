@@ -121,15 +121,18 @@ def validate(root,tables,config,source_profile=None):
     check('Location uncertainty explicitly represented',posts.loc[posts.region_id.isna(),'location_evidence'].eq('unknown').all() and posts.loc[posts.region_id.notna(),'location_evidence'].eq('synthetic_scenario').all())
     pub=pd.to_datetime(posts.published_at,utc=True); collected=pd.to_datetime(posts.collected_at,utc=True)
     check('Collection follows publication',(collected>=pub).all())
-    expected_collection=posts.published_at.str[:7].map(lambda v:(pd.Timestamp(v+'-01')+pd.offsets.MonthBegin(1)+pd.Timedelta(hours=7)).tz_localize(config['timezone']).isoformat())
-    check('Monthly Instagram collection schedule',posts.collected_at.eq(expected_collection).all())
+    local_days=pd.to_datetime(posts.published_at.str[:10])
+    week_starts=local_days-pd.to_timedelta(local_days.dt.dayofweek,unit='D')
+    expected_collection=(week_starts+pd.Timedelta(days=7,hours=7)).dt.tz_localize(config['timezone']).map(lambda v:v.isoformat())
+    check('Weekly Instagram collection schedule',posts.collected_at.eq(expected_collection).all())
     check('Menu names occur in corresponding caption',all(t['products'].set_index('product_id').loc[r.product_id,'product_name'] in posts.set_index('post_id').loc[r.post_id,'content_text'] for r in mentions.itertuples()))
     aspect_sets=aspects.groupby('mention_id').sentiment_label.agg(set)
     check('Menu sentiment ground truth consistent with aspects',all(
         aspect_sets.loc[r.mention_id]==({'positive','negative'} if r.sentiment_label=='mixed' else {r.sentiment_label}) for r in mentions.itertuples()))
     check('All four menu sentiment classes available',set(mentions.sentiment_label)=={'positive','neutral','negative','mixed'})
     social_rows=mentions.merge(posts,on='post_id')
-    social_rows['period_start']=social_rows.published_at.str[:7]+'-01'
+    publication_days=pd.to_datetime(social_rows.published_at.str[:10])
+    social_rows['period_start']=(publication_days-pd.to_timedelta(publication_days.dt.dayofweek,unit='D')).dt.strftime('%Y-%m-%d')
     signals=t['menu_market_signals']
     eligible=social_rows[social_rows.region_id.notna()]
     groups={key:g for key,g in eligible.groupby(['region_id','product_id','period_start'])}
@@ -143,7 +146,7 @@ def validate(root,tables,config,source_profile=None):
                r.available_at==g.collected_at.max() and r.source_max_published_at==g.published_at.max() and
                all(getattr(r,k+'_count')==counts.get(k,0) for k in ['positive','neutral','negative','mixed']))
         if not valid: signal_errors.append(r.signal_id)
-    check('Monthly region/menu signals independently reconstructed',not signal_errors and len(groups)==len(signals),str(signal_errors[:5]))
+    check('Weekly region/menu signals independently reconstructed',not signal_errors and len(groups)==len(signals),str(signal_errors[:5]))
     check('Regional signals exclude unknown locations',signals.region_id.notna().all() and set(signals.region_id)<=set(t['regions'].region_id))
     sentiment=t['sentiment_ml_dataset']; postmap=posts.set_index('post_id')
     check('Sentiment training rows retain correct caption and label',sentiment.content_text.eq(sentiment.post_id.map(postmap.content_text)).all() and
@@ -207,8 +210,8 @@ def validate(root,tables,config,source_profile=None):
                                 (outstanding.delivered_time.isna()|(outstanding.delivered_time>at))]
         valid=(abs(usable-row.on_hand)<1e-5 and len(before)==row.history_days and
                (not len(before) or abs(before.consumption.mean()-row.mean_daily_consumption_14d)<1e-5) and
-               len(rr)==row.social_post_count_latest_month and
-               abs((rr.sentiment_label.map({'positive':1,'negative':-1,'neutral':0,'mixed':0}).mean() if len(rr) else 0)-row.menu_sentiment_latest_month)<1e-5 and
+               len(rr)==row.social_post_count_latest_week and
+               abs((rr.sentiment_label.map({'positive':1,'negative':-1,'neutral':0,'mixed':0}).mean() if len(rr) else 0)-row.menu_sentiment_latest_week)<1e-5 and
                row.social_data_available==int(len(rr)>0) and
                (not len(rr) or (rr.collected_at.max()==row.social_available_at and rr.published_at.max()==row.social_feature_max_at and rr.period_start.max()==row.social_period_start)) and
                abs(outstanding.quantity.sum()-row.on_order)<1e-5)

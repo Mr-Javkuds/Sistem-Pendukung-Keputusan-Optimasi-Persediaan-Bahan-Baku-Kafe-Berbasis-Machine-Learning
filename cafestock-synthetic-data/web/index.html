@@ -20,6 +20,13 @@
       crossorigin
     />
     <title>CafeStock • Analisis persediaan</title>
+    <script>
+      try {
+        document.documentElement.classList.toggle('sidebar-collapsed', localStorage.getItem('cafestock.sidebar.collapsed') !== 'false');
+      } catch {
+        document.documentElement.classList.add('sidebar-collapsed');
+      }
+    </script>
     <link rel="stylesheet" href="/dashboard.css" />
     <script src="/dashboard.js" defer></script>
     <script src="/market_trends.js" defer></script>
@@ -250,11 +257,16 @@
     </svg>
     <a class="skip-link" href="#main">Lewati ke konten utama</a>
     <aside class="sidebar" aria-label="Navigasi CafeStock">
-      <a class="brand" href="?view=analysis" translate="no"
+      <button id="sidebar-toggle" class="sidebar-toggle" type="button"
+        aria-controls="workspace-navigation" aria-expanded="false"
+        aria-label="Perluas sidebar" title="Perluas sidebar">
+        <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"></use></svg>
+      </button>
+      <a class="brand" href="?view=analysis" translate="no" aria-label="CafeStock — Analisis pasar" title="CafeStock"
         ><span class="brand-mark"
           ><svg class="icon" aria-hidden="true">
             <use href="#i-coffee"></use></svg></span
-        ><span
+        ><span class="brand-copy"
           >CafeStock<span class="brand-descriptor">INTELLIGENCE</span></span
         ></a
       >
@@ -263,22 +275,22 @@
         kafe
       </div>
       <div class="nav-caption">Workspace</div>
-      <nav aria-label="Tampilan utama">
-        <a href="?view=analysis" data-route="analysis" aria-current="page"
+      <nav id="workspace-navigation" aria-label="Tampilan utama">
+        <a href="?view=analysis" data-route="analysis" aria-current="page" aria-label="Analisis pasar" title="Analisis pasar"
           ><svg class="icon" aria-hidden="true">
             <use href="#i-chart-no-axes-combined"></use></svg
           ><span>Analisis pasar</span
           ><svg class="icon" aria-hidden="true">
             <use href="#i-chevron-right"></use></svg
         ></a>
-        <a href="?view=purchase" data-route="purchase"
+        <a href="?view=purchase" data-route="purchase" aria-label="Pembelian" title="Pembelian"
           ><svg class="icon" aria-hidden="true">
             <use href="#i-package"></use></svg
           ><span>Pembelian</span
           ><svg class="icon" aria-hidden="true">
             <use href="#i-chevron-right"></use></svg
         ></a>
-        <a href="?view=evaluation" data-route="evaluation"
+        <a href="?view=evaluation" data-route="evaluation" aria-label="Evaluasi dan sentimen" title="Evaluasi &amp; sentimen"
           ><svg class="icon" aria-hidden="true">
             <use href="#i-scan-text"></use></svg
           ><span>Evaluasi &amp; sentimen</span
@@ -393,14 +405,14 @@
                 <div>
                   <h2 id="trend-heading">Pergerakan pasar &amp; stok</h2>
                   <p class="subtle">
-                    Tren, sentimen, penjualan, dan nilai stok pada minggu yang
-                    sama.
+                    Lihat perubahan minat pasar, pendapat konsumen, penjualan,
+                    dan nilai bahan yang tersisa untuk kategori menu pilihan.
                   </p>
                 </div>
               </div>
               <div class="trend-controls">
                 <label for="trend-category"
-                  >Kategori<select
+                  >Kategori menu<select
                     id="trend-category"
                     name="category"
                     autocomplete="off"
@@ -420,6 +432,7 @@
                   </select></label
                 >
               </div>
+              <p class="small">Data saat ini mencakup 4 kategori menu: Kopi, Teh, Roti &amp; pastry, dan Minuman cokelat. Pilih satu kategori untuk melihat datanya.</p>
               <fieldset class="series-toggles">
                 <legend class="sr-only">Garis &amp; nilai terakhir</legend>
                 <label
@@ -434,7 +447,7 @@
                     data-swatch="interest_index"
                     aria-hidden="true"
                   ></span
-                  ><span>Tren pasar</span
+                  ><span>Minat pasar (indeks 0–100)</span
                   ><strong id="legend-interest_index">—</strong></label
                 >
                 <label
@@ -449,7 +462,7 @@
                     data-swatch="sentiment_score"
                     aria-hidden="true"
                   ></span
-                  ><span>Sentimen</span
+                  ><span>Sentimen mingguan (−1 sampai +1)</span
                   ><strong id="legend-sentiment_score">—</strong></label
                 >
                 <label
@@ -464,7 +477,7 @@
                     data-swatch="sales_units"
                     aria-hidden="true"
                   ></span
-                  ><span>Penjualan</span
+                  ><span>Menu terjual dalam 7 hari</span
                   ><strong id="legend-sales_units">—</strong></label
                 >
                 <label
@@ -479,7 +492,7 @@
                     data-swatch="stock_value_idr"
                     aria-hidden="true"
                   ></span
-                  ><span>Nilai stok</span
+                  ><span>Nilai bahan tersisa (Rp)</span
                   ><strong id="legend-stock_value_idr">—</strong></label
                 >
               </fieldset>
@@ -495,11 +508,20 @@
                 <svg
                   id="trend-chart"
                   viewBox="0 0 960 260"
-                  role="img"
+                  role="group"
                   aria-labelledby="trend-heading"
-                  aria-describedby="chart-scale-note"
+                  aria-describedby="chart-scale-note chart-interaction-hint"
                 ></svg>
+                <div id="chart-point-detail" class="chart-point-detail" role="status" aria-live="polite" hidden>
+                  <button id="chart-point-close" type="button" aria-label="Tutup detail titik" title="Tutup detail titik">×</button>
+                  <span id="chart-point-series"></span>
+                  <strong id="chart-point-value"></strong>
+                  <span id="chart-point-date"></span>
+                  <dl id="chart-point-other-values"></dl>
+                  <small id="chart-point-source"></small>
+                </div>
               </div>
+              <p id="chart-interaction-hint" class="small">Klik atau ketuk titik/garis untuk melihat tanggal dan nilai asli. Gunakan Tab lalu Enter untuk memilih titik dengan keyboard.</p>
               <div class="scale-control">
                 <label for="trend-scale"
                   >Skala<select
@@ -507,15 +529,16 @@
                     name="scale"
                     autocomplete="off"
                   >
-                    <option value="compare">Perbandingan 0–100</option>
-                    <option value="original">Nilai asli per seri</option>
+                    <option value="original" selected>Grafik terpisah dengan satuan asli</option>
+                    <option value="compare">Gabungkan garis pada skala 0–100</option>
                   </select></label
                 >
               </div>
               <p id="chart-scale-note" class="small">
-                Skala 0–100 mengikuti minimum–maksimum tiap seri pada periode
-                terpilih. Besar nilai antarseri tidak dapat disamakan.
+                Setiap grafik memiliki satuan sendiri. Baca tanggal dari kiri ke kanan dan nilai pada sumbu kiri.
               </p>
+              <p class="small">Cara membaca: minat pasar yang naik berarti indeks ketertarikan meningkat. Sentimen mendekati +1 berarti lebih positif, 0 netral atau berimbang, dan −1 lebih negatif. Penjualan menunjukkan jumlah menu yang terjual selama 7 hari sebelum tanggal pengamatan. Nilai stok adalah nilai rupiah bahan yang tersisa pada akhir hari sebelumnya. Sentimen dihitung dari postingan Senin–Minggu dan diperbarui pada Senin berikutnya pukul 07.00 WIB. Nilainya dapat tetap sama jika rata-rata pendapat tidak berubah.</p>
+              <p id="sentiment-batch-note" class="small"></p>
               <div class="chart-status">
                 <p
                   id="trend-status"
@@ -622,7 +645,7 @@
                   r ≥ 0,3 cenderung sejalan; r ≤ −0,3 berlawanan; sisanya lemah.
                   Minimal enam pasangan dengan variasi cukup. Hubungan
                   deskriptif ini bukan bukti sebab-akibat atau signifikansi
-                  statistik. Sentimen bulanan bertangga; pengulangan batch bukan
+                  statistik. Sentimen mingguan bertangga; pengulangan batch bukan
                   sampel baru.
                 </p>
               </details>
@@ -689,7 +712,7 @@
               </p>
               <p>
                 Sentimen menggunakan prediksi SVM dari batch terakhir yang telah
-                dikumpulkan, mencakup kota dan wilayah cabang. Batch bulanan
+                dikumpulkan, mencakup kota dan wilayah cabang. Batch mingguan
                 digambar bertangga; data belum tersedia menjadi celah. Seri
                 konstan pada skala perbandingan berada di 50.
               </p>
@@ -707,8 +730,8 @@
               <div>
                 <h2 id="purchase-heading">Rencana bahan baku</h2>
                 <p class="subtle">
-                  Jumlah beli mengikuti kemasan, minimum pesanan, dan kebijakan
-                  terpilih.
+                  Saran pesanan tambahan berada di luar jumlah yang sudah dipesan.
+                  Biaya hanya untuk pesanan tambahan tersebut.
                 </p>
               </div>
               <label class="check-filter"
@@ -716,9 +739,10 @@
                   id="purchase-only"
                   type="checkbox"
                   name="purchaseOnly"
-                />Perlu dibeli saja</label
+                />Perlu pesanan tambahan saja</label
               >
             </div>
+            <p id="purchase-context" class="small purchase-context">Memuat tanggal acuan rencana…</p>
             <div
               class="overflow"
               tabindex="0"
@@ -729,10 +753,10 @@
                 <thead>
                   <tr>
                     <th scope="col">Bahan &amp; alasan</th>
-                    <th scope="col">Stok tersedia</th>
-                    <th scope="col">Dalam pesanan</th>
-                    <th scope="col">Beli</th>
-                    <th scope="col">Estimasi biaya</th>
+                    <th scope="col">Stok di cabang</th>
+                    <th scope="col">Sudah dipesan,<br>belum diterima</th>
+                    <th scope="col">Saran pesanan<br>tambahan</th>
+                    <th scope="col">Biaya pesanan<br>tambahan</th>
                   </tr>
                 </thead>
                 <tbody id="rows"></tbody>
@@ -773,16 +797,34 @@
             <section class="panel" aria-labelledby="sentiment-heading">
               <h2 id="sentiment-heading">Analisis sentimen menu</h2>
               <p class="subtle">
-                Coba pembahasan menu dan lihat hasil klasifikasinya.
+                Pilih analisis sentimen produk atau ketertarikan publik terhadap menu.
               </p>
               <form id="sentiment-form" novalidate>
-                <label for="text">Teks pembahasan</label
+                <label for="sentiment-model">Model klasifikasi</label>
+                <select id="sentiment-model" name="model" aria-describedby="sentiment-model-note">
+                  <option value="indobert">IndoBERT</option>
+                  <option value="laya_product">Laya Sentimen Produk</option>
+                  <option value="laya_trend">Laya Tren Sentimen</option>
+                </select>
+                <p id="sentiment-model-note" class="small">
+                  Memeriksa ketersediaan tiga model lokal…
+                </p>
+                <div id="trend-sentiment-context" hidden>
+                  <label for="sentiment-target">Produk/menu target</label>
+                  <input id="sentiment-target" name="target_product" type="text" maxlength="160"
+                    placeholder="Contoh: Es Matcha Latte" aria-describedby="sentiment-model-note" />
+                  <label for="sentiment-caption">Caption atau konteks postingan</label>
+                  <textarea id="sentiment-caption" name="parent_caption" maxlength="2000"
+                    placeholder="Contoh: Unggahan yang memperkenalkan varian Es Matcha Latte baru."
+                    aria-describedby="sentiment-model-note"></textarea>
+                </div>
+                <label for="text" id="sentiment-text-label">Teks ulasan produk</label
                 ><textarea
                   id="text"
                   name="content_text"
                   maxlength="4000"
                   autocomplete="off"
-                  aria-describedby="sentiment"
+                  aria-describedby="sentiment sentiment-model-note"
                   placeholder="Contoh: Matchanya enak, tetapi harganya mahal…"
                 ></textarea
                 ><button id="analyze" type="submit" class="primary">

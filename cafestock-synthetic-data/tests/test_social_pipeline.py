@@ -1,10 +1,10 @@
-"""Behavior checks for monthly availability, location isolation and independent posts."""
+"""Behavior checks for weekly availability, location isolation and independent posts."""
 import copy
 import unittest
 import numpy as np
 import pandas as pd
 from src.generate_recipes import generate as catalog
-from src.generate_social import generate,aggregate,monthly_collection
+from src.generate_social import generate,aggregate,weekly_collection,weekly_period_start
 from src.generate_ml_datasets import generate as features
 
 class SocialPipelineTests(unittest.TestCase):
@@ -12,9 +12,20 @@ class SocialPipelineTests(unittest.TestCase):
         self.config={'seed':42,'start_date':'2025-11-25','end_date':'2025-12-04',
                      'timezone':'Asia/Jakarta','mean_daily_social_posts':30,'evaluation_horizon_days':7}
 
-    def test_monthly_collection_not_retroactive(self):
-        result=monthly_collection('2025-11-30T23:59:00+07:00','Asia/Jakarta')
+    def test_weekly_collection_not_retroactive(self):
+        result=weekly_collection('2025-11-30T23:59:00+07:00','Asia/Jakarta')
         self.assertEqual(result.isoformat(),'2025-12-01T07:00:00+07:00')
+
+    def test_monday_posts_wait_until_next_monday(self):
+        self.assertEqual(weekly_collection('2025-12-01T01:00:00+07:00','Asia/Jakarta').isoformat(),
+                         '2025-12-08T07:00:00+07:00')
+        self.assertEqual(weekly_collection('2025-11-30T18:00:00+00:00','Asia/Jakarta').isoformat(),
+                         '2025-12-08T07:00:00+07:00')
+
+    def test_week_crosses_month_and_year_without_splitting(self):
+        for day in ('2025-12-29','2025-12-31','2026-01-01','2026-01-04'):
+            self.assertEqual(weekly_period_start(day+'T12:00:00+07:00'),'2025-12-29')
+        self.assertEqual(weekly_period_start('2026-01-05T12:00:00+07:00'),'2026-01-05')
 
     def test_synthetic_discussion_independent_of_sales(self):
         a=catalog(); b=catalog(); b['transaction_items']=pd.DataFrame({'rating':[1,5]})
@@ -46,9 +57,9 @@ class SocialPipelineTests(unittest.TestCase):
         tables=self.fixture(); original=copy.deepcopy(tables)
         features(self.config,tables)
         result=tables['restock_decision_dataset'].set_index('decision_id')
-        self.assertEqual(result.loc[1,'social_post_count_latest_month'],0)
+        self.assertEqual(result.loc[1,'social_post_count_latest_week'],0)
         self.assertEqual(result.loc[1,'social_data_available'],0)
-        self.assertGreater(result.loc[2,'social_post_count_latest_month'],0)
+        self.assertGreater(result.loc[2,'social_post_count_latest_week'],0)
         # Inject positive sentiment into unknown-location and another district only.
         region_by_post=original['social_posts'].set_index('post_id').region_id
         ids=original['menu_mentions'].post_id.map(region_by_post)
@@ -57,8 +68,8 @@ class SocialPipelineTests(unittest.TestCase):
         original['menu_market_signals']=aggregate(original)
         features(self.config,original)
         changed=original['restock_decision_dataset'].set_index('decision_id')
-        self.assertEqual(result.loc[2,'menu_sentiment_latest_month'],changed.loc[2,'menu_sentiment_latest_month'])
-        self.assertEqual(result.loc[2,'social_post_count_latest_month'],changed.loc[2,'social_post_count_latest_month'])
+        self.assertEqual(result.loc[2,'menu_sentiment_latest_week'],changed.loc[2,'menu_sentiment_latest_week'])
+        self.assertEqual(result.loc[2,'social_post_count_latest_week'],changed.loc[2,'social_post_count_latest_week'])
 
     def test_later_batch_cannot_change_past_features(self):
         tables=self.fixture(); modified=copy.deepcopy(tables)
@@ -67,7 +78,7 @@ class SocialPipelineTests(unittest.TestCase):
         modified['menu_mentions'].loc[future,'sentiment_label']='negative'
         modified['menu_market_signals']=aggregate(modified)
         features(self.config,tables); features(self.config,modified)
-        cols=['social_post_count_latest_month','menu_sentiment_latest_month','social_available_at']
+        cols=['social_post_count_latest_week','menu_sentiment_latest_week','social_available_at']
         pd.testing.assert_frame_equal(tables['restock_decision_dataset'][cols],modified['restock_decision_dataset'][cols])
 
 if __name__=='__main__': unittest.main()

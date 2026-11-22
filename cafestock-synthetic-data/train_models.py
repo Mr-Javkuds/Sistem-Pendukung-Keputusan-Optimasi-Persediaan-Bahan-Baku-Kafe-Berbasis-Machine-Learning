@@ -19,6 +19,7 @@ from sklearn.metrics import (classification_report, confusion_matrix, f1_score,
     precision_score, recall_score, average_precision_score, brier_score_loss)
 from sklearn.inspection import permutation_importance
 from src.encoding import fit_text, fit_tabular
+from src.generate_social import weekly_period_start
 from encode import verify_upstream
 
 ROOT = Path(__file__).resolve().parent
@@ -80,7 +81,7 @@ def predicted_risk_features(posts):
     links = pd.read_csv(ROOT / 'output/recipe_ingredients.csv')
     menus = {i: set(g.recipe_id.map(recipes)) for i, g in links.groupby('ingredient_id')}
     posts = posts[posts.region_id.notna() & posts.prediction.notna()].copy()
-    posts['period'] = posts.published_at.str[:7]
+    posts['period'] = posts.published_at.map(weekly_period_start)
     posts['score'] = posts.prediction.map({'positive': 1., 'negative': -1., 'neutral': 0., 'mixed': 0.})
     cache = {}
     records = []
@@ -99,7 +100,7 @@ def predicted_risk_features(posts):
             else:
                 cache[key] = (0, 0., 0, 0, None)
         records.append(cache[key])
-    columns = ['social_post_count_latest_month', 'menu_sentiment_latest_month',
+    columns = ['social_post_count_latest_week', 'menu_sentiment_latest_week',
                'social_data_available', 'social_age_days', 'predicted_social_available_at']
     for n, col in enumerate(columns):
         risk[col] = [r[n] for r in records]
@@ -148,7 +149,7 @@ def run():
     operational = [c for c in features if c not in social + market]
     groups = {'A_operational': operational, 'B_trend': operational + market,
               'C_sentiment': operational + social, 'D_combined': features,
-              'E_volume_without_polarity': [c for c in features if c != 'menu_sentiment_latest_month']}
+              'E_volume_without_polarity': [c for c in features if c != 'menu_sentiment_latest_week']}
     frames = {p: risk.loc[prepared[p]['metadata'].risk_row_id].reset_index(drop=True) for p in PARTS}
     results = {}
     best_pipeline = None
@@ -198,7 +199,7 @@ def run():
                   for n, label in enumerate(svm.classes_)}
     dump(DEST / 'sentiment_terms.json', text_terms)
     report = {'sentiment': text_results, 'risk': results, 'primary_risk_model': 'D_combined_RandomForest',
-        'primary_threshold': best_threshold, 'sentiment_source': 'strict earlier-batch SVM; frozen train model for validation/test',
+        'primary_threshold': best_threshold, 'sentiment_source': 'weekly Monday–Sunday publication batches; strict earlier-batch SVM; frozen train model for validation/test',
         'warmup_posts_without_prediction': int(posts.prediction.isna().sum()),
         'limitations': ['Synthetic templates do not establish real Instagram generalization.',
           'Risk labels describe historical inventory policy, not counterfactual policies.',

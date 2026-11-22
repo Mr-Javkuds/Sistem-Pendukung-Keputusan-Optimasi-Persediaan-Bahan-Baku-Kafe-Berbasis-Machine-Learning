@@ -60,7 +60,7 @@ miliknya. Jangan menganggap perubahan config otomatis merombak basis data lama.
 | output/social_posts.csv | Caption Instagram sintetis, waktu publikasi/koleksi, wilayah dan provenance |
 | output/menu_mentions.csv | Hubungan postingan–menu dan label sentimen menu |
 | output/menu_aspects.csv | Label aspek taste/value; mixed mempunyai aspek berlawanan |
-| output/menu_market_signals.csv | Ringkasan menu–wilayah–bulan yang tersedia saat batch dikumpulkan |
+| output/menu_market_signals.csv | Ringkasan menu–wilayah–minggu yang tersedia saat batch dikumpulkan |
 | output/sentiment_ml_dataset.csv | Teks dan label untuk eksperimen, split menurut collected_at |
 | output/restock_decision_dataset.csv | Fitur operasional dan sinyal menu regional yang tersedia sebelum keputusan |
 | output/inventory_risk_ml_dataset.csv | Fitur dan target stockout 7 hari |
@@ -71,10 +71,10 @@ source_url kosong, source_post_key berawalan SIM-IG-SMG-. Teks tidak terkait rat
 transaksi pelanggan atau penilaian sebuah kafe. Angka sosial yang dihasilkan bukan
 ukuran popularitas menu nyata di Semarang.
 
-Postingan satu bulan dikumpulkan pada tanggal 1 bulan berikutnya pukul 07:00 WIB.
+Postingan Senin–Minggu dikumpulkan pada Senin berikutnya pukul 07:00 WIB.
 Keputusan stok pukul 05:00 tidak boleh memakai batch pukul 07:00 hari yang sama.
 Data publikasi terminal yang batch-nya belum tersedia mendapat split=pending di
-dataset sentimen. Fitur stok memakai bulan publikasi terakhir yang sudah terkumpul,
+dataset sentimen. Fitur stok memakai minggu publikasi terakhir yang sudah terkumpul,
 menu yang memakai bahan tersebut, serta wilayah cabang dan kota Semarang.
 Lokasi unknown tetap NULL dan dikeluarkan dari agregat regional.
 
@@ -146,8 +146,6 @@ uv pip install --python ../.venv/Scripts/python.exe -r requirements-ml.txt
 ../.venv/Scripts/python.exe optimize_inventory.py
 ../.venv/Scripts/python.exe analyze_results.py
 ../.venv/Scripts/python.exe -m unittest discover -s tests -v
-../.venv/Scripts/python.exe -m pip install -r requirements-indobert.txt
-../.venv/Scripts/python.exe experiment_indobert.py
 ../.venv/Scripts/python.exe owner_app.py
 ```
 
@@ -157,6 +155,13 @@ menulis forecast serta replay stok di `prepared/10_optimization/`.
 Eksperimen IndoBERT membuat checkpoint `../tmp/indobert-cafestock-fourclass` untuk
 form teks; jalankan setelah train/test challenge tersedia. Fine-tuning memerlukan
 internet saat mengunduh base model dan memakan sekitar 30 menit pada CPU.
+Untuk opsi IndoBERT, pasang `requirements-indobert.txt` dan buat checkpoint.
+Untuk Laya, pasang `requirements-laya.txt` dan siapkan checkpoint produk di
+`local/laya_product_reviews_v1` serta ketertarikan di `local/laya_menu_interest_v2/model`.
+Dashboard menyediakan IndoBERT, Laya Sentimen Produk, dan Laya Tren Sentimen; semuanya
+berjalan lokal tanpa API key. Pilihan form tidak mengganti SVM pada seri historis
+atau fitur risiko.
+Bila ingin melatih ulang Laya dengan GPU, gunakan [notebook Kaggle dan panduannya](docs/finetuning_laya_kaggle.md).
 Baca [laporan model](reports/modeling_report.md), [laporan optimasi](reports/optimization_report.md),
 [petunjuk aplikasi](docs/aplikasi_pemilik.md), dan [bukti penyelesaian](reports/completion_report.md).
 Data sumber dan artefak tahap 01–06 tidak ditimpa oleh kedua script ini.

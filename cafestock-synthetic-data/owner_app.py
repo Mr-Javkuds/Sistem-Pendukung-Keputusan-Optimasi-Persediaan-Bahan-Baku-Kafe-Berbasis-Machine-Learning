@@ -4,6 +4,7 @@ import argparse
 import csv
 import io
 import json
+import importlib.util
 import math
 import os
 import threading
@@ -13,14 +14,27 @@ from urllib.parse import urlparse, parse_qs
 import pandas as pd
 from market_analysis import market_trend_analysis
 
+os.environ.setdefault('USE_TF', '0')
 ROOT = Path(__file__).resolve().parent
 LOCK = threading.Lock()
 SENTIMENT_LOCK = threading.Lock()
+LAYA_LOCK = threading.Lock()
 SENTIMENT_CHECKPOINT = Path(os.environ.get(
     'CAFESTOCK_INDOBERT_PATH', str(ROOT.parent / 'tmp/indobert-cafestock-fourclass')))
 SENTIMENT_TOKENIZER = None
 SENTIMENT_MODEL = None
 SENTIMENT_TORCH = None
+LAYA_AGENT = None
+LAYA_TREND_AGENT = None
+LAYA_CHECKPOINT = Path(os.environ.get(
+    'CAFESTOCK_LAYA_PRODUCT_PATH', os.environ.get(
+        'CAFESTOCK_LAYA_PATH', str(ROOT / 'local/laya_product_reviews_v1'))))
+LAYA_TREND_CHECKPOINT = Path(os.environ.get(
+    'CAFESTOCK_LAYA_TREND_PATH', str(ROOT / 'local/laya_menu_interest_v2/model')))
+
+
+class ServiceUnavailable(Exception):
+    pass
 
 
 def load_sentiment_model():
@@ -43,7 +57,7 @@ def load_sentiment_model():
 
 def predict_sentiment(text):
     if SENTIMENT_MODEL is None or SENTIMENT_TOKENIZER is None:
-        raise RuntimeError('Model IndoBERT belum dimuat.')
+        raise ServiceUnavailable('Checkpoint IndoBERT belum tersedia. Jalankan experiment_indobert.py terlebih dahulu.')
     torch = SENTIMENT_TORCH
     encoded = SENTIMENT_TOKENIZER(text, truncation=True, padding='max_length',
                                   max_length=80, return_tensors='pt')
@@ -51,6 +65,101 @@ def predict_sentiment(text):
         logits = SENTIMENT_MODEL(**encoded).logits[0]
         label_id = int(torch.argmax(logits).item())
     return str(SENTIMENT_MODEL.config.id2label[label_id])
+
+
+def load_laya_model():
+    """Load the archived product-review model, without a generic model fallback."""
+    global LAYA_AGENT
+    if LAYA_AGENT is not None:
+        return LAYA_AGENT
+    if importlib.util.find_spec('laya') is None:
+        raise ServiceUnavailable('Laya belum terpasang. Pasang requirements-laya.txt terlebih dahulu.')
+    if not laya_checkpoint_ready(LAYA_CHECKPOINT, 'sentiment'):
+        raise ServiceUnavailable('Checkpoint Laya Sentimen Produk belum tersedia atau tidak sesuai.')
+    try:
+        from laya import load as load_laya
+        with LAYA_LOCK:
+            if LAYA_AGENT is None:
+                LAYA_AGENT = load_laya(str(LAYA_CHECKPOINT), device='cpu')
+        return LAYA_AGENT
+    except Exception as error:
+        raise ServiceUnavailable(
+            'Checkpoint Laya Sentimen Produk gagal dimuat. Periksa berkas model lokal.'
+        ) from error
+
+
+def laya_checkpoint_ready(path, question):
+    required = ['model.safetensors', 'questions.json', 'rl_agent_config.json',
+                'encoder/config.json', 'tokenizer/tokenizer.json']
+    if not all((path / name).is_file() for name in required):
+        return False
+    try:
+        questions = json.loads((path / 'questions.json').read_text(encoding='utf-8'))
+        return question in questions
+    except (OSError, ValueError, TypeError):
+        return False
+
+
+def sentiment_options():
+    installed = importlib.util.find_spec('laya') is not None
+    product = installed and laya_checkpoint_ready(LAYA_CHECKPOINT, 'sentiment')
+    trend = installed and laya_checkpoint_ready(LAYA_TREND_CHECKPOINT, 'menu_interest')
+    return {'indobert_available': SENTIMENT_MODEL is not None,
+            'laya_available': product, 'laya_product_available': product,
+            'laya_trend_available': trend}
+
+
+def load_laya_trend_model():
+    global LAYA_TREND_AGENT
+    if LAYA_TREND_AGENT is not None:
+        return LAYA_TREND_AGENT
+    if importlib.util.find_spec('laya') is None:
+        raise ServiceUnavailable('Laya belum terpasang. Pasang requirements-laya.txt terlebih dahulu.')
+    if not laya_checkpoint_ready(LAYA_TREND_CHECKPOINT, 'menu_interest'):
+        raise ServiceUnavailable('Checkpoint Laya Tren Sentimen belum tersedia atau tidak sesuai.')
+    try:
+        from laya import load as load_laya
+        with LAYA_LOCK:
+            if LAYA_TREND_AGENT is None:
+                LAYA_TREND_AGENT = load_laya(str(LAYA_TREND_CHECKPOINT), device='cpu')
+        return LAYA_TREND_AGENT
+    except Exception as error:
+        raise ServiceUnavailable('Checkpoint Laya Tren Sentimen gagal dimuat. Periksa berkas model lokal.') from error
+
+
+def laya_prediction(agent, checkpoint, state, question, model_name, task):
+    questions = json.loads((checkpoint / 'questions.json').read_text(encoding='utf-8'))
+    try:
+        with LAYA_LOCK:
+            result = agent.predict(state, questions)
+    except Exception as error:
+        raise ServiceUnavailable('Laya gagal mengklasifikasikan teks. Coba lagi.') from error
+    answer = result.get('answers', {}).get(question, {}) if isinstance(result, dict) else {}
+    label = answer.get('choice') if isinstance(answer, dict) else None
+    if label not in ('positive', 'negative', 'neutral', 'mixed'):
+        raise ServiceUnavailable('Respons Laya tidak berisi label sentimen yang dikenali.')
+    probabilities = answer.get('probabilities') or {}
+    probability = probabilities.get(label)
+    if probability is not None:
+        try:
+            probability = float(probability)
+        except (TypeError, ValueError):
+            raise ServiceUnavailable('Probabilitas sentimen dari Laya tidak valid.') from None
+        if not math.isfinite(probability) or not 0 <= probability <= 1:
+            raise ServiceUnavailable('Probabilitas sentimen dari Laya di luar rentang 0–1.')
+    return {'label': label, 'model': model_name, 'task': task, 'probability': probability}
+
+
+def predict_laya_sentiment(text):
+    return laya_prediction(load_laya_model(), LAYA_CHECKPOINT, {'review': text},
+                           'sentiment', 'Laya Sentimen Produk (lokal)', 'product_sentiment')
+
+
+def predict_laya_trend(text, target_product, parent_caption):
+    content = json.dumps({'target_product': target_product, 'parent_caption': parent_caption,
+                          'comment_text': text}, ensure_ascii=False)
+    return laya_prediction(load_laya_trend_model(), LAYA_TREND_CHECKPOINT, {'review': content},
+                           'menu_interest', 'Laya Tren Sentimen (lokal)', 'menu_interest')
 
 
 def overview(branch):
@@ -166,6 +275,8 @@ class Handler(BaseHTTPRequestHandler):
             if url.path == '/api/overview':
                 branch = int(parse_qs(url.query).get('branch', ['1'])[0])
                 return self.send(200, json.dumps(overview(branch), ensure_ascii=False, allow_nan=False))
+            if url.path == '/api/sentiment/options':
+                return self.send(200, json.dumps(sentiment_options(), ensure_ascii=False))
             if url.path == '/api/trends':
                 query = parse_qs(url.query)
                 branch = int(query.get('branch', ['1'])[0])
@@ -195,15 +306,32 @@ class Handler(BaseHTTPRequestHandler):
             if origin and origin != 'http://' + str(host):
                 return self.send(403, json.dumps({'error': 'Origin ditolak'}))
             length = int(self.headers.get('Content-Length', '0'))
-            if length <= 0 or length > 12000:
+            if length <= 0 or length > 32000:
                 raise ValueError('Ukuran permintaan tidak valid')
             data = json.loads(self.rfile.read(length))
+            if not isinstance(data, dict):
+                raise ValueError('Permintaan harus berupa objek JSON.')
             if self.path == '/api/sentiment':
                 text = data.get('text', '')
                 if not isinstance(text, str) or not text.strip() or len(text) > 4000:
                     raise ValueError('Isi teks 1–4000 karakter')
-                label = predict_sentiment(text)
-                return self.send(200, json.dumps({'label': label, 'model': 'IndoBERT'}))
+                model = data.get('model', 'indobert')
+                if model == 'indobert':
+                    result = {'label': predict_sentiment(text), 'model': 'IndoBERT fine-tuned lokal',
+                              'task': 'product_sentiment'}
+                elif model in ('laya', 'laya_product'):
+                    result = predict_laya_sentiment(text)
+                elif model == 'laya_trend':
+                    target = data.get('target_product', '')
+                    caption = data.get('parent_caption', '')
+                    if not isinstance(target, str) or not target.strip() or len(target) > 160:
+                        raise ValueError('Isi produk target 1–160 karakter untuk Laya Tren Sentimen.')
+                    if not isinstance(caption, str) or not caption.strip() or len(caption) > 2000:
+                        raise ValueError('Isi konteks postingan 1–2000 karakter untuk Laya Tren Sentimen.')
+                    result = predict_laya_trend(text.strip(), target.strip(), caption.strip())
+                else:
+                    raise ValueError('Pilih IndoBERT, Laya Sentimen Produk, atau Laya Tren Sentimen.')
+                return self.send(200, json.dumps(result, ensure_ascii=False, allow_nan=False))
             if self.path == '/api/approve':
                 branch = int(data.get('branch_id', 0))
                 state = overview(branch)
@@ -228,6 +356,8 @@ class Handler(BaseHTTPRequestHandler):
             self.send(404, json.dumps({'error': 'Endpoint tidak ditemukan'}))
         except (ValueError, TypeError, KeyError) as error:
             self.send(400, json.dumps({'error': str(error)}))
+        except ServiceUnavailable as error:
+            self.send(503, json.dumps({'error': str(error)}, ensure_ascii=False))
         except FileNotFoundError:
             self.send(503, json.dumps({'error': 'Jalankan train_models.py lalu optimize_inventory.py terlebih dahulu.'}))
 
@@ -236,7 +366,10 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--port', type=int, default=8765)
     args = parser.parse_args()
-    load_sentiment_model()
+    if SENTIMENT_CHECKPOINT.is_dir():
+        load_sentiment_model()
+    else:
+        print('Checkpoint IndoBERT tidak tersedia; opsi IndoBERT tidak aktif.', flush=True)
     server = ThreadingHTTPServer(('127.0.0.1', args.port), Handler)
     print(f'CafeStock: http://127.0.0.1:{args.port}', flush=True)
     try:

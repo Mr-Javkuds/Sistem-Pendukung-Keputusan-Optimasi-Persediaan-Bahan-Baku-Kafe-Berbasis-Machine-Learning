@@ -57,19 +57,19 @@ beberapa menu pada satu post. Engagement dan bot akun belum disimulasikan.
 
 ## Waktu koleksi dan agregasi
 
-published_at berada di periode simulasi. collected_at adalah tanggal 1 bulan
-berikutnya pukul 07:00 WIB. Ini asumsi jadwal pengambilan bulanan, bukan klaim
-scraping sudah dijalankan. Postingan November 2026 dapat disimpan tetapi baru
-tersedia 1 Desember; split=pending mengeluarkannya dari training/evaluasi saat ini.
+published_at berada di periode simulasi. Postingan Senin–Minggu dikumpulkan pada
+Senin berikutnya pukul 07:00 WIB (collected_at). Ini asumsi jadwal pengambilan
+mingguan, bukan klaim scraping sudah dijalankan. Batch setelah akhir simulasi
+mendapat split=pending dan tidak masuk training/evaluasi saat ini.
 
-Agregat menu_market_signals mengelompokkan region_id, product_id dan bulan publikasi.
+Agregat menu_market_signals mengelompokkan region_id, product_id dan minggu publikasi.
 Hanya lokasi diketahui yang masuk; tersedia ketika batch sudah dikumpulkan.
 Sentimen = (jumlah positive - jumlah negative)/jumlah postingan; mixed/neutral
 berskor 0. Jumlah postingan dan availability flag tetap disimpan: tidak ada data
 bukan berarti sentimen netral atau permintaan nol. Volume adalah jumlah sampel
 sintetis, bukan pangsa pasar.
 
-Fitur keputusan mengambil bulan terbaru yang tersedia sebelum decision_at,
+Fitur keputusan mengambil minggu terbaru yang tersedia sebelum decision_at,
 produk yang resepnya menggunakan bahan terkait, dan region kota plus region
 cabang. Pembahasan wilayah cabang lain dan unknown tidak masuk. Postingan kota
 dapat dipakai beberapa cabang: ini sinyal pasar bersama, bukan observasi penjualan
@@ -94,7 +94,7 @@ ditafsirkan sebagai kondisi Instagram atau bisnis Semarang yang sebenarnya.
 Resep dan atribut pemasok adalah asumsi di src/generate_recipes.py: kopi 18 g,
 susu latte 180–200 ml, matcha 5 g + 200 ml susu + 150 g es + 15 ml pemanis,
 teh 3–4 g, cokelat 25 g + 220 ml susu, bakery satu porsi siap olah. Air dimodelkan
-sebagai pembelian air tersaring dan es sebagai kantong pembelian. Tidak ada
+sebagai pembelian air minum dan es sebagai kantong pembelian. Tidak ada
 konversi g ke ml; kuantitas mengikuti ingredients.unit.
 
 Biaya dasar IDR: biji kopi 200/g, susu 20/ml, matcha 350/g, teh 100/g, cokelat

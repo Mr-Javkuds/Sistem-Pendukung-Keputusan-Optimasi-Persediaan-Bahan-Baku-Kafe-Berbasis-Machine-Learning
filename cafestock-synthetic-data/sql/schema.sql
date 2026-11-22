@@ -268,8 +268,8 @@ CREATE TABLE restock_decision_dataset (
     market_interest_latest numeric(20,6) NOT NULL,
     market_interest_lag_1w numeric(20,6) NOT NULL,
     market_feature_max_at timestamptz NOT NULL,
-    social_post_count_latest_month integer NOT NULL,
-    menu_sentiment_latest_month numeric(20,6) NOT NULL,
+    social_post_count_latest_week integer NOT NULL,
+    menu_sentiment_latest_week numeric(20,6) NOT NULL,
     social_feature_max_at timestamptz,
     social_available_at timestamptz,
     social_period_start date,
@@ -287,8 +287,8 @@ CREATE TABLE restock_decision_dataset (
     CHECK (package_size > 0),
     CHECK (minimum_order_qty > 0),
     CHECK (baseline_purchase_qty >= 0),
-    CHECK (social_post_count_latest_month >= 0),
-    CHECK (menu_sentiment_latest_month BETWEEN -1 AND 1)
+    CHECK (social_post_count_latest_week >= 0),
+    CHECK (menu_sentiment_latest_week BETWEEN -1 AND 1)
 );
 CREATE INDEX ON restock_decision_dataset (ingredient_id);
 CREATE TABLE inventory_risk_ml_dataset (
@@ -308,8 +308,8 @@ CREATE TABLE inventory_risk_ml_dataset (
     market_interest_latest numeric(20,6) NOT NULL,
     market_interest_lag_1w numeric(20,6) NOT NULL,
     market_feature_max_at timestamptz NOT NULL,
-    social_post_count_latest_month integer NOT NULL,
-    menu_sentiment_latest_month numeric(20,6) NOT NULL,
+    social_post_count_latest_week integer NOT NULL,
+    menu_sentiment_latest_week numeric(20,6) NOT NULL,
     social_feature_max_at timestamptz,
     social_available_at timestamptz,
     social_period_start date,
@@ -327,8 +327,8 @@ CREATE TABLE inventory_risk_ml_dataset (
     CHECK (package_size > 0),
     CHECK (minimum_order_qty > 0),
     CHECK (baseline_purchase_qty >= 0),
-    CHECK (social_post_count_latest_month >= 0),
-    CHECK (menu_sentiment_latest_month BETWEEN -1 AND 1)
+    CHECK (social_post_count_latest_week >= 0),
+    CHECK (menu_sentiment_latest_week BETWEEN -1 AND 1)
 );
 CREATE INDEX ON inventory_risk_ml_dataset (branch_id);
 CREATE INDEX ON inventory_risk_ml_dataset (ingredient_id);

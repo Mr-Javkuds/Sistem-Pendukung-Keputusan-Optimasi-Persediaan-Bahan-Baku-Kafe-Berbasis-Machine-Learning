@@ -12,13 +12,36 @@ import pandas as pd
 import owner_app
 from encode import verify_upstream
 from src.generate_ml_datasets import temporal_split
-from market_analysis import movement_comparison
+from market_analysis import movement_comparison, market_trend_analysis
 import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
 class ArtifactTests(unittest.TestCase):
+    def test_dashboard_uses_weekly_sentiment_batches_without_future_posts(self):
+        posts = pd.read_csv(ROOT/'prepared/07_modeling/chronological_sentiment.csv')
+        products = pd.read_csv(ROOT/'output/products.csv')
+        posts = posts[posts.prediction.notna() & posts.region_id.isin([1,2])]
+        scores = {'positive':1.,'negative':-1.,'neutral':0.,'mixed':0.}
+        result = market_trend_analysis(ROOT, branch=1, weeks=12)
+        self.assertEqual(result['sentiment_frequency'], 'weekly')
+        for category in result['categories']:
+            ids = products.loc[products.category_id.eq(category['category_id']), 'product_id']
+            for row in category['series']:
+                known = posts[posts.product_id.isin(ids) & posts.collected_at.lt(row['available_at'])]
+                if known.empty:
+                    self.assertIsNone(row['sentiment_score'])
+                    continue
+                batch = known[known.collected_at.eq(known.collected_at.max())]
+                self.assertEqual(row['social_post_count'], len(batch))
+                self.assertAlmostEqual(row['sentiment_score'], batch.prediction.map(scores).mean())
+                available = pd.Timestamp(row['sentiment_available_at'])
+                self.assertEqual(available.tz_convert('Asia/Jakarta').weekday(), 0)
+                self.assertEqual(available.tz_convert('Asia/Jakarta').hour, 7)
+                self.assertEqual(pd.Timestamp(row['sentiment_period_start']),
+                                 pd.Timestamp(available.tz_convert('Asia/Jakarta').date())-pd.Timedelta(days=7))
+
     def test_weekly_direction_compares_changes_and_handles_gaps_constants(self):
         rows = [{'interest_index': float(i*i), 'sentiment_score': float(i*i)/100,
                  'sales_units': float(100-i*i), 'stock_value_idr': 50.} for i in range(10)]
@@ -236,7 +259,7 @@ class OwnerHTTPTests(unittest.TestCase):
         with self.request('/api/sentiment',{'text':'Matchanya buruk.'}) as response:
             result=json.load(response)
             self.assertEqual(result['label'],'negative')
-            self.assertEqual(result['model'],'IndoBERT')
+        self.assertEqual(result['model'],'IndoBERT fine-tuned lokal')
         for path,data,origin,code in [('/api/sentiment',{'text':''},None,400),
             ('/api/overview?branch=999',None,None,400),
             ('/api/approve',{'branch_id':1},'http://untrusted.invalid',403)]:

@@ -18,6 +18,9 @@ Baru mengenal proyek? Mulai dari [README utama](../../README.md), lalu lihat
 | Fitur yang boleh masuk model | [Kontrak fitur JSON](feature_manifest.json) |
 | Partisi X/y/metadata | [Panduan prepared data](../prepared/README.md) |
 | Matriks dan preprocessing tahap 06 | [Panduan encoding](../prepared/06_encoding/README.md) |
+| Pemisahan model review dan komentar publik | [Dua model Laya](laya_dua_model.md) |
+| Rancangan aktif ketertarikan publik terhadap menu | [Dataset baru, waktu, cap sumber dan skenario peramalan](dataset_ketertarikan_menu.md) |
+| Fine-tuning ketertarikan dengan target >95% | [Protokol dan hasil tiap set](fine_tuning_interest95.md) |
 
 ## Bukti pemeriksaan
 

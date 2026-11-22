@@ -13,11 +13,14 @@ pelatihan/evaluasi, explainability, forecast kebutuhan, replay kebijakan dan
 dashboard lokal. Scraper nyata tidak diperlukan dalam lingkup Instagram sintetis.
 Hasil pemeriksaan aktual dibaca dari reports/, bukan dianggap sebagai akurasi ML.
 
-Form analisis teks dashboard kini memakai IndoBERT fine-tuned empat kelas.
+Form analisis teks dashboard menyediakan IndoBERT dan Laya fine-tuned lokal
+empat kelas. Uji eksploratif 100 kalimat pada Laya mencatat accuracy 96%, tetapi
+label harapannya belum divalidasi anotator manusia dan seluruh data fine-tuning
+bersifat sintetis; angka tersebut bukan kinerja pada ulasan konsumen nyata.
 Pipeline sentimen historis yang menjadi fitur model risiko tetap memakai SVM
-kronologis. Challenge terkontrol 2.000 kalimat memberi akurasi IndoBERT 54,7%,
-namun recall positif hanya 7,6%; hasil ini belum membuktikan kinerja pada ulasan
-konsumen nyata. [Laporan challenge IndoBERT](../reports/indobert_experiment/report.md).
+kronologis. Challenge terkontrol 2.000 kalimat IndoBERT memberi akurasi 54,7%,
+namun recall positif hanya 7,6%. [Laporan challenge IndoBERT](../reports/indobert_experiment/report.md) ·
+[Catatan presentasi Laya](../reports/catatan_presentasi_laya.md).
 
 ✅ Selesai dengan bukti tersimpan di Git · ⬜ Belum dikerjakan.
 Checklist menunjukkan penyelesaian tahap, bukan akurasi atau manfaat bisnis.
@@ -67,8 +70,8 @@ dan [audit penyelesaian](../reports/completion_report.md).
 |---|---|---|
 | 01_raw_dataset | Simpan transaksi sumber dan konteks Google terpisah; generate Instagram sintetis Semarang | Provenance serta caption/menu/wilayah |
 | 02_data_cleaning | Periksa duplikasi teks, label, lokasi unknown, waktu publikasi dan koleksi; catat perlakuan | Dataset siap dianalisis |
-| 03_eda | Grafik volume menu per wilayah/bulan, sentimen, konsumsi, stockout dan limbah | Hipotesis, bukan klaim tren nyata |
-| 04_feature_engineering | Map menu ke resep/bahan, agregasi bulan yang sudah terkumpul, indeks tren lag, stok/pesanan/pemasok | Fitur point-in-time dan target terpisah |
+| 03_eda | Grafik volume menu per wilayah/minggu, sentimen, konsumsi, stockout dan limbah | Hipotesis, bukan klaim tren nyata |
+| 04_feature_engineering | Map menu ke resep/bahan, agregasi minggu yang sudah terkumpul, indeks tren lag, stok/pesanan/pemasok | Fitur point-in-time dan target terpisah |
 | 05_split_70_15_15 | Gunakan waktu; sentimen berdasarkan collected_at, risiko berdasarkan decision_at dan purge | Train/validation/test yang sah |
 | 06_encoding | Fit TF-IDF dan encoding/imputasi hanya pada train; ID, waktu target dan label bukan input | Pipeline preprocessing |
 | 07_modeling | SVM + Naive Bayes pembanding sentimen; Random Forest + Logistic Regression pembanding risiko | Kandidat model |
@@ -141,4 +144,4 @@ menganggap hasil stockout lama sebagai hasil kebijakan baru.
 Cabang/bahan, waktu data, stok, pesanan berjalan, cakupan historis, prediksi risiko,
 prioritas, jumlah dan kemasan pembelian, serta alasan. Jumlah baseline ditandai
 sebagai aturan, tidak diklaim keluar langsung dari classifier. Pembaruan Instagram
-bulanan dapat digunakan bersama stok harian. Persetujuan pembelian tetap di pemilik.
+mingguan dapat digunakan bersama stok harian. Persetujuan pembelian tetap di pemilik.

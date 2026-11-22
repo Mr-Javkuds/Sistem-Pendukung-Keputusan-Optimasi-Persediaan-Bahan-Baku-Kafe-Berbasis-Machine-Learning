@@ -3,22 +3,59 @@
 [README utama](../../README.md) · [Alur proyek](alur_project_ml.md)
 
 Dashboard lokal menampilkan snapshot keputusan terakhir simulasi, bukan data
-kafe langsung. Tidak memerlukan akun, API berbayar, atau akses jaringan saat dipakai.
+kafe langsung. Analisis teks menyediakan tiga pilihan: IndoBERT, Laya Sentimen Produk, dan Laya Tren Sentimen.
 
 ## Menjalankan
 
-Dari folder `cafestock-synthetic-data`, pasang dependensi (sekali per environment),
-buat checkpoint IndoBERT lokal, lalu jalankan aplikasi:
+Dari folder `cafestock-synthetic-data`, pasang dependensi ML (sekali per environment).
+Untuk opsi IndoBERT, pasang dependensi IndoBERT dan buat checkpoint lokal. Untuk
+opsi Laya, pasang paket Laya dan siapkan checkpoint lokal sesuai tabel di bawah.
+Ketiga pilihan berjalan lokal tanpa API key.
 
 ```powershell
-../.venv/Scripts/python.exe -m pip install -r requirements-ml.txt -r requirements-indobert.txt
+../.venv/Scripts/python.exe -m pip install -r requirements-ml.txt
+```
+
+Siapkan IndoBERT jika ingin memakai model lokal:
+
+```powershell
+../.venv/Scripts/python.exe -m pip install -r requirements-indobert.txt
 ../.venv/Scripts/python.exe experiment_indobert.py
+```
+
+Siapkan Laya multilingual lokal:
+
+```powershell
+../.venv/Scripts/python.exe -m pip install -r requirements-laya.txt
+```
+
+Checkpoint yang dipakai dashboard:
+
+| Pilihan | Task | Checkpoint default |
+|---|---|---|
+| IndoBERT | Sentimen teks produk | `../tmp/indobert-cafestock-fourclass` |
+| Laya Sentimen Produk | Opini kualitas/pengalaman konsumsi | `local/laya_product_reviews_v1` |
+| Laya Tren Sentimen | Ketertarikan mencoba menu, dengan konteks postingan | `local/laya_menu_interest_v2/model` |
+
+Dua checkpoint Laya dimuat saat pertama kali dipilih lalu digunakan kembali.
+Aplikasi memeriksa file checkpoint dan task; pilihan yang belum siap dinonaktifkan.
+Tidak ada penggantian otomatis ke model multilingual dasar. Variabel lingkungan
+`CAFESTOCK_LAYA_PRODUCT_PATH` dan `CAFESTOCK_LAYA_TREND_PATH` dapat menunjuk
+checkpoint lain dengan task yang sesuai. `CAFESTOCK_LAYA_PATH` tetap menjadi
+alias konfigurasi lama untuk model produk. Restart server setelah mengganti path.
+Bobot lokal berada pada folder yang diabaikan Git.
+
+Jalankan server setelah menyiapkan pilihan model yang ingin dipakai:
+
+```powershell
 ../.venv/Scripts/python.exe owner_app.py
 ```
 
-Checkpoint disimpan di folder `tmp/` workspace dan dimuat sekali saat server
-mulai. Setelah bobot tersedia secara lokal, analisis teks tidak memerlukan unduhan
-model lagi. `CAFESTOCK_INDOBERT_PATH` dapat dipakai untuk menunjuk checkpoint lain.
+Checkpoint IndoBERT disimpan di folder `tmp/` workspace dan dimuat sekali saat
+server mulai. Jika checkpoint tidak ada, aplikasi tetap berjalan tetapi opsi
+IndoBERT dinonaktifkan. Setelah bobot tersedia secara lokal, analisis teks tidak
+memerlukan unduhan model lagi. `CAFESTOCK_INDOBERT_PATH` dapat dipakai untuk
+menunjuk checkpoint lain.
 Checkpoint tidak diunggah ke GitHub. Pada CPU, pembuatan checkpoint memerlukan
 sekitar 30 menit dan koneksi internet untuk mengambil base model.
 
@@ -35,7 +72,12 @@ Port alternatif: `owner_app.py --port 8766`. Server hanya menerima koneksi lokal
 5. Tekan **Setujui rencana lokal** untuk mencatat rencana. Data disimpan di
    `local/approvals.json`, diabaikan Git, dan tidak dikirim ke pemasok.
    Persetujuan snapshot/cabang/kebijakan yang sama tidak dibuat dua kali.
-6. Coba teks pembahasan menu untuk melihat hasil inferensi IndoBERT empat kelas.
+6. Pada **Analisis sentimen menu**, pilih salah satu dari tiga model.
+   IndoBERT dan Laya Sentimen Produk menerima teks ulasan. Laya Tren Sentimen
+   juga meminta produk/menu target serta caption atau konteks postingan.
+   Hasilnya dibaca sebagai tertarik mencoba, tidak tertarik, arah minat belum
+   jelas, atau tertarik tetapi ragu/menolak. Probabilitas yang ditampilkan adalah
+   skor label model, bukan peluang pembelian konsumen.
 
 Grafik garis pada alasan pembelian memproyeksikan stok per hari tanpa pembelian
 dan setelah rencana pesanan diterima, dilengkapi garis titik pemesanan dan target
@@ -49,14 +91,28 @@ risiko berasal dari kondisi kebijakan historis pada tanggal yang ditampilkan;
 skor tersebut bukan risiko terkalibrasi pada stok hasil simulasi kebijakan baru.
 Data awal yang belum memiliki prediksi sentimen historis dinyatakan belum tersedia.
 
-### Dua jalur sentimen
+### Tiga model form dan jalur historis
 
-Form analisis teks menggunakan IndoBERT fine-tuned empat kelas. Sementara itu,
-garis sentimen historis dalam grafik dan fitur yang dipakai model risiko berasal
-dari prediksi SVM kronologis. Jalur historis dipertahankan agar hasil evaluasi
-risiko tetap dapat direproduksi. Hasil challenge IndoBERT pada data sintetis
-adalah akurasi 54,7%; recall positif 7,6%, sehingga hasilnya belum boleh dianggap
-sebagai kinerja pada ulasan konsumen nyata. Lihat [rincian per kelas](../reports/indobert_experiment/report.md).
+IndoBERT serta Laya Sentimen Produk menggunakan label opini positif, negatif,
+netral, campuran. Laya Tren Sentimen menggunakan checkpoint ketertarikan v2
+(warm8): pujian atau keluhan rasa saja dapat netral jika arah minat belum jelas.
+Model tren membaca JSON produk target, konteks postingan dan komentar dengan
+question `menu_interest`, sesuai format training.
+
+Model v2 memiliki accuracy validation 94,54%, test lama 84,73%, dan konfirmasi
+baru 98,85% pada data sintetis; kinerjanya belum konsisten >95% antar-set.
+[Laporan lengkap](../reports/menu_interest_v2/report.md). Nama Laya Tren Sentimen
+menunjukkan pembacaan ketertarikan publik, bukan peramalan tren atau jumlah stok.
+
+Pilihan model pada form tidak mengganti seri sentimen historis SVM, model risiko,
+atau hasil peramalan/pembelian yang telah dievaluasi. Grafik historis tetap
+menggunakan prediksi SVM kronologis agar evaluasi lama dapat direproduksi.
+
+API `/api/sentiment` menerima model `indobert`, `laya_product`, atau `laya_trend`.
+Alias lama `laya` tetap mengarah ke model produk. Model tren wajib menyertakan
+`target_product` (1–160 karakter), `parent_caption` (1–2000), dan `text` (1–4000).
+Respons menyertakan `task=menu_interest` untuk model tren dan `product_sentiment`
+untuk kedua model produk. Endpoint `/api/sentiment/options` memuat ketersediaannya.
 
 ## Analisis tren pasar di dashboard
 
@@ -73,14 +129,24 @@ volume penjualan. Periode grafik mengubah jumlah observasi yang ditampilkan;
 ringkasan empat mingguan selalu memakai delapan observasi terbaru yang tersedia.
 Endpoint: `/api/trends?branch=1&weeks=12`.
 
+Klik/ketuk titik atau garis pada grafik untuk melihat hari, tanggal, nilai asli,
+dan satuannya. Pada mode gabungan 0–100, detail tetap menampilkan nilai asli.
+Jika beberapa seri bertumpuk, nilai seri lain pada tanggal yang sama juga
+ditampilkan. Klik di antara titik memilih pengamatan terdekat, bukan nilai
+interpolasi. Tab dan Enter/Spasi dapat memilih titik; Escape atau tombol tutup
+menyembunyikan detail. Di ponsel, detail ditampilkan di bawah grafik. Mengubah
+filter atau periode menutup detail lama; celah data kosong tetap dipertahankan.
+
 ### Membandingkan tren, sentimen, penjualan, dan stok
 
 Grafik menampilkan empat garis yang dapat dipilih melalui checkbox:
 
 - **Tren pasar:** indeks kategori pada tanggal pengamatan, sinyal kota Semarang.
 - **Sentimen historis (SVM):** rata-rata prediksi penyebutan menu di kota dan wilayah cabang
-  dari batch terakhir yang sudah tersedia sebelum pengamatan. Pembaruan bulanan
-  digambar bertangga; batch yang belum tersedia menjadi celah, bukan skor netral.
+  dari batch terakhir yang sudah tersedia sebelum pengamatan. Pembaruan mingguan
+  dihubungkan dengan garis diagonal antarobservasi; batch yang belum tersedia
+  menjadi celah, bukan skor netral. Garis penghubung hanya panduan visual;
+  pembaruan sentimen tetap mingguan.
 - **Penjualan 7 hari:** jumlah unit menu kategori yang terpenuhi pada cabang
   terpilih selama tujuh hari sebelum tanggal grafik. Jendela tidak lengkap kosong.
 - **Nilai stok:** stok akhir hari sebelumnya × biaya satuan bahan kategori,
@@ -88,17 +154,19 @@ Grafik menampilkan empat garis yang dapat dipilih melalui checkbox:
   bukan snapshot hasil optimasi. Setiap bahan dihitung sekali per kategori;
   bahan bersama menyebabkan nilai antar kategori tidak boleh dijumlahkan.
 
-Mode default menormalkan setiap seri berdasarkan minimum–maksimum periode ke
-0–100 agar bentuk gerakan terlihat. Seri konstan digambar di 50; skala ini tidak
-menyatakan besaran atau satuan yang sama. Pilihan **Nilai asli per seri** membuat
-panel dengan sumbu masing-masing. Nilai asli juga tersedia di tabel mingguan.
+Mode default **Grafik terpisah dengan satuan asli** menampilkan setiap ukuran
+pada panel dengan sumbu masing-masing. Mode gabungan menormalkan setiap garis
+berdasarkan minimum–maksimum periode ke 0–100. Seri konstan digambar di 50;
+skala gabungan tidak menyatakan besaran atau satuan yang sama. Nilai asli juga
+tersedia di tabel mingguan. Ringkasan sentimen menyebutkan minggu asal dan jumlah
+penyebutan menu; pembaruan tersedia setiap Senin pukul 07.00 WIB.
 
 Tabel hubungan menghitung Pearson r dari **perubahan mingguan**, hanya pada
 pasangan lengkap yang berurutan, minimal enam pasangan dengan variasi cukup.
 r ≥ 0,3 diberi label cenderung sejalan; r ≤ −0,3 berlawanan; selain itu lemah.
 Konstanta, data hilang, atau jendela terlalu pendek tidak diberi koefisien.
 Hubungan ini deskriptif; tidak menyatakan sebab-akibat atau signifikansi statistik.
-Pengulangan batch bulanan bukan sampel sentimen baru yang independen.
+Pengulangan batch mingguan bukan sampel sentimen baru yang independen.
 
 ## Memperbarui artefak model
 

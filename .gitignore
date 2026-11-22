@@ -23,3 +23,18 @@ venv/
 .idea/
 Thumbs.db
 .DS_Store
+
+# Reproducible menu-interest training data and experiment outputs
+/cafestock-synthetic-data/datasets/menu_interest_v1/comments.csv
+/cafestock-synthetic-data/datasets/menu_interest_v2_training/*.csv
+/cafestock-synthetic-data/output/pdf/
+/cafestock-synthetic-data/reports/ablation_forecast_laya/
+/cafestock-synthetic-data/reports/menu_interest_v1/*.csv
+/cafestock-synthetic-data/reports/menu_interest_v1/*.json
+/cafestock-synthetic-data/reports/menu_interest_v2/*.csv
+/cafestock-synthetic-data/reports/menu_interest_v2/*.json
+/cafestock-synthetic-data/reports/laya_public_product_trends/*.csv
+/cafestock-synthetic-data/reports/app/chart_point_detail/
+/cafestock-synthetic-data/reports/app/sentiment_line/
+/cafestock-synthetic-data/reports/app/sidebar/
+/cafestock-synthetic-data/reports/app/three_models/

@@ -8,7 +8,7 @@ dikeluarkan dari input/output aktif. Tidak ada scraping Instagram nyata pada tah
 flowchart TD
     A[Caption Instagram sintetis berbahasa Indonesia] --> B[Wilayah dan waktu publikasi/koleksi]
     A --> C[Penyebutan menu dan aspek taste/value]
-    B --> D[Agregat per menu-wilayah-bulan]
+    B --> D[Agregat per menu-wilayah-minggu]
     C --> D
     D --> E[Menu produk kafe]
     E --> F[Resep dan bahan]
@@ -36,7 +36,7 @@ output/social_posts.csv dan dihubungkan melalui post_id ke menu_mentions.csv.
 | social_posts | Satu post memiliki lokasi diketahui atau NULL unknown; tidak punya transaction FK |
 | menu_mentions | Junction post–product dengan label sentimen menu |
 | menu_aspects | Aspek rasa/nilai per mention; mixed mempunyai polaritas berbeda |
-| menu_market_signals | Jumlah dan rata-rata sentimen menu–region–bulan |
+| menu_market_signals | Jumlah dan rata-rata sentimen menu–region–minggu |
 | recipe_ingredients | Menghubungkan menu ke bahan |
 | restock_decision_dataset | Mengambil sinyal menu yang menggunakan bahan pada region kota dan region cabang |
 
@@ -45,18 +45,18 @@ tidak diketahui tidak ditebak; tetap boleh menjadi contoh teks sentimen tetapi
 tidak masuk sinyal regional. Tidak ada account_id, username, data pribadi, atau
 tautan palsu; source_url NULL dan source_post_key berawalan SIM-IG-SMG-.
 
-## Pembaruan bulanan
+## Pembaruan mingguan
 
-Koleksi dijadwalkan tanggal 1 bulan berikutnya pukul 07:00 WIB. Contoh: seluruh
-postingan November 2025 baru tersedia 1 Desember 2025 pukul 07:00. Keputusan
+Postingan Senin–Minggu dikumpulkan pada Senin berikutnya pukul 07:00 WIB.
+Contoh: postingan 24–30 November 2025 tersedia 1 Desember 2025 pukul 07:00. Keputusan
 1 Desember pukul 05:00 belum boleh memakainya; keputusan 2 Desember sudah boleh.
 Koleksi sosial tidak melatih ulang model otomatis. Input stok dapat diperbarui
 harian memakai batch pasar terakhir yang tersedia serta indikator kesegarannya.
 
 ## Arti fitur dan keterbatasan
 
-menu_sentiment_latest_month adalah agregat opini menu regional, bukan tingkat
-kepuasan pelanggan kafe. social_post_count_latest_month memberikan dukungan jumlah
+menu_sentiment_latest_week adalah agregat opini menu regional, bukan tingkat
+kepuasan pelanggan kafe. social_post_count_latest_week memberikan dukungan jumlah
 observasi. social_data_available membedakan data kosong dari skor netral; lokasi
 unknown, batch belum tersedia, serta menu yang tidak relevan tidak dimasukkan.
 Source publication dan collection timestamps selalu mendahului decision_at.

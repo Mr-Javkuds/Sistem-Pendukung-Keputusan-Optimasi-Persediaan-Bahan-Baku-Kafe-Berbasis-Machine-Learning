@@ -99,7 +99,7 @@ All output rows are synthetic; input/ contains preserved external observations. 
 | source_url | text | NULL for synthetic content; no real Instagram link is claimed; nullable |
 | content_text | text | Original synthetic Indonesian discussion about a menu, not a cafe review |
 | published_at | timestamptz | Published at |
-| collected_at | timestamptz | Simulated monthly ingestion time; later than publication; gates feature availability |
+| collected_at | timestamptz | Simulated weekly ingestion time; later than publication; gates feature availability |
 | batch_key | text | Batch key |
 | region_id | bigint | Region id; FK to regions; nullable |
 | location_evidence | text | synthetic_scenario for assigned market or unknown; never inferred from account location |
@@ -264,13 +264,13 @@ All output rows are synthetic; input/ contains preserved external observations. 
 | market_interest_latest | numeric(20,6) | Equal mean of latest known category indices associated via recipes |
 | market_interest_lag_1w | numeric(20,6) | Market interest lag 1w |
 | market_feature_max_at | timestamptz | Latest source timestamp of historical synthetic weekly interest feature |
-| social_post_count_latest_month | integer | Count of available menu discussions for linked products in city plus branch district |
-| menu_sentiment_latest_month | numeric(20,6) | Mean menu opinion: positive=1, negative=-1, neutral/mixed=0; missing flagged separately |
+| social_post_count_latest_week | integer | Count of available menu discussions for linked products in city plus branch district |
+| menu_sentiment_latest_week | numeric(20,6) | Mean menu opinion: positive=1, negative=-1, neutral/mixed=0; missing flagged separately |
 | social_feature_max_at | timestamptz | Latest publication time used in the historical menu sentiment feature; nullable |
-| social_available_at | timestamptz | Latest actual synthetic monthly collection time contributing to features; nullable |
-| social_period_start | date | Publication month represented in latest available regional menu signals; nullable |
+| social_available_at | timestamptz | Latest actual synthetic weekly collection time contributing to features; nullable |
+| social_period_start | date | Publication week (Monday–Sunday) represented in latest available regional menu signals; nullable |
 | social_data_available | integer | 0 means no eligible collected batch; score 0 must not be interpreted as observed neutrality |
-| social_age_days | integer | Days since contributing monthly batch availability; 0 with availability flag 0 means missing |
+| social_age_days | integer | Days since contributing weekly batch availability; 0 with availability flag 0 means missing |
 | label_window_end | timestamptz | Label window end |
 | future_stockout_7d | integer | Evaluation target: shortage event in configured horizon; NULL if censored; nullable |
 | label_observed | integer | 1 if complete future outcome window is available, otherwise 0 |
@@ -296,13 +296,13 @@ All output rows are synthetic; input/ contains preserved external observations. 
 | market_interest_latest | numeric(20,6) | Equal mean of latest known category indices associated via recipes |
 | market_interest_lag_1w | numeric(20,6) | Market interest lag 1w |
 | market_feature_max_at | timestamptz | Latest source timestamp of historical synthetic weekly interest feature |
-| social_post_count_latest_month | integer | Count of available menu discussions for linked products in city plus branch district |
-| menu_sentiment_latest_month | numeric(20,6) | Mean menu opinion: positive=1, negative=-1, neutral/mixed=0; missing flagged separately |
+| social_post_count_latest_week | integer | Count of available menu discussions for linked products in city plus branch district |
+| menu_sentiment_latest_week | numeric(20,6) | Mean menu opinion: positive=1, negative=-1, neutral/mixed=0; missing flagged separately |
 | social_feature_max_at | timestamptz | Latest publication time used in the historical menu sentiment feature; nullable |
-| social_available_at | timestamptz | Latest actual synthetic monthly collection time contributing to features; nullable |
-| social_period_start | date | Publication month represented in latest available regional menu signals; nullable |
+| social_available_at | timestamptz | Latest actual synthetic weekly collection time contributing to features; nullable |
+| social_period_start | date | Publication week (Monday–Sunday) represented in latest available regional menu signals; nullable |
 | social_data_available | integer | 0 means no eligible collected batch; score 0 must not be interpreted as observed neutrality |
-| social_age_days | integer | Days since contributing monthly batch availability; 0 with availability flag 0 means missing |
+| social_age_days | integer | Days since contributing weekly batch availability; 0 with availability flag 0 means missing |
 | label_window_end | timestamptz | Label window end |
 | target_stockout | integer | Same evaluation outcome as restock table; excluded from features; nullable |
 | label_observed | integer | 1 if complete future outcome window is available, otherwise 0 |
@@ -319,7 +319,7 @@ All output rows are synthetic; input/ contains preserved external observations. 
 | product_id | bigint | Product id; FK to products |
 | region_id | bigint | Region id; FK to regions; nullable |
 | published_at | timestamptz | Published at |
-| collected_at | timestamptz | Simulated monthly ingestion time; later than publication; gates feature availability |
+| collected_at | timestamptz | Simulated weekly ingestion time; later than publication; gates feature availability |
 | content_text | text | Original synthetic Indonesian discussion about a menu, not a cafe review |
 | sentiment_label | text | Sentiment label |
 | label_provenance | text | Label provenance |

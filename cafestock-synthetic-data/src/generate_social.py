@@ -14,10 +14,15 @@ VALUE={'positive':'Menurutku porsi dan rasanya sepadan.',
        'neutral':'Untuk harga aku belum punya kesimpulan.',
        'negative':'Untuk porsi seperti itu, harganya terasa mahal.'}
 
-def monthly_collection(published,tz):
+def weekly_period_start(published):
+    """Publication week in local time: Monday through Sunday."""
+    day=pd.Timestamp(str(published)[:10])
+    return (day-pd.Timedelta(days=day.weekday())).date().isoformat()
+
+def weekly_collection(published,tz):
     local=pd.Timestamp(published).tz_convert(tz)
-    return (pd.Timestamp(local.date()).to_period('M').to_timestamp()+pd.offsets.MonthBegin(1)
-            +pd.Timedelta(hours=7)).tz_localize(tz)
+    monday=pd.Timestamp(weekly_period_start(local.isoformat()))
+    return (monday+pd.Timedelta(days=7,hours=7)).tz_localize(tz)
 
 def generate(config,tables,rng):
     posts=[]; mentions=[]; aspects=[]
@@ -39,10 +44,10 @@ def generate(config,tables,rng):
             text+=f'Bahasan wilayah {location}. {rng.choice(closers)} #bahasmenu'
             if region: text+=' #Semarang'
             published=(day+pd.Timedelta(hours=int(rng.integers(8,23)),minutes=int(rng.integers(60)))).tz_localize(config['timezone'])
-            collected=monthly_collection(published,config['timezone'])
+            collected=weekly_collection(published,config['timezone'])
             postid=len(posts)+1; mentionid=len(mentions)+1
             posts.append((postid,'instagram',f'SIM-IG-SMG-{postid:07d}',None,text,
-                          published.isoformat(),collected.isoformat(),collected.strftime('BATCH-%Y%m'),
+                          published.isoformat(),collected.isoformat(),collected.strftime('BATCH-%Y%m%d'),
                           region or None,'synthetic_scenario' if region else 'unknown','id','synthetic'))
             mentions.append((mentionid,postid,pid,label,'synthetic_rule'))
             aspects.append((len(aspects)+1,mentionid,'taste',taste))
@@ -56,7 +61,7 @@ def generate(config,tables,rng):
 def aggregate(tables):
     data=tables['menu_mentions'].merge(tables['social_posts'],on='post_id')
     data=data[data.region_id.notna()].copy()
-    data['period_start']=data.published_at.str[:7]+'-01'
+    data['period_start']=data.published_at.map(weekly_period_start)
     rows=[]
     for (region,product,period),g in data.groupby(['region_id','product_id','period_start'],sort=True):
         counts=g.sentiment_label.value_counts()

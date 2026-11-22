@@ -1,7 +1,15 @@
 
 const $=id=>document.getElementById(id),money=n=>new Intl.NumberFormat('id-ID',{style:'currency',currency:'IDR',maximumFractionDigits:0}).format(n),num=n=>new Intl.NumberFormat('id-ID',{maximumFractionDigits:1}).format(n);
+function setSidebarCollapsed(collapsed,persist=false){
+  document.documentElement.classList.toggle('sidebar-collapsed',collapsed);
+  const button=$('sidebar-toggle'),label=collapsed?'Perluas sidebar':'Minimalkan sidebar';
+  button.setAttribute('aria-expanded',String(!collapsed));button.setAttribute('aria-label',label);button.title=label;
+  if(persist){try{localStorage.setItem('cafestock.sidebar.collapsed',String(collapsed));}catch{}}
+}
+setSidebarCollapsed(document.documentElement.classList.contains('sidebar-collapsed'));
+$('sidebar-toggle').addEventListener('click',()=>setSidebarCollapsed(!document.documentElement.classList.contains('sidebar-collapsed'),true));
 async function request(url,body){const r=await fetch(url,body?{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}:{});const d=await r.json();if(!r.ok)throw Error(d.error||'Permintaan gagal');return d}
-function cell(row,text){const td=document.createElement('td');td.textContent=text;td.dataset.label=['Bahan / alasan','Stok tersedia','Dalam pesanan','Beli','Estimasi biaya'][row.children.length];row.append(td);return td}
+function cell(row,text){const td=document.createElement('td');td.textContent=text;td.dataset.label=['Bahan & alasan','Stok di cabang','Sudah dipesan, belum diterima','Saran pesanan tambahan','Biaya pesanan tambahan'][row.children.length];row.append(td);return td}
 function icon(name){const svg=document.createElementNS('http://www.w3.org/2000/svg','svg'),use=document.createElementNS(svg.namespaceURI,'use');svg.classList.add('icon');svg.setAttribute('aria-hidden','true');use.setAttribute('href','#i-'+name);svg.append(use);return svg}
 function explanation(r){
   const box=document.createElement('div');box.className='reason-content';
@@ -96,11 +104,19 @@ let sequence=0, overviewData=null;
 function renderPurchases(){
   if(!overviewData)return;
   const rows=overviewData.recommendations;
+  const stamp=rows[0]?.decision_at;
+  $('purchase-context').textContent=stamp?'Acuan rencana: '+new Intl.DateTimeFormat('id-ID',{dateStyle:'long',timeStyle:'short',timeZone:'Asia/Jakarta'}).format(new Date(stamp))+' WIB. Stok di cabang hanya mencakup bahan yang sudah diterima.':'Tanggal acuan rencana belum tersedia.';
   $('rows').replaceChildren();
   const filtered=$('purchase-only').checked?rows.filter(r=>r.purchase_qty>0):rows;
   for(const r of filtered){
     const tr=document.createElement('tr'),name=cell(tr,r.ingredient_name);
     tr.dataset.ingredient=String(r.ingredient_id);
+    const rationale=document.createElement('p');rationale.className='purchase-rationale';
+    const e=r.purchase_explanation;
+    rationale.textContent=r.purchase_qty>0
+      ?'Stok + pesanan berjalan '+num(e.stock_position)+' '+r.unit+', di bawah batas pemesanan '+num(e.reorder_point)+' '+r.unit+'. Disarankan memesan tambahan '+num(r.purchase_qty)+' '+r.unit+'.'
+      :'Stok + pesanan berjalan '+num(e.stock_position)+' '+r.unit+' masih memenuhi batas pemesanan '+num(e.reorder_point)+' '+r.unit+'. Belum perlu pesanan tambahan.';
+    name.append(rationale);
     const details=document.createElement('details'),summary=document.createElement('summary');
     summary.textContent='Lihat alasan';summary.setAttribute('aria-label','Lihat alasan '+r.ingredient_name);details.append(summary,explanation(r));name.append(details);
     details.addEventListener('toggle',()=>{
@@ -108,11 +124,11 @@ function renderPurchases(){
       name.colSpan=details.open?5:1;
     });
     cell(tr,num(r.on_hand)+' '+r.unit);cell(tr,num(r.on_order)+' '+r.unit);
-    cell(tr,r.purchase_qty?num(r.purchase_qty)+' '+r.unit:'Cukup').className=r.purchase_qty?'buy':'';
+    cell(tr,r.purchase_qty?num(r.purchase_qty)+' '+r.unit:'Tidak perlu tambahan').className=r.purchase_qty?'buy':'';
     cell(tr,money(r.estimated_cost_idr));$('rows').append(tr);
   }
   if(!filtered.length){const tr=document.createElement('tr'),td=document.createElement('td');td.colSpan=5;td.textContent='Tidak ada bahan yang perlu dibeli. Stok sesuai rencana saat ini.';tr.append(td);$('rows').append(tr);}
-  $('purchase-total').textContent=filtered.length+' dari '+rows.length+' bahan ditampilkan. Total rencana '+money(rows.reduce((total,r)=>total+r.estimated_cost_idr,0))+'.';
+  $('purchase-total').textContent=filtered.length+' dari '+rows.length+' bahan ditampilkan. Total biaya pesanan tambahan '+money(rows.reduce((total,r)=>total+r.estimated_cost_idr,0))+'. Tidak termasuk biaya pesanan yang sudah berjalan.';
   const preview=$('purchase-preview');preview.replaceChildren();
   const needed=rows.filter(r=>r.purchase_qty>0).sort((a,b)=>b.estimated_cost_idr-a.estimated_cost_idr);
   $('preview-count').textContent=needed.length+' bahan';
@@ -120,7 +136,7 @@ function renderPurchases(){
   needed.slice(0,4).forEach(r=>{
     const li=document.createElement('li'),button=document.createElement('button'),content=document.createElement('span'),name=document.createElement('strong'),amount=document.createElement('small');
     button.type='button';button.className='preview-item';button.title='Buka alasan pembelian '+r.ingredient_name;
-    name.textContent=r.ingredient_name;amount.textContent=num(r.purchase_qty)+' '+r.unit+' · '+money(r.estimated_cost_idr);
+    name.textContent=r.ingredient_name;amount.textContent=num(r.purchase_qty)+' '+r.unit+' tambahan · '+money(r.estimated_cost_idr);
     content.append(name,amount);button.append(content,icon('arrow-up-right'));li.append(button);preview.append(li);
     button.addEventListener('click',()=>{
       // A priority ingredient unfolds its own evidence in the purchasing ledger.
@@ -164,6 +180,7 @@ async function load(){
     for(const id of ['count','cost','policy','coverage','preview-count','preview-cost'])$(id).textContent='—';
     $('rows').replaceChildren();$('purchase-preview').replaceChildren();$('policies').replaceChildren();
     $('purchase-total').textContent='Rencana belum tersedia untuk cabang ini.';
+    $('purchase-context').textContent='Tanggal acuan rencana belum tersedia.';
     $('date').textContent='Snapshot belum tersedia';$('date').removeAttribute('datetime');
     $('message').textContent='Rencana tidak berhasil dimuat. Coba muat kembali.';
     $('retry-overview').hidden=false;
@@ -178,14 +195,68 @@ $('approve').addEventListener('click',async()=>{
   catch(error){$('message').textContent='Persetujuan belum tersimpan. Coba setujui kembali.';}
   finally{$('approve').removeAttribute('aria-busy');$('approve').disabled=!overviewData;}
 });
+const sentimentNames={positive:'Positif',negative:'Negatif',neutral:'Netral',mixed:'Campuran'};
+const interestNames={positive:'Tertarik mencoba',negative:'Tidak tertarik',neutral:'Arah ketertarikan belum jelas',mixed:'Tertarik tetapi ragu/menolak'};
+const sentimentNotes={
+  indobert:'IndoBERT menilai sentimen teks produk: positif, negatif, netral, atau campuran.',
+  laya_product:'Laya Sentimen Produk menilai opini kualitas atau pengalaman konsumsi produk.',
+  laya_trend:'Laya Tren Sentimen menilai ketertarikan mencoba menu dari komentar dan konteks postingan. Pujian rasa saja dapat netral. Hasil ini bukan ramalan penjualan.'
+};
+let sentimentAvailability=null;
+function syncSentimentModel(resetResult=false){
+  const model=$('sentiment-model').value,trend=model==='laya_trend';
+  $('trend-sentiment-context').hidden=!trend;
+  for(const id of ['sentiment-target','sentiment-caption']){
+    $(id).disabled=!trend;$(id).required=trend;$(id).removeAttribute('aria-invalid');
+  }
+  $('sentiment-text-label').textContent=trend?'Komentar publik':'Teks ulasan produk';
+  $('text').placeholder=trend?'Contoh: Pengin coba menu ini, tapi masih ragu karena harganya.':'Contoh: Matchanya enak, tetapi harganya mahal…';
+  $('text').removeAttribute('aria-invalid');
+  $('sentiment-model-note').textContent=sentimentAvailability&&!Object.values(sentimentAvailability).some(Boolean)
+    ?'Belum ada model yang siap. Periksa checkpoint lokal dan dependensi model.'
+    :sentimentNotes[model];
+  if(resetResult)$('sentiment').textContent=trend?'Isi produk target, konteks postingan, dan komentar untuk membaca ketertarikan.':'Masukkan teks ulasan untuk memulai analisis.';
+}
+async function configureSentimentOptions(){
+  const select=$('sentiment-model'),options=Object.fromEntries([...select.options].map(option=>[option.value,option]));
+  try{
+    const config=await request('/api/sentiment/options');
+    sentimentAvailability={indobert:config.indobert_available,laya_product:config.laya_product_available,laya_trend:config.laya_trend_available};
+    for(const [id,available] of Object.entries(sentimentAvailability))options[id].disabled=!available;
+    const ready=Object.keys(sentimentAvailability).filter(id=>sentimentAvailability[id]);
+    if(!sentimentAvailability[select.value]&&ready.length)select.value=ready[0];
+    select.disabled=!ready.length;$('analyze').disabled=!ready.length;
+    syncSentimentModel();
+  }catch(error){
+    $('sentiment-model-note').textContent='Status model belum dapat dimuat. Periksa apakah server berjalan.';
+  }
+}
+$('sentiment-model').addEventListener('change',()=>syncSentimentModel(true));
 $('sentiment-form').addEventListener('submit',async event=>{
   event.preventDefault();
   const text=$('text').value.trim();
   if(!text){$('text').setAttribute('aria-invalid','true');$('sentiment').textContent='Isi pembahasan menu terlebih dahulu, lalu pilih Analisis teks.';$('text').focus();return;}
+  const selectedModel=$('sentiment-model').value;
+  const payload={text,model:selectedModel};
+  if(selectedModel==='laya_trend'){
+    for(const [id,key,message] of [['sentiment-target','target_product','Isi produk/menu target terlebih dahulu.'],['sentiment-caption','parent_caption','Isi caption atau konteks postingan terlebih dahulu.']]){
+      const value=$(id).value.trim();
+      if(!value){$(id).setAttribute('aria-invalid','true');$('sentiment').textContent=message;$(id).focus();return;}
+      $(id).removeAttribute('aria-invalid');payload[key]=value;
+    }
+  }
   $('text').removeAttribute('aria-invalid');$('analyze').disabled=true;$('analyze').setAttribute('aria-busy','true');$('sentiment').textContent='Menganalisis teks…';
-  try{const result=await request('/api/sentiment',{text});$('sentiment').textContent='Hasil IndoBERT: '+({positive:'Positif',negative:'Negatif',neutral:'Netral',mixed:'Campuran'}[result.label]||result.label)+'.';}
-  catch(error){$('sentiment').textContent='Teks belum berhasil dianalisis. Pilih Analisis teks untuk mencoba kembali.';}
-  finally{$('analyze').disabled=false;$('analyze').removeAttribute('aria-busy');}
+  try{
+    const result=await request('/api/sentiment',payload);
+    if($('sentiment-model').value!==selectedModel)return;
+    const names=result.task==='menu_interest'?interestNames:sentimentNames;
+    const label=names[result.label]||result.label;
+    const probability=result.probability==null?'':' Probabilitas label pilihan: '+new Intl.NumberFormat('id-ID',{style:'percent',maximumFractionDigits:1}).format(result.probability)+'.';
+    $('sentiment').textContent='Hasil '+result.model+': '+label+'.'+probability;
+  }
+  catch(error){if($('sentiment-model').value===selectedModel)$('sentiment').textContent='Analisis gagal: '+error.message;}
+  finally{$('analyze').disabled=sentimentAvailability&&!sentimentAvailability[$('sentiment-model').value];$('analyze').removeAttribute('aria-busy');}
 });
 window.addEventListener('popstate',()=>location.reload());
+configureSentimentOptions();
 load();

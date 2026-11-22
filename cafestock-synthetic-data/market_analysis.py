@@ -2,6 +2,7 @@
 import json
 import pandas as pd
 from itertools import combinations
+from src.generate_social import weekly_period_start
 
 SERIES = ['interest_index', 'sentiment_score', 'sales_units', 'stock_value_idr']
 
@@ -88,6 +89,7 @@ def market_trend_analysis(root, branch=1, weeks=12):
                 'interest_index': float(point.interest_index),
                 'sentiment_score': float(selected.score.mean()) if selected is not None else None,
                 'sentiment_available_at': selected_at.isoformat() if selected_at is not None else None,
+                'sentiment_period_start': selected.published_at.map(weekly_period_start).max() if selected is not None else None,
                 'social_post_count': len(selected) if selected is not None else 0,
                 'sales_units': units, 'sales_window_start': str(start.date()), 'sales_window_end': str(end.date()),
                 'stock_value_idr': float(category_stock[str(end.date())]) if str(end.date()) in category_stock else None,
@@ -104,9 +106,10 @@ def market_trend_analysis(root, branch=1, weeks=12):
             'ingredients': ingredients.loc[ingredients.ingredient_id.isin(ingredient_ids), 'ingredient_name'].tolist()})
     modeling = json.loads((root/'reports/modeling_report.json').read_text())
     return {'city': 'Semarang', 'scope': 'Sinyal pasar kota yang sama digunakan oleh ketiga cabang.',
+        'sentiment_frequency': 'weekly', 'sentiment_collection_schedule': 'Senin 07.00 WIB; postingan Senin–Minggu sebelumnya',
         'decision_at': cutoff, 'weeks': weeks, 'source': 'Seri simulasi pasar Semarang',
         'index_description': 'Indeks 0–100; perubahan dinyatakan dalam poin indeks, bukan jumlah penjualan.',
-        'comparison_description': 'Tren pada tanggal pengamatan; sentimen dari batch SVM terbaru yang sudah tersedia (bulanan); penjualan tujuh hari sebelumnya; nilai stok historis akhir hari sebelumnya. Stok memakai nilai IDR agar g/ml/porsi tidak dijumlahkan. Bahan bersama dihitung sekali per kategori, sehingga kategori tidak boleh dijumlahkan.',
+        'comparison_description': 'Tren pada tanggal pengamatan; sentimen dari batch SVM terbaru yang sudah tersedia (mingguan); penjualan tujuh hari sebelumnya; nilai stok historis akhir hari sebelumnya. Stok memakai nilai IDR agar g/ml/porsi tidak dijumlahkan. Bahan bersama dihitung sekali per kategori, sehingga kategori tidak boleh dijumlahkan.',
         'categories': result, 'model_comparison': {
             'operational_f1': modeling['risk']['A_operational_RandomForest']['test']['f1'],
             'with_trend_f1': modeling['risk']['B_trend_RandomForest']['test']['f1'],

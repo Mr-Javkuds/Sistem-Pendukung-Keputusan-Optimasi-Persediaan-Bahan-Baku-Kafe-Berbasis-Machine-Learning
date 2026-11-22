@@ -26,7 +26,7 @@ def generate():
         (7,'Es batu','g',7,2,5000,5000,2),
         (8,'Adonan croissant','piece',3,5500,12,24,2),
         (9,'Porsi adonan muffin','piece',3,4500,12,24,2),
-        (10,'Air tersaring','ml',7,.2,20000,20000,2)],
+        (10,'Air minum','ml',7,.2,20000,20000,2)],
         columns=['ingredient_id','ingredient_name','unit','shelf_life_days','unit_cost_idr',
                  'package_size','minimum_order_qty','supplier_id'])
     menu = [(1,'Kopi Seduh',1,'Gourmet brewed coffee',{1:18,10:250}),

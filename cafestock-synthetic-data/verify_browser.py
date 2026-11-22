@@ -21,6 +21,13 @@ def run():
         page.wait_for_function("document.querySelectorAll('#rows tr').length===10")
         page.wait_for_function("document.querySelectorAll('#trend-values tr').length===12")
         assert page.locator('#trend-heading').is_visible()
+        assert 'minggu mulai' in page.locator('#sentiment-batch-note').inner_text()
+        assert 'Sentimen mingguan' in page.locator('label:has(#series-sentiment_score)').inner_text()
+        assert page.evaluate('''async () => {
+            const data = await (await fetch('/api/trends?branch=1&weeks=12')).json();
+            return data.sentiment_frequency === 'weekly' && data.categories.every(c =>
+                new Set(c.series.map(r => r.sentiment_available_at).filter(Boolean)).size > 6);
+        }''')
         assert page.locator('#coverage').inner_text() != '—'
         assert page.evaluate("document.fonts.check('15px Manrope')")
         assert page.locator('symbol [fill="currentColor"]').count() == 0
@@ -90,7 +97,7 @@ def run():
         assert page.locator('#text').evaluate('(element)=>element===document.activeElement')
         page.fill('#text', 'Matchanya enak tetapi harganya mahal.')
         page.click('#analyze')
-        page.wait_for_function("document.querySelector('#sentiment').textContent.startsWith('Hasil IndoBERT:')")
+        page.wait_for_function("document.querySelector('#sentiment').textContent.startsWith('Hasil IndoBERT fine-tuned lokal:')")
         assert 'undefined' not in page.locator('#sentiment').inner_text()
         for phrase in ('sintetis', 'belum tervalidasi', 'belum diuji', 'probabilitas terkalibrasi'):
             assert phrase not in page.locator('body').inner_text().lower()
@@ -118,7 +125,7 @@ def run():
                        'projected stock with/without purchase', 'reorder and target reference lines',
                        'policy math included in explanation', 'requested notices removed', 'IndoBERT sentiment inference',
                        'CSV download', 'four aligned comparison series', 'two-series toggle and pair comparison',
-                       'original-unit panels', 'trend category and 52-week selection',
+                       'original-unit panels', 'weekly sentiment batches and sample count', 'trend category and 52-week selection',
                        'task navigation', 'persisted URL filters', 'keyboard skip link',
                        'purchase-only filter', 'inline text validation', 'trend error and retry',
                        'priority ingredient shortcut', 'full-row purchase explanation', 'local Manrope font',

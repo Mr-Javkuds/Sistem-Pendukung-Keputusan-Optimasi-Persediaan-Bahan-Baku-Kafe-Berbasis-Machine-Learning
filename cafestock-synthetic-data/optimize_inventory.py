@@ -20,7 +20,7 @@ from train_models import dump
 ROOT = Path(__file__).resolve().parent
 DEST = ROOT / 'prepared/10_optimization'
 FEATURES = ['branch_id', 'ingredient_id', 'mean_daily_consumption_14d',
-            'market_interest_latest', 'menu_sentiment_latest_month',
+            'market_interest_latest', 'menu_sentiment_latest_week',
             'social_data_available', 'weekday', 'month']
 
 

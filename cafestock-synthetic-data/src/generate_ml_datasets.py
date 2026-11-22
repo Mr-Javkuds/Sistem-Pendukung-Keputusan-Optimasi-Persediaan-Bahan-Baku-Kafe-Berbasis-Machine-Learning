@@ -1,4 +1,4 @@
-"""Point-in-time menu/region/month signals, without cafe reviews or purchase links."""
+"""Point-in-time menu/region/week signals, without cafe reviews or purchase links."""
 import numpy as np
 import pandas as pd
 from .cleaning import mark_sentiment_eligibility
@@ -51,7 +51,7 @@ def generate(config,tables):
         features.append((float(latest.interest_index.mean()),float(lagged.interest_index.mean()),
             latest.available_at.max(),*social,until.isoformat(),outcome,int(until<=end)))
     columns=['market_interest_latest','market_interest_lag_1w','market_feature_max_at',
-             'social_post_count_latest_month','menu_sentiment_latest_month','social_feature_max_at',
+             'social_post_count_latest_week','menu_sentiment_latest_week','social_feature_max_at',
              'social_available_at','social_period_start','social_data_available','social_age_days',
              'label_window_end','future_stockout_7d','label_observed']
     for j,col in enumerate(columns): decisions[col]=[f[j] for f in features]

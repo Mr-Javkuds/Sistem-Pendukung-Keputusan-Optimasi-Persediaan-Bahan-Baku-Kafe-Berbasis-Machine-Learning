@@ -57,7 +57,7 @@ def sql_type(col,series):
     if col=='source_url': return 'text'
     if col.endswith('_id'): return 'bigint'
     if col in ('requested_qty','fulfilled_qty','lead_time_days','shelf_life_days','history_days',
-               'social_post_count_latest_month','post_count','positive_count','neutral_count','negative_count',
+               'social_post_count_latest_week','post_count','positive_count','neutral_count','negative_count',
                'mixed_count','social_data_available','social_age_days',
                'future_stockout_7d','target_stockout','label_observed','target_fulfilled_units_next_7d','unfulfilled_product_qty'): return 'integer'
     if pd.api.types.is_numeric_dtype(series): return 'numeric(20,6)'
@@ -137,7 +137,7 @@ def emit(root,tables):
               'trend_target':'target_fulfilled_units_next_7d',
               'split_rule':'chronological 70/15/15; purge training label windows crossing next split boundary'}
     manifest['restock_features'].remove('baseline_purchase_qty')
-    manifest['social_feature_contract']='Latest completed publication month collected before decision_at; mapped by city/district and recipe menu; unknown locations excluded.'
+    manifest['social_feature_contract']='Latest completed publication week (Monday–Sunday) collected before decision_at; mapped by city/district and recipe menu; unknown locations excluded.'
     manifest['sentiment_split_rule']='By collected_at; pending batches beyond simulation end excluded from training/evaluation.'
     manifest['sentiment_eligibility_rule']='Use training_status=eligible only. Canonical text deduplication retains earliest ingested occurrence; later duplicates/conflicts excluded without moving time partitions.'
     manifest['sentiment_excluded_metadata']=['text_fingerprint','training_status','split','sentiment_label','label_provenance','post_id','mention_id','region_id','product_id','published_at','collected_at','sentiment_row_id']
@@ -148,7 +148,7 @@ def checks(name,frame):
     result=[]
     for col in frame:
         if col in ('quantity','package_size','minimum_order_qty','shelf_life_days','lead_time_days') and name!='inventory_movements': result.append(f'{col} > 0')
-        if col in ('on_hand','on_order','opening_stock','closing_stock','receipts','consumption','waste','requested_qty','fulfilled_qty','unit_price_idr','unit_cost_idr','base_price_idr','baseline_purchase_qty','shortage_qty','post_count','social_post_count_latest_month'): result.append(f'{col} >= 0')
+        if col in ('on_hand','on_order','opening_stock','closing_stock','receipts','consumption','waste','requested_qty','fulfilled_qty','unit_price_idr','unit_cost_idr','base_price_idr','baseline_purchase_qty','shortage_qty','post_count','social_post_count_latest_week'): result.append(f'{col} >= 0')
     if name=='transaction_items': result.append('fulfilled_qty <= requested_qty')
     if name=='ingredients': result.append("unit IN ('g','ml','piece')")
     if name=='social_posts':
@@ -157,7 +157,7 @@ def checks(name,frame):
     if name=='menu_market_signals':
         result += ['post_count = positive_count + neutral_count + negative_count + mixed_count',
                    'sentiment_mean BETWEEN -1 AND 1','available_at >= source_max_published_at']
-    if 'menu_sentiment_latest_month' in frame: result.append('menu_sentiment_latest_month BETWEEN -1 AND 1')
+    if 'menu_sentiment_latest_week' in frame: result.append('menu_sentiment_latest_week BETWEEN -1 AND 1')
     if 'sentiment_label' in frame: result.append("sentiment_label IN ('positive','neutral','negative','mixed')")
     if name=='sentiment_ml_dataset': result += ["training_status IN ('eligible','duplicate','label_conflict','pending')",'length(text_fingerprint) = 64']
     if name=='market_trends': result.append('interest_index BETWEEN 0 AND 100')
@@ -185,17 +185,17 @@ def describe(col):
         'content_text':'Original synthetic Indonesian discussion about a menu, not a cafe review',
         'text_fingerprint':'SHA-256 of NFKC/casefold/whitespace-normalized text, used for audit/dedup only; excluded from model inputs',
         'training_status':'Use eligible only for modeling; later duplicate, label_conflict and pending records remain auditable but excluded',
-        'collected_at':'Simulated monthly ingestion time; later than publication; gates feature availability',
+        'collected_at':'Simulated weekly ingestion time; later than publication; gates feature availability',
         'source_url':'NULL for synthetic content; no real Instagram link is claimed',
         'location_evidence':'synthetic_scenario for assigned market or unknown; never inferred from account location',
         'source_location_proxy':'Explicit unrelated source location used only to transfer transaction patterns',
         'social_feature_max_at':'Latest publication time used in the historical menu sentiment feature',
-        'social_available_at':'Latest actual synthetic monthly collection time contributing to features',
-        'social_period_start':'Publication month represented in latest available regional menu signals',
-        'social_post_count_latest_month':'Count of available menu discussions for linked products in city plus branch district',
-        'menu_sentiment_latest_month':'Mean menu opinion: positive=1, negative=-1, neutral/mixed=0; missing flagged separately',
+        'social_available_at':'Latest actual synthetic weekly collection time contributing to features',
+        'social_period_start':'Publication week (Monday–Sunday) represented in latest available regional menu signals',
+        'social_post_count_latest_week':'Count of available menu discussions for linked products in city plus branch district',
+        'menu_sentiment_latest_week':'Mean menu opinion: positive=1, negative=-1, neutral/mixed=0; missing flagged separately',
         'social_data_available':'0 means no eligible collected batch; score 0 must not be interpreted as observed neutrality',
-        'social_age_days':'Days since contributing monthly batch availability; 0 with availability flag 0 means missing',
+        'social_age_days':'Days since contributing weekly batch availability; 0 with availability flag 0 means missing',
         'market_interest_latest':'Equal mean of latest known category indices associated via recipes',
         'unit_cost_idr':'IDR per ingredient base unit; invented local cost, not an FX conversion',
         'package_size':'Purchase-package quantity in ingredient base units',
